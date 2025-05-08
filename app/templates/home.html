@@ -1,12 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1> This is going to be the landing page</h1>
-  <a href="/testing"> Link to testing page</a>
-</body>
+
+<!--
+Nia Lam, Amanda Tan, Naomi Lai, Kishi Wijaya
+Magical Magnolias
+SoftDev
+P02: Makers Makin' It, Act I
+2025-01-15
+-->
+
+<html>
+  <head>
+    <title>Home</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <link rel="stylesheet" href="/static/css/shop.css">
+  </head>
+
+  <body>
+    <!-- navbar -->
+    <div class="container-fluid">
+      <nav class="navbar">
+      <ul class="nav">
+      <li class="nav-item"> <a class="nav-link" href="{{ url_for('home') }}"> Home </a> </li>
+      <li class="nav-item"> <p class="navbar-text"> Flower score: {{ fs }} </p> </li>
+      <li class="nav-item"> <p class="navbar-text"> Magic power: {{ mp }} </p> </li>
+      </ul>
+      <ul class="nav">
+      <li class="nav-item"> <a class="nav-link" href="#"> {{ session['username'] }}'s Profile </a> </li>
+      <li class="nav-item"> <a class="nav-link" href="{{ url_for('logout') }}"> Logout </a> </li>
+      </ul>
+      </nav>
+    </div>
+    <!------>
+
+    <div class="container">
+
+      <!-- header/info -->
+      <h1> Magnolia Gardens </h1>
+      <h6> <i> by Magical Magnolias </i> </h6>
+
+      <div class="card">
+        <p>
+        Magnolia Gardens is a game about maintaining a garden of flowers. Users may plant flower seeds– each species has slightly different growth requirements. Flowers must be watered each day to grow. Water is infinitely available in the universe of the garden. Once a flower meets the requirement for days watered, it has bloomed and may be “picked” (transferred to the user’s inventory).
+        </p>
+        <p>
+        Another resource, magic power, automatically makes the flower bloom and is obtained from completing minigames of basic and simple arithmetic. Magic power may also be exchanged for flower seeds in the shop page.
+        </p>
+        <p>
+        Points called “flower score” will be assigned based on (equal to) the number of days taken to grow the flower. As the user progresses, “flower score” unlocks more flower varieties which will appear in the shop. The game may continue indefinitely, but the “goal” is to unlock the final “Mythical Magnolia.”
+        </p>
+        <p>
+        These interactions take place on a grid-based garden using JavaScript. The user’s profile displays minigame statistics and the flower score, as well as “picked” flowers. Users must be logged in to play.
+        </p>
+      </div>
+      <!------>
+
+      <!-- flash messages -->
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <br>
+            <div class="alert alert-info">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <!------>
+
+      <br><br>
+
+      <a href="{{ url_for('game') }}">Game</a> &emsp;&emsp;
+      <a href="{{ url_for('garden') }}">Garden</a> &emsp;&emsp;
+      <!-- <a href="{{ url_for('logout') }}">Logout</a> &emsp;&emsp; -->
+      <a href="{{ url_for('shop') }}"> Shop </a>
+
+
+      <script src="/static/js/script.js"></script>
+    </div>
+  </body>
 </html>
