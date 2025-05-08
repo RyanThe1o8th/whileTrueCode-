@@ -21,23 +21,29 @@ SoftDev
   <body>
     <!-- navbar -->
     <div class="container-fluid">
+    {% if username %}
       <nav class="navbar">
       <ul class="nav">
-      <li class="nav-item"> <a class="nav-link" href="{{ url_for('home') }}"> Home </a> </li>
-      </ul>
-      <ul class="nav">
-      <li class="nav-item"> <a class="nav-link" href="#"> {{ session['username'] }}'s Profile </a> </li>
-      <li class="nav-item"> <a class="nav-link" href="{{ url_for('logout') }}"> Logout </a> </li>
+      <a class="nav-link" href="#"> Profile </a>
+      <a class="nav-link" href="{{ url_for('logout') }}"> Logout </a>
       </ul>
       </nav>
+    {% else %}
+      <nav class="navbar">
+      <ul class="nav">
+      <a class="nav-link" href="{{ url_for('register')}}"> Register </a>
+      <a class="nav-link" href="{{ url_for('login') }}"> Login </a>
+      </ul>
+      </nav>
+    {% endif %}
     </div>
     <!------>
 
     <div class="container">
 
       <!-- header/info -->
-      <h1> Magnolia Gardens </h1>
-      <h6> <i> by Magical Magnolias </i> </h6>
+      <h1> The Art of School </h1>
+      <h6> <i> by whileTrueCode- </i> </h6>
 
       <!-- <a href="{{ url_for('logout') }}">Logout</a> &emsp;&emsp; -->
 
