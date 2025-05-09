@@ -1,7 +1,4 @@
- # Nia Lam, Amanda Tan, Naomi Lai, Kishi Wijaya
-# Magical Magnolias
-# SoftDev
-# P02: Makers Makin' It, Act I
+# whileTrueCode
 # 2025-01-15
 
 # Imports
@@ -15,7 +12,7 @@ app.secret_key = os.urandom(32)
 # database initialization
 def init_db():
     """initialize db if none exists"""
-    conn = sqlite3.connect('magnolia.db')
+    conn = sqlite3.connect('truecode.db')
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -28,6 +25,7 @@ def init_db():
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS stats (
+            username TEXT UNIQUE NOT NULL
             CURRENTHP INTEGER NOT NULL,
             TOTALHP INTEGER NOT NULL,
             INTELLIGENCE INTEGER NOT NULL
@@ -38,12 +36,17 @@ def init_db():
     conn.close()
 
 def database_connect():
-    if not os.path.exists('magnolia.db'):
+    if not os.path.exists('truecode.db'):
         init_db()
-    conn = sqlite3.connect('magnolia.db')
+    conn = sqlite3.connect('truecode.db')
     return conn
 
-database_connect()
+#stats
+def statedit(username):
+    conn = database_connect()
+    cursor = conn.cursor()
+    user = cursor.execute('SELECT username FROM stats WHERE username = ?', (username)).fetchone() 
+
 
 # User
 def register_user():
@@ -51,21 +54,24 @@ def register_user():
     password = request.form.get('password')
     confirm_pass = request.form.get('confirm_pass')
 
+    # check if fields filled out
     if not username or not password or not confirm_pass:
-        flash('fill all fields')
+        flash('Please fill out all fields.')
+
     elif password != confirm_pass:
-        flash('passwords dont match')
+        flash('Passwords do not match.')
+
     else:
         try:
-            with sqlite3.connect('magnolia.db') as conn:
+            with sqlite3.connect('truecode.db') as conn:
                 cursor = conn.cursor()
-                cursor.execute('INSERT INTO users (username, password) VALUES (?,?)', (username, password))
-                cursor.execute('INSERT INTO stats (user, magicpower, flowerscore, day) VALUES (?,?,?,?)', (username, 1, 1, 1))
+                cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
                 conn.commit()
-                flash('registered')
+                flash('User registered. Please log in.')
+                return redirect('/login')
         except sqlite3.IntegrityError:
-            flash('username already exists')
-    return redirect('/login')
+            flash('Username already exists.')
+    return redirect('/register')
 
 def login_user():
     username = request.form.get('username')
@@ -75,7 +81,7 @@ def login_user():
         flash('fill all fields')
         return redirect('/login')
     else:
-        with sqlite3.connect('magnolia.db') as conn:
+        with sqlite3.connect('truecode.db') as conn:
             cursor = conn.cursor()
             cursor.execute('SELECT password FROM users WHERE username = ?', (username,))
             user_pass = cursor.fetchone()
@@ -92,4 +98,4 @@ def login_user():
 def logout_user():
     session.pop('username',)
     flash('logged out')
-    return redirect('/login')
+    return redirect('/')

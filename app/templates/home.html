@@ -24,7 +24,7 @@ SoftDev
     {% if username %}
       <nav class="navbar">
       <ul class="nav">
-      <a class="nav-link" href="#"> Profile </a>
+      <a class="nav-link" href="{{ url_for('profile')}}"> Profile </a>
       <a class="nav-link" href="{{ url_for('logout') }}"> Logout </a>
       </ul>
       </nav>

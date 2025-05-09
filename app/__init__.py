@@ -1,8 +1,12 @@
 # Testing ground
-from flask import Flask, redirect, session, render_template, url_for, request
+from flask import Flask, request, render_template, redirect, url_for, flash, session
+import os
+from database import init_db, database_connect, register_user, login_user, logout_user
 
 app = Flask(__name__)
 app.secret_key = 'whileTrueCode()-'
+
+database_connect()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -26,11 +30,16 @@ def register():
             return register_user()
         else:
             flash('form error')
-    return render_template('login.html')
+    return render_template('register.html')
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     return logout_user()
+
+@app.route('/profile', methods=['Get', 'POST'])
+def profile():
+    return render_template('profile.html', username = session.get('username'))
+
 
 @app.route('/testing')
 def testing():
