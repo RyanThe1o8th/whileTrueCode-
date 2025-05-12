@@ -46,4 +46,4 @@ def testing():
     return render_template("testing.html", user=session.get('username'))
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host = '0.0.0.0')
