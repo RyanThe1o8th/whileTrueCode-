@@ -19,13 +19,14 @@ def init_db():
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            avatar TEXT NOT NULL
         )
     ''')
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS stats (
-            username TEXT UNIQUE NOT NULL
+            username TEXT UNIQUE NOT NULL,
             CURRENTHP INTEGER NOT NULL,
             TOTALHP INTEGER NOT NULL,
             INTELLIGENCE INTEGER NOT NULL
@@ -65,7 +66,7 @@ def register_user():
         try:
             with sqlite3.connect('truecode.db') as conn:
                 cursor = conn.cursor()
-                cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
+                cursor.execute('INSERT INTO users (username, password, avatar) VALUES (?, ?, ?)', (username, password, "../static/pictures/yum.png"))
                 conn.commit()
                 flash('User registered. Please log in.')
                 return redirect('/login')

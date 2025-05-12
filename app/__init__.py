@@ -38,7 +38,7 @@ def logout():
 
 @app.route('/profile', methods=['Get', 'POST'])
 def profile():
-    return render_template('profile.html', username = session.get('username'))
+    return render_template('profile.html', username = session.get('username'), avatar = session.get('avatar'))
 
 
 @app.route('/testing')
