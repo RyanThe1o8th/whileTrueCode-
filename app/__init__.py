@@ -45,68 +45,68 @@ def profile():
 def testing():
     return render_template("testing.html", user=session.get('username'))
 
-// subway travel
+# subway
 
 @app.route('/subway')
-def mainHome():
+def subway():
     return render_template('home.html')
 
 @app.route('/neighborhood')
-def mainHome():
+def neighborhood():
     return render_template('neighborhood.html')
 
 @app.route('/mall')
-def mainHome():
+def mall():
     return render_template('mall.html')
 
 @app.route('/school')
-def mainHome():
+def school():
     return render_template('school.html')
 
-// neighborhood
+# neighborhood
 
 @app.route('/home')
 def mainHome():
     return render_template('mhome.html')
 
 @app.route('/friendHouse')
-def mainHome():
+def friendHouse():
     return render_template('friendHouse.html')
 
 @app.route('/park')
-def mainHome():
+def park():
     return render_template('park.html')
 
-// mall
+# mall
 
 @app.route('/candy')
-def mainHome():
+def candy():
     return render_template('candy.html')
 
 @app.route('/gamble')
-def mainHome():
+def gamble():
     return render_template('gamble.html')
 
 @app.route('/darkAlley')
-def mainHome():
+def darkAlley():
     return render_template('darkAlley.html')
 
-// school
+# school
 
 @app.route('/computerScienceLab')
-def mainHome():
+def computerScienceLab():
     return render_template('computerScienceLab.html')
 
 @app.route('/mathClassroom')
-def mainHome():
+def mathClassroom():
     return render_template('mathClassroom.html')
 
 @app.route('/USHistory')
-def mainHome():
+def USHistory():
     return render_template('USHistory.html')
 
 @app.route('/lunchroom')
-def mainHome():
+def lunchroom():
     return render_template('lunchroom.html')
 
 if __name__ == "__main__":
