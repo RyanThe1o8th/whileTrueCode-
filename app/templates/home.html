@@ -25,6 +25,7 @@ SoftDev
       <nav class="navbar">
       <ul class="nav">
       <a class="nav-link" href="{{ url_for('profile')}}"> Profile </a>
+      <p>         </p>
       <a class="nav-link" href="{{ url_for('logout') }}"> Logout </a>
       </ul>
       </nav>
@@ -32,6 +33,7 @@ SoftDev
       <nav class="navbar">
       <ul class="nav">
       <a class="nav-link" href="{{ url_for('register')}}"> Register </a>
+      <p>         </p>
       <a class="nav-link" href="{{ url_for('login') }}"> Login </a>
       </ul>
       </nav>
@@ -42,31 +44,56 @@ SoftDev
     <div class="container">
 
       <!-- header/info -->
-      <img src = "../static/pictures/titlecard.png" class = img>
       <h1> The Art of School </h1>
+    <img src = "../static/pictures/titlecard.png" class = "titlecard">
       <h6> <i> whileTrueCode- </i> </h6>
 
       <!-- <a href="{{ url_for('logout') }}">Logout</a> &emsp;&emsp; -->
 
     </div>
 
-    <div class = "about">
+    <div class = "boxes">
 
-        <h4> Go to School! </h4> 
-        <p> ...or don't! After all, the world (3 locations) is your oyster. </p> 
+        <div class = "about">
+
+            <h4> Go to School! </h4> 
+            <p> ...or don't! After all, the world (3 locations) is your oyster. </p>
+            <p> Will you best Topher Mykolyk? </p>
+            <p> Or must you resort to cheating and stealing to pass? </p>
+            <p> How confident are you in </p>
+            <p> The Art of School? </p>
+
+        </div>
+
+        <div class = "updates">
+
+            <h4> Change Log </h4> 
+            <p> Added this line to the Change Log. Hi! </p>
+            <p> Made the front page look like a page </p>
+            <p> Added a profile page </p> 
+            <p> Made the website! </p>
+
+        </div>
 
     </div>
 
-    <div class = "updates">
+<br>
+<br>
+<br>
+<br>
 
-        <h4> Change Log </h4> 
-        <p> Added a profile page </p> 
-        <p> Made the website! </p>
 
+    <div class = "play">
+        {% if username %}
+        <form class = "button" action="/">
+            <input id=play type="submit" name="play" value="Play!">
+        </form>
+        {% else %}
+        <form class = "button" action="/login">
+            <input id=login type="submit" name="log in" value="Login">
+        </form>
+        {% endif %}
     </div>
-
-
-
 
 
 
