@@ -49,7 +49,7 @@ def testing():
 
 @app.route('/subway')
 def subway():
-    return render_template('home.html')
+    return render_template('subway.html')
 
 @app.route('/neighborhood')
 def neighborhood():
@@ -65,8 +65,8 @@ def school():
 
 # neighborhood
 
-@app.route('/home')
-def mainHome():
+@app.route('/mhome')
+def mhome():
     return render_template('mhome.html')
 
 @app.route('/friendHouse')
