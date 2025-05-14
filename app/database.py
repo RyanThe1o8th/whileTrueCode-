@@ -32,6 +32,14 @@ def init_db():
             INTELLIGENCE INTEGER NOT NULL
         )
     ''')
+    
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS change (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            change TEXT NOT NULL,
+
+        )
+    ''')
 
     conn.commit()
     conn.close()
@@ -41,6 +49,15 @@ def database_connect():
         init_db()
     conn = sqlite3.connect('truecode.db')
     return conn
+
+#changelog
+def changelog_add(message):
+    with sqlite3.connect('truecode.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO change (change) VALUES (?)', (message))
+        conn.commit()
+
+
 
 #stats
 def statedit(username):

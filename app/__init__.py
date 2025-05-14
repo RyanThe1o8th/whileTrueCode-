@@ -1,7 +1,7 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
-from database import init_db, database_connect, register_user, login_user, logout_user
+from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user
 
 app = Flask(__name__)
 app.secret_key = 'whileTrueCode()-'
@@ -10,7 +10,7 @@ database_connect()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html', username = session.get('username'))
+    return render_template('home.html', username = session.get('username'), changelog = session.get('change'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
