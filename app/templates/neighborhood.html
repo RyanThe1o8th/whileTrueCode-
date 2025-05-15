@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <html>
+
+  <head>
+    <title>Neighborhood</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/neighborhood.css">
+  </head>
+
   <body>
-    <button><a href = "/mhome"> home </a></button>
-    <button><a href = "/friendHouse"> Friends House </a></button>
-    <button><a href = "/park"> park </a></button>
-    <button><a href = "/subway"> subway </a></button>
+    <img id = "neighborhood" src = ../static/pictures/neighborhood.png>
+
+   <div id = locations>
+    <a id = "house" href = "/house"> <img src = ../static/pictures/house.png> </a>
+    <a id = "friendhouse" href = "/friendHouse"> <img src = ../static/pictures/friendhome.png> </a>
+    <a id = "park" href = "/park"> <img src = ../static/pictures/park.png> </a>
+    <a id = "subway" href = "/subway"> <img src = ../static/pictures/subway.png> </a>
+    </div>
   </body>
 </html>
