@@ -10,6 +10,7 @@
 
 <html>
   <head>
+        <link rel="stylesheet" href="/static/css/login.css">
         <form action="/">
             <input id=home type="submit" name="return" value="Home">
         </form>
@@ -17,6 +18,9 @@
   </head>
 
   <body>
+
+    <h1> LOGIN </h1>
+
     <!-- flash messages -->
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -29,10 +33,14 @@
     <br><br>
 
     <form action="/login" method="POST">
-      <input type="text" name="username" placeholder="Username"><br><br>
-      <input type="password" name="password" placeholder="Password"><br><br>
-      <input type="submit" name="login" value="Login">
+      <input id = "boxes" type="text" name="username" placeholder="Username"><br><br>
+      <input id = "boxes" type="password" name="password" placeholder="Password"><br><br>
+      <input id=login type="submit" name="login" value="Login">
     </form>
+
+    <p style="color: red">{{ error_text }}</p>
+
+    <p> Don't have an account? <p><a class="nav-link" href="{{ url_for('register')}}"> Register Here</a>
 
     <br><br>
 

@@ -15,12 +15,8 @@
         </form>
         <h1 id=title>Register</h1>
     </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+
+<br>
 
     <div id="background">
 
@@ -40,6 +36,8 @@
         </form>
 
         <p style="color: red">{{ error_text }}</p>
+
+        <p> Already have an account? </p><a class="nav-link" href="{{ url_for('login') }}"> Login Here</a>
     </div>
 </body>
 </html>

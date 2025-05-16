@@ -67,9 +67,9 @@ def school():
 
 # neighborhood
 
-@app.route('/mhome')
-def mhome():
-    return render_template('mhome.html')
+@app.route('/house')
+def house():
+    return render_template('house.html')
 
 @app.route('/friendHouse')
 def friendHouse():

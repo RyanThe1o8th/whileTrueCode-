@@ -1,20 +1,8 @@
-nav.navbar{
-    padding: 20px;
-    font-size:large;
-}
-
-.container{
-}
-
-.container-fluid{
-    text-align: left;
-}
-
 body{
     background-color: white;
     font-family: monospace;
-    text-align: center;
 }
+
 
 h1{
     font-size: 500%;
@@ -54,13 +42,10 @@ h6{
     border-color: blue;
 }
 
-.updates{
-    text-align: center;
-    width: 50%;
-    position: relative;
-    left: 1%;
-    border-style: inset;
-    border-color: blue;
+.neighborhood{
+  position: fixed;
+  bottom: 500px;
+  text-align: center;
 }
 
 #play {
@@ -84,26 +69,3 @@ h6{
 	color: black;
 	scale: 105%;
 }
-
-#login {
-	text-decoration: none;
-    color: white;
-	border: none;
-	background-color: blue;
-	border-radius: 6px;
-	font-size: 30px;
-	font-weight: 600;
-	letter-spacing: 0.5px;
-	width: 10%;
-	padding: 10px;
-	cursor: pointer;
-	position: relative;
-}
-
-#login:hover {
-	transition: 0.3s;
-	background-color: #ADD8E6;
-	color: black;
-	scale: 105%;
-}
-
