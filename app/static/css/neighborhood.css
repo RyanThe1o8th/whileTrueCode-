@@ -1,6 +1,7 @@
 body{
     background-color: white;
     font-family: monospace;
+    text-align: center;
 }
 
 
@@ -42,11 +43,57 @@ h6{
     border-color: blue;
 }
 
-.neighborhood{
-  position: fixed;
-  bottom: 500px;
-  text-align: center;
+.n{
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
 }
+
+.neighborhood{
+    height: 70%;
+    width: 70%;
+    border-style: inset;
+    border-color: blue;
+}
+
+.h{
+    position: absolute;
+    top: 14%;
+    right: 20%;
+}
+
+.house{
+    width: 20%;
+    height: 20%;
+}
+
+.f{
+    position: absolute;
+    top: 14%;
+    left: 20%;
+}
+
+.friendhouse{
+    position: relative;
+    width: 20%;
+    height: 20%;
+}
+
+.subway{
+    position: absolute;
+    bottom: 30%;
+    right: 20%;
+}
+
+.park{
+    display: flex;
+    position: absolute;
+    bottom: 0%;
+    right: 13%;
+}
+
+
 
 #play {
 	text-decoration: none;
