@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, redirect, url_for, flash, ses
 import os
 from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user
 import game
+import random
 
 
 app = Flask(__name__)
@@ -42,11 +43,32 @@ def logout():
 def profile():
     return render_template('profile.html', username = session.get('username'), avatar = session.get('avatar'))
 
-
-@app.route('/testing')
-def testing():
-    return render_template("testing.html", user=session.get('username'))
-
+global x = 0
+@app.route("/testing", methods=["GET", "POST"])
+def index():
+    if 'number' not in session:
+        session['number'] = random.randint(1, 100)
+        session['log'] = []
+    message = ''
+    if request.method == "POST":
+        try:
+            guess = int(request.form['guess'])
+            number = session['number']
+            if guess < number:
+                message = f"{guess} is too low."
+            elif guess > number:
+                message = f"{guess} is too high."
+            else:
+                message = f"Congratulations! {guess} is correct! Starting a new game."
+                session['number'] = random.randint(1, 100)
+                session['log'] = []
+            session['log'].append(message)
+            session.modified = True
+        except ValueError:
+            message = "Please enter a valid number."
+            session['log'].append(message)
+            session.modified = True
+    return render_template("testing.html", message=message)
 # subway
 
 @app.route('/subway')
@@ -85,9 +107,9 @@ def park():
 def candy():
     return render_template('candy.html')
 
-@app.route('/gamble')
-def gamble():
-    return render_template('gamble.html')
+# @app.route('/gamble')
+# def gamble():
+#     return render_template('gamble.html')
 
 @app.route('/darkAlley')
 def darkAlley():
