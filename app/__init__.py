@@ -119,7 +119,7 @@ def blackjackHit():
     dealer_hand = dealer
     return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand))
 
-# guess the number 
+# guess the number
 
 num = 0
 previous = []
@@ -149,6 +149,80 @@ def guesscheck():
             return render_template("guess.html", number = num, prev = previous, win = "wooo")
     return render_template("guess.html", number = num, prev = previous)
 
+# hangman
+used_letters = set()
+
+# Replace with API call for random words
+@app.route('/hangman')
+def hang():
+    words = ["python", "java", "javascript", "ruby", "swift", "kotlin"]
+    word = random.choice(words)
+    global word_letters
+    word_letters = set(word)
+    alphabet = set(chr(x) for x in range(ord('a'), ord('z') + 1))
+    global used_letters
+    global lives
+    lives = 6
+    return render_template("hangman.html")
+
+@app.route('/hangman/check', methods= ["GET", "POST"])
+def hangcheck():
+    global word_letters
+    global used_letters
+    global lives
+    if request.method == 'POST':
+        user_letter = request.form.get('letter').lower()
+        if user_letter in alphabet:
+            if user_letter not in used_letters:
+                used.letters.add(user_letter)
+                if user_letter in word_letters:
+                    word_letters.remove(user_letter)
+                    # return the word but with the places with that letter filled out
+                    return render_template("hangman.html", lives = lives, used = used_letters, message="")
+                else:
+                    lives -= 1
+                    return render_template("hangman.html", lives = lives, used = used_letters, message="You suffer a penalty")
+                    # letter was not in word
+            else:
+                return render_template("hangman.html", lives = lives, used = used_letters, message="This letter was already used")
+                # Say letter was already used
+        else:
+            return render_template("hangman.html", lives = lives, used = used_letters, message="Letter is invalid")
+            # Invalid letter
+    if lives == 0:
+        return render_template("hangman.html", lives = lives, used = used_letters, message="You've been hanged. Game over")
+        # You've been hanged
+    if len(word_letters) == 0:
+        return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!")
+        # You've guessed the word
+
+
+def hangman():
+    while len(word_letters) > 0 and lives > 0:
+        print("You have", lives, "lives left and have used these letters: ", ' '.join(used_letters))
+
+        word_list = [letter if letter in used_letters else '-' for letter in word]
+        print("Current word: ", ' '.join(word_list))
+
+        user_letter = input("Guess a letter: ").lower()
+        if user_letter in alphabet - used_letters:
+            used_letters.add(user_letter)
+            if user_letter in word_letters:
+                word_letters.remove(user_letter)
+            else:
+                lives -= 1
+                print("Letter is not in word.")
+
+        elif user_letter in used_letters:
+            print("You have already used that character. Please try again.")
+
+        else:
+            print("Invalid character. Please try again.")
+
+    if lives == 0:
+        print("You died, sorry. The word was", word)
+    else:
+        print("You guessed the word", word, "!!")
 
 # subway
 
@@ -188,9 +262,9 @@ def park():
 def candy():
     return render_template('candy.html')
 
-@app.route('/gamble')
-def gamble():
-    return render_template('gamble.html')
+# @app.route('/gamble')
+# def gamble():
+#     return render_template('gamble.html')
 
 @app.route('/darkAlley')
 def darkAlley():

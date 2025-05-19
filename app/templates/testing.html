@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<canvas id="canvas"></canvas>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
-<script src="../static/js/testing.js"></script>
-<body>
-  <h1> This is going to be the testing page</h1>
-  <a href="/">Back to landing page</a>
-</body>
-
-</html>
+<title>Guess the Number</title>
+<h1>Guess a number between 1 and 100</h1>
+<form method="post">
+    <input type="number" name="guess" min="1" max="100" required autofocus>
+    <input type="submit" value="Guess">
+</form>
+{% if message %}
+    <p>{{ message }}</p>
+{% endif %}
+<h2>Log:</h2>
+<ul>
+{% for log in session.get('log', []) %}
+    <li>{{ log }}</li>
+{% endfor %}
+</ul>
