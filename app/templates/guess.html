@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <body>
+      Guess a number between 1 and 100
+      {% if win %}
+      {% else %}
+        <form action="/guess/check" method="POST">
+            <input id = 'number' type="number" name="inputNum" placeholder="0"><br><br>
+            <input id= guess type="submit" name="guess" value="guess">
+        </form>
+      {% endif %}
+      {% for i in prev %}
+      {{i}}
+      <br>
+      {% endfor %}
+  </body>
+</html>
+

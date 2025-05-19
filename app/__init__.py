@@ -48,6 +48,12 @@ def profile():
 def testing():
     return render_template("testing.html", user=session.get('username'))
 
+# black jack creation
+
+running_deck = "placeholder"
+player = "a"
+dealer = "b"
+
 def deal_card(deck):
     return deck.pop()
 
@@ -66,9 +72,6 @@ def calculate_hand_value(hand):
         ace_count -= 1
     return total
 
-running_deck = "placeholder"
-player = "a"
-dealer = "b"
 
 @app.route('/blackjack')
 def blackjack():
@@ -115,7 +118,37 @@ def blackjackHit():
     player_hand = player
     dealer_hand = dealer
     return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand))
-#blackjack()
+
+# guess the number 
+
+num = 0
+previous = []
+
+@app.route('/guess')
+def guess():
+    number = random.randint(1, 100)
+    global num
+    global previous
+    num = number
+    return render_template("guess.html", number = num, prev = previous)
+
+@app.route('/guess/check', methods = ["GET", "POST"])
+def guesscheck():
+    global num
+    global previous
+    if request.method == 'POST':
+        guess = (int)(request.form.get('inputNum'))
+        if(guess > num):
+            previous.append(str(guess) + " was too high!")
+            return render_template("guess.html", number = num, prev = previous)
+        if(guess < num):
+            previous.append(str(guess) + " was too low!")
+            return render_template("guess.html", number = num, prev = previous)
+        if(guess == num):
+            previous.append("YOU WIN WOOO!!!")
+            return render_template("guess.html", number = num, prev = previous, win = "wooo")
+    return render_template("guess.html", number = num, prev = previous)
+
 
 # subway
 
