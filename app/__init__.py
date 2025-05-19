@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, redirect, url_for, flash, ses
 import os
 from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user
 import game
+import random
 
 
 app = Flask(__name__)
@@ -46,6 +47,75 @@ def profile():
 @app.route('/testing')
 def testing():
     return render_template("testing.html", user=session.get('username'))
+
+def deal_card(deck):
+    return deck.pop()
+
+def calculate_hand_value(hand):
+    ace_count = hand.count('A')
+    total = 0
+    for card in hand:
+        if card.isdigit():
+            total += int(card)
+        elif card in ('J', 'Q', 'K'):
+            total += 10
+        elif card == 'A':
+            total += 11
+    while total > 21 and ace_count > 0:
+        total -= 10
+        ace_count -= 1
+    return total
+
+running_deck = "placeholder"
+player = "a"
+dealer = "b"
+
+@app.route('/blackjack')
+def blackjack():
+    suits = ('Hearts', 'Diamonds', 'Clubs', 'Spades')
+    ranks = ('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A')
+    deck = [rank for rank in ranks for suit in suits] * 4
+    random.shuffle(deck)
+    player_hand = [deal_card(deck), deal_card(deck)]
+    dealer_hand = [deal_card(deck), deal_card(deck)]
+    global running_deck
+    global player
+    global dealer
+    running_deck = deck
+    player = player_hand
+    dealer = dealer_hand
+    print(*player_hand)
+    print(*dealer_hand)
+    return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand))
+
+@app.route('/blackjack/stand')
+def blackjackStand():
+    global running_deck
+    global player
+    global dealer
+    deck = running_deck
+    player_hand = player
+    dealer_hand = dealer
+    while calculate_hand_value(dealer_hand) < 17:
+        dealer_hand.append(deal_card(deck))
+        if calculate_hand_value(dealer_hand) > 21 or calculate_hand_value(player_hand) > calculate_hand_value(dealer_hand):
+            return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand), result = "You won!!!")
+        elif calculate_hand_value(player_hand) == calculate_hand_value(dealer_hand):
+            return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand), result = "Push. Oh well.")
+        else:
+            return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand), result = "Loser")
+
+@app.route('/blackjack/hit')
+def blackjackHit():
+    global running_deck
+    global player
+    global dealer
+    deck = running_deck
+    player.append(deal_card(deck))
+    player_hand = player
+    dealer_hand = dealer
+    return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand))
+#blackjack()
 
 # subway
 
