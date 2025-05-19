@@ -43,32 +43,113 @@ def logout():
 def profile():
     return render_template('profile.html', username = session.get('username'), avatar = session.get('avatar'))
 
-global x = 0
-@app.route("/testing", methods=["GET", "POST"])
-def index():
-    if 'number' not in session:
-        session['number'] = random.randint(1, 100)
-        session['log'] = []
-    message = ''
-    if request.method == "POST":
-        try:
-            guess = int(request.form['guess'])
-            number = session['number']
-            if guess < number:
-                message = f"{guess} is too low."
-            elif guess > number:
-                message = f"{guess} is too high."
-            else:
-                message = f"Congratulations! {guess} is correct! Starting a new game."
-                session['number'] = random.randint(1, 100)
-                session['log'] = []
-            session['log'].append(message)
-            session.modified = True
-        except ValueError:
-            message = "Please enter a valid number."
-            session['log'].append(message)
-            session.modified = True
-    return render_template("testing.html", message=message)
+
+@app.route('/testing')
+def testing():
+    return render_template("testing.html", user=session.get('username'))
+
+# black jack creation
+
+running_deck = "placeholder"
+player = "a"
+dealer = "b"
+
+def deal_card(deck):
+    return deck.pop()
+
+def calculate_hand_value(hand):
+    ace_count = hand.count('A')
+    total = 0
+    for card in hand:
+        if card.isdigit():
+            total += int(card)
+        elif card in ('J', 'Q', 'K'):
+            total += 10
+        elif card == 'A':
+            total += 11
+    while total > 21 and ace_count > 0:
+        total -= 10
+        ace_count -= 1
+    return total
+
+
+@app.route('/blackjack')
+def blackjack():
+    suits = ('Hearts', 'Diamonds', 'Clubs', 'Spades')
+    ranks = ('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A')
+    deck = [rank for rank in ranks for suit in suits] * 4
+    random.shuffle(deck)
+    player_hand = [deal_card(deck), deal_card(deck)]
+    dealer_hand = [deal_card(deck), deal_card(deck)]
+    global running_deck
+    global player
+    global dealer
+    running_deck = deck
+    player = player_hand
+    dealer = dealer_hand
+    print(*player_hand)
+    print(*dealer_hand)
+    return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand))
+
+@app.route('/blackjack/stand')
+def blackjackStand():
+    global running_deck
+    global player
+    global dealer
+    deck = running_deck
+    player_hand = player
+    dealer_hand = dealer
+    while calculate_hand_value(dealer_hand) < 17:
+        dealer_hand.append(deal_card(deck))
+        if calculate_hand_value(dealer_hand) > 21 or calculate_hand_value(player_hand) > calculate_hand_value(dealer_hand):
+            return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand), result = "You won!!!")
+        elif calculate_hand_value(player_hand) == calculate_hand_value(dealer_hand):
+            return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand), result = "Push. Oh well.")
+        else:
+            return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand), result = "Loser")
+
+@app.route('/blackjack/hit')
+def blackjackHit():
+    global running_deck
+    global player
+    global dealer
+    deck = running_deck
+    player.append(deal_card(deck))
+    player_hand = player
+    dealer_hand = dealer
+    return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand))
+
+# guess the number
+
+num = 0
+previous = []
+
+@app.route('/guess')
+def guess():
+    number = random.randint(1, 100)
+    global num
+    global previous
+    num = number
+    return render_template("guess.html", number = num, prev = previous)
+
+@app.route('/guess/check', methods = ["GET", "POST"])
+def guesscheck():
+    global num
+    global previous
+    if request.method == 'POST':
+        guess = (int)(request.form.get('inputNum'))
+        if(guess > num):
+            previous.append(str(guess) + " was too high!")
+            return render_template("guess.html", number = num, prev = previous)
+        if(guess < num):
+            previous.append(str(guess) + " was too low!")
+            return render_template("guess.html", number = num, prev = previous)
+        if(guess == num):
+            previous.append("YOU WIN WOOO!!!")
+            return render_template("guess.html", number = num, prev = previous, win = "wooo")
+    return render_template("guess.html", number = num, prev = previous)
+
+
 # subway
 
 @app.route('/subway')

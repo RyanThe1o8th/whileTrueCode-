@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    Dealer : {{dealer}} Dealer Value : {{dealer_value}}
+    <br>
+    Player : {{player}} Player Value : {{player_value}}
+    <br>
+
+    {% if result %}
+
+    {{result}}
+
+    {% else %}
+
+    <button><a href = "/blackjack/stand"> stand </a></button>
+    <button><a href = "/blackjack/hit"> hit </a></button>
+    
+
+    {% endif %}
+    
+  </body>
+</html>
+
