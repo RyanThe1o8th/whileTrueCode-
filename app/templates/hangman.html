@@ -2,10 +2,15 @@
 <html>
 <body>
   Let's play hangman. You will suffer a penalty for each mistake. If you suffer six penalties, you will be hanged.
-  <form action="hangman/check" method="post">
-    <input id = 'letter' type="letter" name="letter" placeholder="placeholder"><br>
-    
-
+  <p>Remaining lives: {{lives}} </p>
+  <form action="/hangman/check" method="post">
+    <input id = 'letter' type="letter" name="inputLetter" placeholder="placeholder"><br>
+    <input id= guess type="submit" name="guess" value="guess">
   </form>
+  <p>{{c}}</p>
+  {% if num != 0%}
+  <p>{{message}}</p>
+  <p>{{used}}</p>
+  {% endif %}
 </body>
 </html>
