@@ -235,16 +235,19 @@ def rpsCheck():
     global dial
     dial = []
     oppAction = random.randint(1, 3)
+    
+    if oppAction == 1:
+        oppAction = "Rock"
+    elif oppAction == 2:
+        oppAction = "Paper"
+    else:
+        oppAction = "Scissors"
 
     #Win Cons
-    if oppAction == 1 and action == "Paper":
-        dial.append("Rock")
-    elif oppAction == 2 and action == "Scissors":
-        dial.append("Paper")
-    elif action == "Rock":
-        dial.append("Scissors")
+    win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
 
-    return render_template("rps.html", dialogue=dial)
+
+    return render_template("rps.html", oppAct=oppAction, act=action, won=win, playing=False)
 
 # subway
 @app.route('/subway')
@@ -311,3 +314,4 @@ def lunchroom():
 
 if __name__ == "__main__":
     app.run(host = '0.0.0.0')
+

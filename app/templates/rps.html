@@ -9,9 +9,15 @@
             <button id = 'action' type="submit" name="inputAction" value="Scissors">Scissors</button>
         </form>
       {% endif %}
+      {% if won and not playing %}
+        Ahhhh, you got me! I went {{ oppAct }} and you went {{ act }}!
+      {% else %}
+        HAHA, I got you! I went {{ oppAct }} and you went {{ act }}!
+      {% endif %}
       {% for i in dialogue %}
       {{i}}
       <br>
       {% endfor %}
   </body>
 </html>
+
