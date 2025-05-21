@@ -43,13 +43,13 @@ h6{
     border-color: blue;
 }
 
-.n{
+.s{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.neighborhood{
+.subway{
     height: 689px;
     width: 689px;
     border-style: inset;
@@ -63,36 +63,28 @@ h6{
 }
 
 
-.house{
-    position: absolute;
-    height: 228px;
-    width: 689px;
-    bottom: 40px;
-    left: -145px;
-}
-
-.friendhouse{
+.school{
     position: absolute;
     height: 228px;
     width: 689px;
     bottom: 80px;
-    right: -145px;
+    left: -105px;
 }
 
-.subway{
+.neighborhood{
     position: absolute;
     height: 228px;
     width: 689px;
-    top: 40px;
-    left: -120px;
+    bottom: 83px;
 }
 
-.park{
+
+.mall{
     position: absolute;
     height: 228px;
     width: 689px;
-    top: 116px;
-    right: -345px;
+    bottom: 80px;
+    right: -105px;
 }
 
 
