@@ -49,7 +49,7 @@ h6{
   align-items: center;
 }
 
-.subway{
+.school{
     height: 689px;
     width: 689px;
     border-style: inset;
@@ -63,7 +63,7 @@ h6{
 }
 
 
-.school{
+.CSlab{
     position: absolute;
     height: 100px;
     width: 250px;
@@ -71,7 +71,7 @@ h6{
     left: -350px;
 }
 
-.neighborhood{
+.Math{
     position: absolute;
     height: 100px;
     width: 250px;
@@ -79,12 +79,29 @@ h6{
 }
 
 
-.mall{
+.USH{
     position: absolute;
     height: 100px;
     width: 250px;
     bottom: 230px;
     right: -350px;
+}
+
+.Lunchrm{
+    position: absolute;
+    height: 100px;
+    width: 250px;
+    top: 56px;
+    left: -340px;
+}
+
+
+.subway{
+    position: absolute;
+    height: 100px;
+    width: 250px;
+    top: 260px;
+    right: -400px;
 }
 
 

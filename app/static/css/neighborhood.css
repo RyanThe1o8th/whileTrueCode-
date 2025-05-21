@@ -65,26 +65,26 @@ h6{
 
 .house{
     position: absolute;
-    height: 228px;
-    width: 689px;
+    height: 200px;
+    width: 250px;
     bottom: 40px;
-    left: -145px;
+    right: -350px;
 }
 
 .friendhouse{
     position: absolute;
-    height: 228px;
-    width: 689px;
+    height: 200px;
+    width: 250px;
     bottom: 80px;
-    right: -145px;
+    left: -350px;
 }
 
 .subway{
     position: absolute;
-    height: 228px;
-    width: 689px;
+    height: 100px;
+    width: 200px;
     top: 40px;
-    left: -120px;
+    right: -350px;
 }
 
 .park{

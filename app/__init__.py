@@ -177,44 +177,44 @@ def hang():
     guessCount = 0
     return render_template("hangman.html")
 
-@app.route('/hangman/check', methods= ["GET", "POST"])
-def hangcheck():
-    global word
-    global word_letters
-    global used_letters
-    global correct_letters
-    global lives
-    global alphabet
-    global guessCount
-    if request.method == 'POST':
-        user_letter = request.form.get('inputLetter').lower()
-        if user_letter in alphabet:
-            if user_letter not in used_letters:
-                guessCount += 1
-                used_letters.add(user_letter)
-                if user_letter in word_letters:
-                    word_letters.remove(user_letter)
-                    # return the word but with the places with that letter filled out
-                    for i in range(len(word)):
-                        if word[i] == user_letter:
-                            # Continue
-                    return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed a letter!", num = guessCount, c = correct_letters)
-                else:
-                    lives -= 1
-                    return render_template("hangman.html", lives = lives, used = used_letters, message="You suffer a penalty", num = guessCount, c = correct_letters)
-                    # letter was not in word
-            else:
-                return render_template("hangman.html", lives = lives, used = used_letters, message="This letter was already used", num = guessCount, c = correct_letters)
-                # Say letter was already used
-        else:
-            return render_template("hangman.html", lives = lives, used = used_letters, message="Letter is invalid", num = guessCount, c = correct_letters)
-            # Invalid letter
-    if lives == 0:
-        return render_template("hangman.html", lives = lives, used = used_letters, message="You've been hanged. Game over", num = guessCount, c = correct_letters)
-        # You've been hanged
-    if len(word_letters) == 0:
-        return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = correct_letters)
-        # You've guessed the word
+# @app.route('/hangman/check', methods= ["GET", "POST"])
+# def hangcheck():
+#     global word
+#     global word_letters
+#     global used_letters
+#     global correct_letters
+#     global lives
+#     global alphabet
+#     global guessCount
+#     if request.method == 'POST':
+#         user_letter = request.form.get('inputLetter').lower()
+#         if user_letter in alphabet:
+#             if user_letter not in used_letters:
+#                 guessCount += 1
+#                 used_letters.add(user_letter)
+#                 if user_letter in word_letters:
+#                     word_letters.remove(user_letter)
+#                     # return the word but with the places with that letter filled out
+#                     for i in range(len(word)):
+#                         if word[i] == user_letter:
+#                             # Continue
+#                     return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed a letter!", num = guessCount, c = correct_letters)
+#                 else:
+#                     lives -= 1
+#                     return render_template("hangman.html", lives = lives, used = used_letters, message="You suffer a penalty", num = guessCount, c = correct_letters)
+#                     # letter was not in word
+#             else:
+#                 return render_template("hangman.html", lives = lives, used = used_letters, message="This letter was already used", num = guessCount, c = correct_letters)
+#                 # Say letter was already used
+#         else:
+#             return render_template("hangman.html", lives = lives, used = used_letters, message="Letter is invalid", num = guessCount, c = correct_letters)
+#             # Invalid letter
+#     if lives == 0:
+#         return render_template("hangman.html", lives = lives, used = used_letters, message="You've been hanged. Game over", num = guessCount, c = correct_letters)
+#         # You've been hanged
+#     if len(word_letters) == 0:
+#         return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = correct_letters)
+#         # You've guessed the word
 
 # subway
 
