@@ -152,30 +152,30 @@ def guesscheck():
 # hangman
 
 # Replace with API call for random words
-@app.route('/hangman')
-def hang():
-    words = ["python", "java", "javascript", "ruby", "swift", "kotlin"]
-    global word
-    word = random.choice(words)
-    global word_letters
-    word_letters = set(word)
-    # Word letters being a set means that if a letter is guessed, it only has to be removed once
-    # If you want to get the correct order of letters in the word, you'll want to use an array
-    # For the correct letters, and reference the index position in the word string
-    global correct_letters
-    correct_letters = []
-    for i in range(len(word)):
-        correct_letters.append("_")
-    # Currently trying to create a set of letters guessed correctly, with _ for letters not discovered
-    global alphabet
-    alphabet = set(chr(x) for x in range(ord('a'), ord('z') + 1))
-    global used_letters
-    used_letters = set()
-    global lives
-    lives = 6
-    global guessCount
-    guessCount = 0
-    return render_template("hangman.html")
+# @app.route('/hangman')
+# def hang():
+#     words = ["python", "java", "javascript", "ruby", "swift", "kotlin"]
+#     global word
+#     word = random.choice(words)
+#     global word_letters
+#     word_letters = set(word)
+#     # Word letters being a set means that if a letter is guessed, it only has to be removed once
+#     # If you want to get the correct order of letters in the word, you'll want to use an array
+#     # For the correct letters, and reference the index position in the word string
+#     global correct_letters
+#     correct_letters = []
+#     for i in range(len(word)):
+#         correct_letters.append("_")
+#     # Currently trying to create a set of letters guessed correctly, with _ for letters not discovered
+#     global alphabet
+#     alphabet = set(chr(x) for x in range(ord('a'), ord('z') + 1))
+#     global used_letters
+#     used_letters = set()
+#     global lives
+#     lives = 6
+#     global guessCount
+#     guessCount = 0
+#     return render_template("hangman.html")
 
 # @app.route('/hangman/check', methods= ["GET", "POST"])
 # def hangcheck():
@@ -215,9 +215,41 @@ def hang():
 #     if len(word_letters) == 0:
 #         return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = correct_letters)
 #         # You've guessed the word
+<<<<<<< HEAD
+=======
+
+@app.route("/rps")
+def rps():
+    global oppAction
+    global dial
+    dial = []
+    oppAction = random.randint(1, 3)
+
+    return render_template("rps.html", oppAct=oppAction, dialogue=dial, playing=True)
+
+@app.route("/rps/check", methods=["POST"])
+def rpsCheck():
+    if request.method == "POST":
+        action = request.form.get("inputAction")
+        print(action)
+
+    global oppAction
+    global dial
+    dial = []
+    oppAction = random.randint(1, 3)
+
+    #Win Cons
+    if oppAction == 1 and action == "Paper":
+        dial.append("Rock")
+    elif oppAction == 2 and action == "Scissors":
+        dial.append("Paper")
+    elif action == "Rock":
+        dial.append("Scissors")
+
+    return render_template("rps.html", dialogue=dial)
+>>>>>>> 09f110bcb9d6fcc6506abf6cedbb0a6e45e1fa6a
 
 # subway
-
 @app.route('/subway')
 def subway():
     return render_template('subway.html')
