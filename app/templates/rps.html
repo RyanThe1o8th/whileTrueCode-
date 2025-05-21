@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <body>
+      Lets play rock, paper, scissors!
+      {% if playing %}
+        <form action="/rps/check" method="POST">
+            <button id = 'action' type="submit" name="inputAction" value="Rock">Rock</button>
+            <button id = 'action' type="submit" name="inputAction" value="Paper">Paper</button>
+            <button id = 'action' type="submit" name="inputAction" value="Scissors">Scissors</button>
+        </form>
+      {% endif %}
+      {% for i in dialogue %}
+      {{i}}
+      <br>
+      {% endfor %}
+  </body>
+</html>
