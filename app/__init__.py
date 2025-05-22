@@ -215,8 +215,6 @@ def guesscheck():
 #     if len(word_letters) == 0:
 #         return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = correct_letters)
 #         # You've guessed the word
-<<<<<<< HEAD
-=======
 
 @app.route("/rps")
 def rps():
@@ -247,7 +245,6 @@ def rpsCheck():
         dial.append("Scissors")
 
     return render_template("rps.html", dialogue=dial)
->>>>>>> 09f110bcb9d6fcc6506abf6cedbb0a6e45e1fa6a
 
 # subway
 @app.route('/subway')

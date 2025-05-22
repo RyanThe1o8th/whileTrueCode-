@@ -1,9 +1,35 @@
 <!DOCTYPE html>
 <html>
+
+  <head>
+    <title>Neighborhood</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/mall.css">
+
+        <form action="/">
+            <input id=home type="submit" name="return" value="Home">
+        </form>
+
+        <br>
+        <br>
+
+  </head>
+
   <body>
-    <button><a href = "/candy"> candy </a></button>
-    <button><a href = "/gamble"> gamble </a></button>
-    <button><a href = "/darkAlley"> dark alley </a></button>
-    <button><a href = "/subway"> subway </a></button>
+   <div class ="m">
+    <img class = "mall" src = ../static/pictures/mall.png>
+
+   <div class = locations>
+        <a class = "candy" href = "/candy"> <img src = ../static/pictures/candy.png> </a>
+        <a class = "gamble" href = "/gamble"> <img src = ../static/pictures/gamble.png> </a>
+        <a class = "shady" href = "/darkAlley"> <img src = ../static/pictures/shady.png> </a>
+        <a class = "subway" href = "/subway"> <img src = ../static/pictures/subway.png> </a>
+       </div>
+    </div>
   </body>
 </html>
