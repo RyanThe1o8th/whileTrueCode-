@@ -229,13 +229,13 @@ def rps():
 def rpsCheck():
     if request.method == "POST":
         action = request.form.get("inputAction")
-        print(action)
+        # print(action)
 
     global oppAction
     global dial
     dial = []
     oppAction = random.randint(1, 3)
-    
+
     if oppAction == 1:
         oppAction = "Rock"
     elif oppAction == 2:
@@ -243,11 +243,13 @@ def rpsCheck():
     else:
         oppAction = "Scissors"
 
+    print(f"Player Action: {action}, Opponent Action: {oppAction}")
+
     #Win Cons
     win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
+    tie = oppAction == action
 
-
-    return render_template("rps.html", oppAct=oppAction, act=action, won=win, playing=False)
+    return render_template("rps.html", oppAct=oppAction, act=action, won=win, tied=tie, playing=False)
 
 # subway
 @app.route('/subway')
@@ -314,4 +316,3 @@ def lunchroom():
 
 if __name__ == "__main__":
     app.run(host = '0.0.0.0')
-
