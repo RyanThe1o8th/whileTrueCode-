@@ -152,70 +152,6 @@ def guesscheck():
 # hangman
 
 # Replace with API call for random words
-# @app.route('/hangman')
-# def hang():
-#     words = ["python", "java", "javascript", "ruby", "swift", "kotlin"]
-#     global word
-#     word = random.choice(words)
-#     global word_letters
-#     word_letters = set(word)
-#     # Word letters being a set means that if a letter is guessed, it only has to be removed once
-#     # If you want to get the correct order of letters in the word, you'll want to use an array
-#     # For the correct letters, and reference the index position in the word string
-#     global correct_letters
-#     correct_letters = []
-#     for i in range(len(word)):
-#         correct_letters.append("_")
-#     # Currently trying to create a set of letters guessed correctly, with _ for letters not discovered
-#     global alphabet
-#     alphabet = set(chr(x) for x in range(ord('a'), ord('z') + 1))
-#     global used_letters
-#     used_letters = set()
-#     global lives
-#     lives = 6
-#     global guessCount
-#     guessCount = 0
-#     return render_template("hangman.html")
-
-# @app.route('/hangman/check', methods= ["GET", "POST"])
-# def hangcheck():
-#     global word
-#     global word_letters
-#     global used_letters
-#     global correct_letters
-#     global lives
-#     global alphabet
-#     global guessCount
-#     if request.method == 'POST':
-#         user_letter = request.form.get('inputLetter').lower()
-#         if user_letter in alphabet:
-#             if user_letter not in used_letters:
-#                 guessCount += 1
-#                 used_letters.add(user_letter)
-#                 if user_letter in word_letters:
-#                     word_letters.remove(user_letter)
-#                     # return the word but with the places with that letter filled out
-#                     for i in range(len(word)):
-#                         if word[i] == user_letter:
-#                             # Continue
-#                     return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed a letter!", num = guessCount, c = correct_letters)
-#                 else:
-#                     lives -= 1
-#                     return render_template("hangman.html", lives = lives, used = used_letters, message="You suffer a penalty", num = guessCount, c = correct_letters)
-#                     # letter was not in word
-#             else:
-#                 return render_template("hangman.html", lives = lives, used = used_letters, message="This letter was already used", num = guessCount, c = correct_letters)
-#                 # Say letter was already used
-#         else:
-#             return render_template("hangman.html", lives = lives, used = used_letters, message="Letter is invalid", num = guessCount, c = correct_letters)
-#             # Invalid letter
-#     if lives == 0:
-#         return render_template("hangman.html", lives = lives, used = used_letters, message="You've been hanged. Game over", num = guessCount, c = correct_letters)
-#         # You've been hanged
-#     if len(word_letters) == 0:
-#         return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = correct_letters)
-#         # You've guessed the word
-
 @app.route("/rps")
 def rps():
     global oppAction
@@ -251,6 +187,72 @@ def rpsCheck():
 
     return render_template("rps.html", oppAct=oppAction, act=action, won=win, tied=tie, playing=False)
 
+=======
+@app.route('/hangman')
+def hang():
+    words = ["python", "java", "javascript", "ruby", "swift", "kotlin"]
+    global word
+    word = random.choice(words)
+    global word_letters
+    word_letters = set(word)
+    # Word letters being a set means that if a letter is guessed, it only has to be removed once
+    # If you want to get the correct order of letters in the word, you'll want to use an array
+    # For the correct letters, and reference the index position in the word string
+    global correct_letters
+    correct_letters = []
+    for i in range(len(word)):
+        correct_letters.append("_")
+        correct_letters.append(" ")
+    # Currently trying to create a set of letters guessed correctly, with _ for letters not discovered
+    global alphabet
+    alphabet = set(chr(x) for x in range(ord('a'), ord('z') + 1))
+    global used_letters
+    used_letters = set()
+    global lives
+    lives = 6
+    global guessCount
+    guessCount = 0
+    return render_template("hangman.html")
+
+@app.route('/hangman/check', methods= ["GET", "POST"])
+def hangcheck():
+    global word
+    global word_letters
+    global used_letters
+    global correct_letters
+    global lives
+    global alphabet
+    global guessCount
+    if request.method == 'POST':
+        user_letter = request.form.get('inputLetter').lower()
+        if user_letter in alphabet: # Is it a letter?
+            if user_letter not in used_letters: #Have you used it?
+                guessCount += 1
+                used_letters.add(user_letter)
+                if user_letter in word_letters: #Is it in the word?
+                    word_letters.remove(user_letter)
+                    # return the word but with the places with that letter filled out
+                    for i in range(len(word)): #add it to the list of correct letters
+                        if word[i] == user_letter:
+                            correct_letters[i*2] = word[i]
+                    return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed a letter!", num = guessCount, c = "".join(correct_letters))
+                else:
+                    lives -= 1
+                    return render_template("hangman.html", lives = lives, used = used_letters, message="You suffer a penalty", num = guessCount, c = "".join(correct_letters))
+                    # letter was not in word
+            else:
+                return render_template("hangman.html", lives = lives, used = used_letters, message="This letter was already used", num = guessCount, c = "".join(correct_letters))
+                # Say letter was already used
+        else:
+            return render_template("hangman.html", lives = lives, used = used_letters, message="Letter is invalid", num = guessCount, c = "".join(correct_letters))
+            # Invalid letter
+    if lives == 0:
+        return render_template("hangman.html", lives = lives, used = used_letters, message="You've been hanged. Game over", num = guessCount, c = "".join(correct_letters))
+        # You've been hanged
+    if len(word_letters) == len(word):
+        return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = "".join(correct_letters))
+        # You've guessed the word
+>>>>>>> Tanzeem
 
 # subway
 @app.route('/subway')
