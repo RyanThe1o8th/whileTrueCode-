@@ -231,23 +231,32 @@ def rps():
 def rpsCheck():
     if request.method == "POST":
         action = request.form.get("inputAction")
-        print(action)
+        # print(action)
 
     global oppAction
     global dial
     dial = []
     oppAction = random.randint(1, 3)
 
-    #Win Cons
-    if oppAction == 1 and action == "Paper":
-        dial.append("Rock")
-    elif oppAction == 2 and action == "Scissors":
-        dial.append("Paper")
-    elif action == "Rock":
-        dial.append("Scissors")
+    if oppAction == 1:
+        oppAction = "Rock"
+    elif oppAction == 2:
+        oppAction = "Paper"
+    else:
+        oppAction = "Scissors"
 
+<<<<<<< HEAD
     return render_template("rps.html", dialogue=dial)
 >>>>>>> 09f110bcb9d6fcc6506abf6cedbb0a6e45e1fa6a
+=======
+    print(f"Player Action: {action}, Opponent Action: {oppAction}")
+
+    #Win Cons
+    win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
+    tie = oppAction == action
+
+    return render_template("rps.html", oppAct=oppAction, act=action, won=win, tied=tie, playing=False)
+>>>>>>> ziyad
 
 # subway
 @app.route('/subway')
