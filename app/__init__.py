@@ -219,7 +219,6 @@ def guesscheck():
 @app.route("/rps")
 def rps():
     global oppAction
-    global dial
     dial = []
     oppAction = random.randint(1, 3)
 
@@ -243,7 +242,6 @@ def rpsCheck():
     else:
         oppAction = "Scissors"
 
-    return render_template("rps.html", dialogue=dial)
 
     print(f"Player Action: {action}, Opponent Action: {oppAction}")
 
