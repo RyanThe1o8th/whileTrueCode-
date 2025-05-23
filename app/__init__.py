@@ -254,7 +254,24 @@ def hangcheck():
 
 @app.route("/scramble")
 def scramble():
-    return render_template("scramble.html")
+    global word
+    global wordScramble
+    global attemptsR
+
+    word = "Placeholder"
+    wordScramble = "".join(random.sample(word, len(word)))
+    attemptsR = 3
+
+
+
+    return render_template("scramble.html", attemptsremaining=attemptsR)
+
+@app.route("/scramble/check")
+def scrambleCheck():
+    global attemptsR
+    attemptsR = attemptsR - 1
+
+    return render_template("scramble.html", attemptsremaining=attemptsR)
 
 # subway
 @app.route('/subway')

@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
   <body>
-    Welcome to Scramble the word, where we scramble words!
-    Do you have what it takes to unscramble the word?
-    <br>
-    You only have three tries you know!
+    <div>
+      Welcome to Scramble the word, where we scramble words!
+      Do you have what it takes to unscramble the word?
+      <br>
+      You only have three tries you know!
+    </div>
+    <div>
+      <form action="/scramble/check" method="POST">
+        <input id="guess" type="letter" placeholder="Enter Your Guess!">
+        <button id="submit" type="submit">Guess</button>
+      </form>
+    </div>
+    <div>
+      You have {{ attemptsremaining }} attempts remaining!
+    </div>
   </body>
 </html>
