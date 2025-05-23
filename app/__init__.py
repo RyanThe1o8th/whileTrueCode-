@@ -252,6 +252,10 @@ def rpsCheck():
     return render_template("rps.html", oppAct=oppAction, act=action, won=win, tied=tie, playing=False)
 
 
+@app.route("/scramble")
+def scramble():
+    return render_template("scramble.html")
+
 # subway
 @app.route('/subway')
 def subway():
