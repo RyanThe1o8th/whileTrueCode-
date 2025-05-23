@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <script src="../static/js/gamble.js"></script>
-</head>
+
+  <head>
+    <title>Neighborhood</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/gamble.css">
+
+        <form action="/">
+            <input id=home type="submit" name="return" value="Home">
+        </form>
+
+        <br>
+        <br>
+
+  </head>
+
   <body>
-    <button><a href = "/mall"> mall </a></button>
-    <p>{{Dialogue}}</p>
+   <div class ="g">
+    <img class = "gamble" src = ../static/pictures/gamblebackground.png>
+
+   <div class = locations>
+        <a class = "leave" href = "/mall"> <img src = ../static/pictures/leave.png> </a>
+        <a class = "monte" href = "/3cm"> <img src = ../static/pictures/3CM.png> </a>
+        <a class = "blackjack" href = "/blackjack"> <img src = ../static/pictures/BJ.png> </a>
+        <a class = "guess" href = "/guess"> <img src = ../static/pictures/GTN.png> </a>
+       </div>
+    </div>
   </body>
 </html>

@@ -289,9 +289,9 @@ def park():
 def candy():
     return render_template('candy.html')
 
-# @app.route('/gamble')
-# def gamble():
-#     return render_template('gamble.html')
+@app.route('/gamble')
+def gamble():
+    return render_template('gamble.html')
 
 @app.route('/darkAlley')
 def darkAlley():
