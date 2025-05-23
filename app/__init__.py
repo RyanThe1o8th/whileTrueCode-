@@ -149,9 +149,6 @@ def guesscheck():
             return render_template("guess.html", number = num, prev = previous, win = "wooo")
     return render_template("guess.html", number = num, prev = previous)
 
-# hangman
-
-# Replace with API call for random words
 @app.route("/rps")
 def rps():
     global oppAction
@@ -187,7 +184,9 @@ def rpsCheck():
 
     return render_template("rps.html", oppAct=oppAction, act=action, won=win, tied=tie, playing=False)
 
-=======
+# hangman
+
+# Replace with API call for random words
 @app.route('/hangman')
 def hang():
     words = ["python", "java", "javascript", "ruby", "swift", "kotlin"]
@@ -252,7 +251,6 @@ def hangcheck():
     if len(word_letters) == len(word):
         return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = "".join(correct_letters))
         # You've guessed the word
->>>>>>> Tanzeem
 
 # subway
 @app.route('/subway')
