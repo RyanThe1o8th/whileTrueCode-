@@ -185,11 +185,9 @@ def rpsCheck():
     return render_template("rps.html", oppAct=oppAction, act=action, won=win, tied=tie, playing=False)
 
 # hangman
-
-# Replace with API call for random words
 @app.route('/hangman')
 def hang():
-    words = ["python", "java", "javascript", "ruby", "swift", "kotlin"]
+    words = ["nights", "days", "stars", "rays", "supernova", "super mega ultra hyper explosion"]
     global word
     word = random.choice(words)
     global word_letters
@@ -211,8 +209,11 @@ def hang():
     lives = 6
     global guessCount
     guessCount = 0
-    return render_template("hangman.html")
+    return render_template("hangman.html", lives=lives)
 
+# To do for hangman:
+# Call words from an API
+# When all letters in the word are guessed, show the victory message
 @app.route('/hangman/check', methods= ["GET", "POST"])
 def hangcheck():
     global word
@@ -234,23 +235,24 @@ def hangcheck():
                     for i in range(len(word)): #add it to the list of correct letters
                         if word[i] == user_letter:
                             correct_letters[i*2] = word[i]
-                    return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed a letter!", num = guessCount, c = "".join(correct_letters))
+                    if len(word_letters) == len(word): # You've guessed the word
+                        return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = "".join(correct_letters))
+                    else:
+                        return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed a letter!", num = guessCount, c = "".join(correct_letters))
                 else:
                     lives -= 1
-                    return render_template("hangman.html", lives = lives, used = used_letters, message="You suffer a penalty", num = guessCount, c = "".join(correct_letters))
-                    # letter was not in word
+                    if lives == 0: # You've been hanged
+                        return render_template("hangman.html", lives = lives, used = used_letters, message="You've been hanged. Game over", num = guessCount, c = "".join(correct_letters))
+                    else: # letter was not in word
+                        return render_template("hangman.html", lives = lives, used = used_letters, message="You suffer a penalty", num = guessCount, c = "".join(correct_letters))
             else:
                 return render_template("hangman.html", lives = lives, used = used_letters, message="This letter was already used", num = guessCount, c = "".join(correct_letters))
                 # Say letter was already used
         else:
             return render_template("hangman.html", lives = lives, used = used_letters, message="Letter is invalid", num = guessCount, c = "".join(correct_letters))
             # Invalid letter
-    if lives == 0:
-        return render_template("hangman.html", lives = lives, used = used_letters, message="You've been hanged. Game over", num = guessCount, c = "".join(correct_letters))
-        # You've been hanged
-    if len(word_letters) == len(word):
-        return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = "".join(correct_letters))
-        # You've guessed the word
+
+
 
 # subway
 @app.route('/subway')

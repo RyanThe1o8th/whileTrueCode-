@@ -3,10 +3,16 @@
 <body>
   Let's play hangman. You will suffer a penalty for each mistake. If you suffer six penalties, you will be hanged.
   <p>Remaining lives: {{lives}} </p>
+  {% if lives > 0%}
   <form action="/hangman/check" method="post">
     <input id = 'letter' type="letter" name="inputLetter" placeholder="placeholder"><br>
     <input id= guess type="submit" name="guess" value="guess">
   </form>
+  {% else %}
+  <form action="/hangman">
+    <button> Play again? </button>
+  </form>
+  {% endif %}
   <p>{{c}}</p>
   <p>{{message}}</p>
   {% if num != 0%}
