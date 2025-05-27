@@ -76,11 +76,11 @@ def changelog_add(message):
         conn.commit()
 
 # inventory display
-# def displayInv(username):
-#     conn = database_connect()
-#     cursor = conn.cursor()
-#     user = cursor.execute('SELECT username FROM inventory WHERE username = ?', (username)).fetchone()
-#
+def displayInv(username):
+    conn = database_connect()
+    cursor = conn.cursor()
+    user = cursor.execute('SELECT username FROM inventory WHERE username = ?', (username)).fetchone()
+
 # def addToInv(username, itemName):
 #
 # def removeFromInv(username, itemName, quantity):
