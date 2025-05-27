@@ -338,5 +338,10 @@ def USHistory():
 def lunchroom():
     return render_template('lunchroom.html')
 
+#encouters
+@app.route('/encounter')
+def lunchroom():
+    return render_template('encounter.html', location = location, encounter = encountername)
+
 if __name__ == "__main__":
     app.run(host = '0.0.0.0')

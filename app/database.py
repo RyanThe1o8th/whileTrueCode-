@@ -47,7 +47,6 @@ def init_db():
             username TEXT UNIQUE NOT NULL,
             location TEXT NOT NULL,
             encounterName TEXT NOT NULL,
-            probability REAL NOT NULL
         )
     ''')
 
