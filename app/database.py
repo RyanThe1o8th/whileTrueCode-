@@ -43,7 +43,8 @@ def init_db():
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS encounters (
-            location TEXT UNIQUE NOT NULL,
+            username TEXT UNIQUE NOT NULL,
+            location TEXT NOT NULL,
             encounterName TEXT NOT NULL,
             probability REAL NOT NULL
         )
