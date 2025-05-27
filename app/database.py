@@ -36,6 +36,7 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS inventory (
             username TEXT UNIQUE NOT NULL,
+            category TEXT NOT NULL,
             itemName TEXT NOT NULL,
             itemQuant INTEGER NOT NULL
         )
@@ -74,8 +75,16 @@ def changelog_add(message):
         cursor.execute('INSERT INTO change (change) VALUES (?)', (message))
         conn.commit()
 
-
-
+# inventory display
+# def displayInv(username):
+#     conn = database_connect()
+#     cursor = conn.cursor()
+#     user = cursor.execute('SELECT username FROM inventory WHERE username = ?', (username)).fetchone()
+#
+# def addToInv(username, itemName):
+#
+# def removeFromInv(username, itemName, quantity):
+#
 #stats
 def statedit(username):
     conn = database_connect()
