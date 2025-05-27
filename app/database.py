@@ -32,7 +32,23 @@ def init_db():
             INTELLIGENCE INTEGER NOT NULL
         )
     ''')
-    
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS inventory (
+            username TEXT UNIQUE NOT NULL,
+            itemName TEXT NOT NULL,
+            itemQuant INTEGER NOT NULL
+        )
+    ''')
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS encounters (
+            location TEXT UNIQUE NOT NULL,
+            encounterName TEXT NOT NULL,
+            probability REAL NOT NULL
+        )
+    ''')
+
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS change (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -63,7 +79,7 @@ def changelog_add(message):
 def statedit(username):
     conn = database_connect()
     cursor = conn.cursor()
-    user = cursor.execute('SELECT username FROM stats WHERE username = ?', (username)).fetchone() 
+    user = cursor.execute('SELECT username FROM stats WHERE username = ?', (username)).fetchone()
 
 
 # User
