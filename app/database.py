@@ -26,7 +26,7 @@ def init_db():
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS stats (
-            username TEXT UNIQUE NOT NULL,
+            username TEXT NOT NULL,
             CURRENTHP INTEGER NOT NULL,
             TOTALHP INTEGER NOT NULL,
             INTELLIGENCE INTEGER NOT NULL
@@ -35,7 +35,7 @@ def init_db():
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS inventory (
-            username TEXT UNIQUE NOT NULL,
+            username TEXT NOT NULL,
             category TEXT NOT NULL,
             itemName TEXT NOT NULL,
             itemQuant INTEGER NOT NULL
@@ -44,7 +44,7 @@ def init_db():
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS encounters (
-            username TEXT UNIQUE NOT NULL,
+            username TEXT NOT NULL,
             location TEXT NOT NULL,
             encounterName TEXT NOT NULL,
         )
@@ -75,13 +75,23 @@ def changelog_add(message):
         conn.commit()
 
 # inventory display
-def displayInv(username):
+def displayInv(username, category):
     conn = database_connect()
     cursor = conn.cursor()
-    user = cursor.execute('SELECT username FROM inventory WHERE username = ?', (username)).fetchone()
+    inv = cursor.execute('SELECT itemName, itemQuant FROM inventory WHERE username = ? AND category = ?', (username, category)).fetchall()
+    # for each thing of a given category, I want to display all of the items and their quantities on the side
+    return inv
+def addToInv(username, category, name, quantity):
+    conn = database_connect()
+    cursor = conn.cursor()
+    # What if an item has already been added to the inventory? We want to update rather than SELECT
 
-# def addToInv(username, itemName):
-#
+    insertion = '''INSERT INTO inventory (username, category, itemName, itemQuant) VALUES (?, ?, ?, ?)'''
+    values = (username, category, name, quantity)
+    cursor.execute(insertion, values)
+    conn.commit()
+    print("Item added to inventory")
+    cursor.close()
 # def removeFromInv(username, itemName, quantity):
 #
 #stats
