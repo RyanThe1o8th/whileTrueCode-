@@ -4,7 +4,8 @@ import os
 from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user
 import game
 import random
-
+import requests
+import json
 
 app = Flask(__name__)
 app.secret_key = 'whileTrueCode()-'
@@ -302,6 +303,26 @@ def scrambleCheck():
         playing = False
 
     return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble, dialogue=dial, result=results, isPlaying=playing)
+
+@app.route("/trivia")
+def trivia():
+    response = requests.get("https://opentdb.com/api.php?amount=10&category=23&type=multiple")
+    data = response.json()
+    returnable = []
+    for item in data["results"]:
+        print (item["question"])
+        print (item["correct_answer"])
+        print (item["incorrect_answers"])
+        print(item["incorrect_answers"].append(item["correct_answer"]))
+        choices = []
+        for i in item["incorrect_answers"]:
+            choices.append(i)
+        choices.append(item["correct_answer"])
+        print(choices)
+        returnable.append([item["question"], choices])
+    print(returnable)
+
+    return render_template("trivia.html", testText=returnable)
 
 # subway
 @app.route('/subway')
