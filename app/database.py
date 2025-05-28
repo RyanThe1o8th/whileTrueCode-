@@ -44,17 +44,17 @@ def init_db():
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS encounters (
-            username TEXT UNIQUE NOT NULL,
+            username TEXT NOT NULL,
             location TEXT NOT NULL,
-            encounterName TEXT NOT NULL,
+            encounter TEXT NOT NULL,
+            option TEXT NOT NULL
         )
     ''')
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS change (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            change TEXT NOT NULL,
-
+            change TEXT NOT NULL
         )
     ''')
 
@@ -92,6 +92,22 @@ def statedit(username):
 
 
 # User
+def setup_user(user):
+    try:
+        with sqlite3.connect('truecode.db') as conn:
+            with open('encounters.csv') as csvfile:
+                cursor = conn.cursor()
+                readn = csv.reader(csvfile)
+                for info in readn:
+                    location = info[0]
+                    encounter = info[1]
+                    option = info[2]
+                    cursor.execute('INSERT INTO encounters (username, location, encounter, option) VALUES (?, ?, ?, ?)', (user, location, encounter, option))
+                    conn.commit() #Had to move this into the loop
+    except sqlite3.IntegrityError:
+        flash('Database Error')
+
+
 def register_user():
     username = request.form.get('username')
     password = request.form.get('password')
@@ -111,6 +127,7 @@ def register_user():
                 cursor.execute('INSERT INTO users (username, password, avatar) VALUES (?, ?, ?)', (username, password, "../static/pictures/yum.png"))
                 conn.commit()
                 flash('User registered. Please log in.')
+                setup_user(username)
                 return redirect('/login')
         except sqlite3.IntegrityError:
             flash('Username already exists.')

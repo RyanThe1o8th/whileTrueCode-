@@ -340,7 +340,7 @@ def lunchroom():
 
 #encouters
 @app.route('/encounter')
-def lunchroom():
+def encounter():
     return render_template('encounter.html', location = location, encounter = encountername)
 
 if __name__ == "__main__":
