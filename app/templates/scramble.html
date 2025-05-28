@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-    {% if attemptsremaining > 0 %}
+    {% if isPlaying%}
       <div>
         Welcome to Scramble the word, where we scramble words!
         Do you have what it takes to unscramble the word?
@@ -22,12 +22,6 @@
         <br>
         <i>{{ scrambledWord }}</i>
       </div>
-      <div>
-        {% for i in dialogue %}
-        {{i}}
-        <br>
-        {% endfor %}
-      </div>
     {% else %}
       <div>
         You {{ result }}!
@@ -37,5 +31,11 @@
         </form>
       </div>
     {% endif %}
+    <div>
+      {% for i in dialogue %}
+      {{i}}
+      <br>
+      {% endfor %}
+    </div>
   </body>
 </html>

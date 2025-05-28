@@ -254,19 +254,21 @@ def hangcheck():
 
 
 
-@app.route("/scramble", methods=["POST"])
+@app.route("/scramble", methods=["GET","POST"])
 def scramble():
     global word
     global wordScramble
     global attemptsR
+    global playing
 
     word = "Placeholder"
     wordScramble = "".join(random.sample(word, len(word)))
     attemptsR = 3
+    playing = True
 
 
 
-    return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble)
+    return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble, isPlaying=playing)
 
 @app.route("/scramble/check", methods=["POST"])
 def scrambleCheck():
@@ -277,6 +279,7 @@ def scrambleCheck():
     global word
     global wordScramble
     global attemptsR
+    global playing
     global dial
 
     attemptsR = attemptsR - 1
@@ -290,12 +293,15 @@ def scrambleCheck():
     if guess.lower() == word.lower():
         dial.append(f"Darn! It was {word}, you got it in {3 - attemptsR}!")
         results = "Won"
+        playing = False
     else:
         dial.append("HAHA you suck! Try Again!")
-        if attemptsR == 0:
-            results = "Lost"
 
-    return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble, dialogue=dial, result=results)
+    if attemptsR == 0:
+        results = "Lost"
+        playing = False
+
+    return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble, dialogue=dial, result=results, isPlaying=playing)
 
 # subway
 @app.route('/subway')
