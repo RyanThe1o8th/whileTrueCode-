@@ -308,21 +308,30 @@ def scrambleCheck():
 def trivia():
     response = requests.get("https://opentdb.com/api.php?amount=10&category=23&type=multiple")
     data = response.json()
-    returnable = []
+    qna = {} #Store question and answer pairs
+    questions = {} #Store question and multiple choice answers
+    # print(data)
     for item in data["results"]:
-        print (item["question"])
-        print (item["correct_answer"])
-        print (item["incorrect_answers"])
-        print(item["incorrect_answers"].append(item["correct_answer"]))
-        choices = []
-        for i in item["incorrect_answers"]:
-            choices.append(i)
-        choices.append(item["correct_answer"])
-        print(choices)
-        returnable.append([item["question"], choices])
-    print(returnable)
+        # print (item["question"])
+        # print (item["correct_answer"])
+        # print (item["incorrect_answers"])
+        # print(item["incorrect_answers"].append(item["correct_answer"]))
 
-    return render_template("trivia.html", testText=returnable)
+
+        qna[item["question"]] = item["correct_answer"]
+        questions[item["question"]] = item["incorrect_answers"]
+        questions[item["question"]].insert(random.randint(0, 3), item["correct_answer"])
+
+        questionCurrent = item["question"]
+        questionAnswer = qna[item["question"]]
+        questionChoices = questions[item["question"]]
+
+        print(f"Question: {questionCurrent}, Answer: {questionAnswer}")
+        print(f"Question: {questionCurrent}, Answer Choices: {questionChoices}")
+
+
+
+    return render_template("trivia.html", testText="")
 
 # subway
 @app.route('/subway')
