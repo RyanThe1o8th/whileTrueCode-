@@ -1,7 +1,7 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
-from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user
+from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, encountergen
 import game
 import random
 

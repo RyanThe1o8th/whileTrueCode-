@@ -2,7 +2,7 @@
 # 2025-01-15
 
 # Imports
-import sqlite3, os, csv
+import sqlite3, os, csv, random
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 
 
@@ -100,6 +100,28 @@ def statedit(username):
     cursor = conn.cursor()
     user = cursor.execute('SELECT username FROM stats WHERE username = ?', (username)).fetchone()
 
+#encounter
+
+def delencounter(location, enchoice):
+    try:
+        username = session.get('username')
+        with sqlite3.connect('truecode.db') as conn:
+            cursor = conn.cursor()
+            readn = cursor.execute("DELETE FROM encounters WHERE username = ? AND location = ? AND encounter = ?", (username, location, enchoice))
+    except sqlite3.IntegrityError:
+        flash('Database Error')    
+
+def encountergen(location):
+    try:
+        username = session.get('username')
+        with sqlite3.connect('truecode.db') as conn:
+            cursor = conn.cursor()
+            readn = cursor.execute("SELECT encounter FROM encounters WHERE username = ? AND location = ?", (username, location)).fetchall()
+            enchoice = random.choice(readn)
+            print(enchoice)
+            return enchoice
+    except sqlite3.IntegrityError:
+        flash('Database Error')    
 
 # User
 def setup_user(user):
@@ -116,7 +138,6 @@ def setup_user(user):
                     conn.commit() #Had to move this into the loop
     except sqlite3.IntegrityError:
         flash('Database Error')
-
 
 def register_user():
     username = request.form.get('username')
