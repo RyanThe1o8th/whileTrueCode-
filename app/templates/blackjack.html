@@ -1,22 +1,28 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    Dealer : {{dealer}} Dealer Value : {{dealer_value}}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="/static/css/blackjack.css">
+    <script src="/static/js/blackjack.js"></script>
+</head>
+<body>
+    <h1>Blackjack</h1>
+    <h2 id="game-status"></h2>
+    <h2>Dealer:</h2>
+    <div id="dealer-hand"></div>
+    
+    <h2>You:</h2>
+    <div id="player-hand"></div>
+
     <br>
-    Player : {{player}} Player Value : {{player_value}}
+
+    <button id="play-again-btn">Play again</button>
     <br>
-
-    {% if result %}
-
-    {{result}}
-
-    {% else %}
-
-    <button><a href = "/blackjack/stand"> stand </a></button>
-    <button><a href = "/blackjack/hit"> hit </a></button>
-
-
-    {% endif %}
-
-  </body>
+    <button id="hit-btn">Hit</button>
+    <button id="stay-btn">Stay</button>
+    
+    <button id="sounds-btn">&#128226</button>
+</body>
 </html>
