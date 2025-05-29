@@ -46,15 +46,14 @@ def init_db():
         CREATE TABLE IF NOT EXISTS encounters (
             username TEXT NOT NULL,
             location TEXT NOT NULL,
-            encounterName TEXT NOT NULL,
+            encounterName TEXT NOT NULL
         )
     ''')
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS change (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            change TEXT NOT NULL,
-
+            change TEXT NOT NULL
         )
     ''')
 
@@ -78,17 +77,18 @@ def changelog_add(message):
 def displayInv(username, category):
     conn = database_connect()
     cursor = conn.cursor()
-    inv = cursor.execute('SELECT itemName, itemQuant FROM inventory WHERE username = ? AND category = ?', (username, category)).fetchall()
+    inv = cursor.execute('SELECT itemName, itemQuant FROM inventory WHERE username = ? AND category = ?', (username, category,)).fetchall()
     # for each thing of a given category, I want to display all of the items and their quantities on the side
     return inv
 def addToInv(username, category, name, quantity):
     conn = database_connect()
     cursor = conn.cursor()
     # What if an item has already been added to the inventory? We want to update rather than SELECT
-
-    insertion = '''INSERT INTO inventory (username, category, itemName, itemQuant) VALUES (?, ?, ?, ?)'''
-    values = (username, category, name, quantity)
-    cursor.execute(insertion, values)
+    inv = cursor.execute('SELECT itemName FROM inventory WHERE username = ?', (username,)).fetchall()
+    if inv is none:
+        cursor.execute('INSERT INTO inventory (username, category, itemName, itemQuant) VALUES (?, ?, ?, ?)', (username, category, name, quantity,))
+    else:
+        cursor.execute('''UPDATE inventory SET itemQuant = ? WHERE itemName = ? AND username = ?''', (quantity, name, username,))
     conn.commit()
     print("Item added to inventory")
     cursor.close()

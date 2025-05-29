@@ -1,7 +1,7 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
-from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user
+from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit
 import game
 import random
 
@@ -146,6 +146,8 @@ def guesscheck():
             return render_template("guess.html", number = num, prev = previous)
         if(guess == num):
             previous.append("YOU WIN WOOO!!!")
+            addToInv('username', 'money', 'dollars', guess)
+            print(displayInv('username', 'money'))
             return render_template("guess.html", number = num, prev = previous, win = "wooo")
     return render_template("guess.html", number = num, prev = previous)
 
@@ -324,6 +326,7 @@ def school():
 
 @app.route('/house')
 def house():
+
     return render_template('house.html')
 
 @app.route('/friendHouse')
