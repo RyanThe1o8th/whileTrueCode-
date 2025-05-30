@@ -310,6 +310,8 @@ def trivia():
     data = response.json()
     qna = {} #Store question and answer pairs
     questions = {} #Store question and multiple choice answers
+    questionList = []
+    numQuestions = 0
     # print(data)
     for item in data["results"]:
         # print (item["question"])
@@ -325,13 +327,15 @@ def trivia():
         questionCurrent = item["question"]
         questionAnswer = qna[item["question"]]
         questionChoices = questions[item["question"]]
+        questionList.append(questionCurrent)
 
         print(f"Question: {questionCurrent}, Answer: {questionAnswer}")
         print(f"Question: {questionCurrent}, Answer Choices: {questionChoices}")
+        print(questionList)
 
+    numQuestions = len(questionList)
 
-
-    return render_template("trivia.html", testText="")
+    return render_template("trivia.html", questions=questionList, answersDict=questions, numquestions=numQuestions)
 
 # subway
 @app.route('/subway')
