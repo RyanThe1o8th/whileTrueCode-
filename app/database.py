@@ -78,17 +78,19 @@ def changelog_add(message):
 def displayInv(username, category):
     conn = database_connect()
     cursor = conn.cursor()
-    inv = cursor.execute('SELECT itemName, itemQuant FROM inventory WHERE username = ? AND category = ?', (username, category)).fetchall()
+    inv = cursor.execute('SELECT itemName, itemQuant FROM inventory WHERE username = ? AND category = ?', (username, category,)).fetchall()
     # for each thing of a given category, I want to display all of the items and their quantities on the side
     return inv
 def addToInv(username, category, name, quantity):
     conn = database_connect()
     cursor = conn.cursor()
     # What if an item has already been added to the inventory? We want to update rather than SELECT
-
-    insertion = '''INSERT INTO inventory (username, category, itemName, itemQuant) VALUES (?, ?, ?, ?)'''
-    values = (username, category, name, quantity)
-    cursor.execute(insertion, values)
+    exists = cursor.execute('SELECT itemQuant FROM inventory WHERE username = ? AND itemName = ? AND category = ?', (username, name, category,)).fetchone()
+    # print(exists)
+    if exists is None:
+        cursor.execute('INSERT INTO inventory (username, category, itemName, itemQuant) VALUES (?, ?, ?, ?)', (username, category, name, quantity,))
+    else:
+        cursor.execute('''UPDATE inventory SET itemQuant = ? WHERE itemName = ? AND username = ?''', (quantity+exists[0], name, username,))
     conn.commit()
     print("Item added to inventory")
     cursor.close()
@@ -109,7 +111,7 @@ def delencounter(location, enchoice):
             cursor = conn.cursor()
             readn = cursor.execute("DELETE FROM encounters WHERE username = ? AND location = ? AND encounter = ?", (username, location, enchoice))
     except sqlite3.IntegrityError:
-        flash('Database Error')    
+        flash('Database Error')
 
 def encountergen(location):
     try:
@@ -121,7 +123,7 @@ def encountergen(location):
             print(enchoice)
             return enchoice
     except sqlite3.IntegrityError:
-        flash('Database Error')    
+        flash('Database Error')
 
 # User
 def setup_user(user):

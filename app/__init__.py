@@ -1,7 +1,7 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
-from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, encountergen
+from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit
 import game
 import random
 
@@ -177,7 +177,8 @@ def rpsCheck():
 
 
     print(f"Player Action: {action}, Opponent Action: {oppAction}")
-
+    # addToInv('username', 'money', 'dollars', 10)
+    # print(displayInv('username', 'money'))
     #Win Cons
     win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
     tie = oppAction == action
@@ -187,6 +188,7 @@ def rpsCheck():
 # hangman
 @app.route('/hangman')
 def hang():
+    # print(displayInv('username', 'money'))
     words = ["nights", "days", "stars", "rays", "supernova", "super mega ultra hyper explosion"]
     global word
     word = random.choice(words)
@@ -324,6 +326,7 @@ def school():
 
 @app.route('/house')
 def house():
+
     return render_template('house.html')
 
 @app.route('/friendHouse')
