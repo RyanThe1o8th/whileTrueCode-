@@ -105,7 +105,7 @@ function addCardTo(subject)
 function addHiddenCard()
 {
     hiddenCard = document.createElement("img");
-    hiddenCard.src = "assets/cards/hidden.png";
+    hiddenCard.src = "../static/cards/hidden.png";
 
     spawnCard(hiddenCard, "dealer");
 }
@@ -120,7 +120,7 @@ function createCard(card)
 {
     let img = document.createElement("img");
 
-    img.src = "assets/cards/" + card + ".png";
+    img.src = "../static/cards/" + card + ".png";
 
     return img;
 }
@@ -282,7 +282,7 @@ function preloadImages() {
     suits.forEach(suit => {
         values.forEach(value =>{
             let img = new Image();
-            img.src = "assets/cards/" + value + "-" + suit + ".png";
+            img.src = "../static/cards/" + value + "-" + suit + ".png";
         });
     });
 }

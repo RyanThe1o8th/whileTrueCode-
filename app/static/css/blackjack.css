@@ -2,7 +2,19 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
     text-align: center;
+}
+.BJ{
+    height: 689px;
+    width: 689px;
+    border-style: inset;
+    border-color: blue;
     background-color: rgb(35, 105, 68);
+}
+
+.wah {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #dealer-hand img, #player-hand img {
@@ -28,24 +40,26 @@ h1{
     border-radius: 6px;
 }
 
-#hit-btn:hover, #stay-btn:hover
-{
-    opacity: .7;
+#home {
+    display: inline;
+	text-decoration: none;
+    color: white;
+	border: none;
+	background-color: blue;
+	border-radius: 6px;
+	font-size: 15px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	width: 100px;
+	padding: 10px;
+	cursor: pointer;
+	position: relative;
+    left: -410px;
 }
 
-#sounds-btn {
-    width: 100px;
-    height: 50px;
-    background-color: rgb(35, 105, 68);
-    font-size: 48px;
-    border: none;
-
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
-
-#sounds-btn:hover
-{
-    opacity: 0.7;
+#home:hover {
+	transition: 0.3s;
+	background-color: #ADD8E6;
+	color: black;
+	scale: 105%;
 }
