@@ -177,8 +177,8 @@ def rpsCheck():
 
 
     print(f"Player Action: {action}, Opponent Action: {oppAction}")
-    # addToInv('username', 'money', 'dollars', 10)
-    # print(displayInv('username', 'money'))
+    # addToInv(session.get('username'), 'money', 'dollars', 10)
+    # print(displayInv(session.get('username'), 'money'))
     #Win Cons
     win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
     tie = oppAction == action
