@@ -84,11 +84,12 @@ def addToInv(username, category, name, quantity):
     conn = database_connect()
     cursor = conn.cursor()
     # What if an item has already been added to the inventory? We want to update rather than SELECT
-    inv = cursor.execute('SELECT itemName FROM inventory WHERE username = ?', (username,)).fetchall()
-    if inv is none:
+    exists = cursor.execute('SELECT itemQuant FROM inventory WHERE username = ? AND itemName = ? AND category = ?', (username, name, category,)).fetchone()
+    print(exists)
+    if exists is None:
         cursor.execute('INSERT INTO inventory (username, category, itemName, itemQuant) VALUES (?, ?, ?, ?)', (username, category, name, quantity,))
     else:
-        cursor.execute('''UPDATE inventory SET itemQuant = ? WHERE itemName = ? AND username = ?''', (quantity, name, username,))
+        cursor.execute('''UPDATE inventory SET itemQuant = ? WHERE itemName = ? AND username = ?''', (quantity+exists[0], name, username,))
     conn.commit()
     print("Item added to inventory")
     cursor.close()

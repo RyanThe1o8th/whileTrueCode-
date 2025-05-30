@@ -146,8 +146,6 @@ def guesscheck():
             return render_template("guess.html", number = num, prev = previous)
         if(guess == num):
             previous.append("YOU WIN WOOO!!!")
-            addToInv('username', 'money', 'dollars', guess)
-            print(displayInv('username', 'money'))
             return render_template("guess.html", number = num, prev = previous, win = "wooo")
     return render_template("guess.html", number = num, prev = previous)
 
@@ -179,7 +177,8 @@ def rpsCheck():
 
 
     print(f"Player Action: {action}, Opponent Action: {oppAction}")
-
+    # addToInv('username', 'money', 'dollars', 10)
+    # print(displayInv('username', 'money'))
     #Win Cons
     win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
     tie = oppAction == action
@@ -189,6 +188,7 @@ def rpsCheck():
 # hangman
 @app.route('/hangman')
 def hang():
+    # print(displayInv('username', 'money'))
     words = ["nights", "days", "stars", "rays", "supernova", "super mega ultra hyper explosion"]
     global word
     word = random.choice(words)
