@@ -339,6 +339,13 @@ def trivia():
 
     return render_template("trivia.html", questions=questionList, answersDict=questions, numquestions=numQuestions)
 
+@app.route("/trivia/check", methods=["POST"])
+def triviaCheck():
+    if request.method == "POST":
+        print(request.form)
+
+    return "aaa"
+
 # subway
 @app.route('/subway')
 def subway():
