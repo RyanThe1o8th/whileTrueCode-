@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div>
+      <p>
+        Look at this! We have a new challenger! Can they answer the <i><b>Trivia?</b></i>
+      </p>
+    </div>
+    <div class="questionaire">
+      {% for i in range(numquestions) %}
+        <div class="question">
+          <h3>{{ questions[i] }}</h3>
+        </div>
+        {% for j in range(4) %} <!-- iterate through answer choices -->
+          <div class="answerChoices">
+            <form action="/trivia/check" method="post">
+              <button>{{ answersDict[questions[i]][j] }}</button> <!-- i = question index, j = answer index -->
+            </form>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    <div class="answerChoices">
+      <table>
+
+      </table>
+    </div>
+    <div>
+
+    </div>
+  </body>
+</html>

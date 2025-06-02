@@ -4,7 +4,8 @@ import os
 from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit
 import game
 import random
-
+import requests
+import json
 
 app = Flask(__name__)
 app.secret_key = 'whileTrueCode()-'
@@ -304,6 +305,39 @@ def scrambleCheck():
         playing = False
 
     return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble, dialogue=dial, result=results, isPlaying=playing)
+
+@app.route("/trivia")
+def trivia():
+    response = requests.get("https://opentdb.com/api.php?amount=10&category=23&type=multiple")
+    data = response.json()
+    qna = {} #Store question and answer pairs
+    questions = {} #Store question and multiple choice answers
+    questionList = []
+    numQuestions = 0
+    # print(data)
+    for item in data["results"]:
+        # print (item["question"])
+        # print (item["correct_answer"])
+        # print (item["incorrect_answers"])
+        # print(item["incorrect_answers"].append(item["correct_answer"]))
+
+
+        qna[item["question"]] = item["correct_answer"]
+        questions[item["question"]] = item["incorrect_answers"]
+        questions[item["question"]].insert(random.randint(0, 3), item["correct_answer"])
+
+        questionCurrent = item["question"]
+        questionAnswer = qna[item["question"]]
+        questionChoices = questions[item["question"]]
+        questionList.append(questionCurrent)
+
+        print(f"Question: {questionCurrent}, Answer: {questionAnswer}")
+        print(f"Question: {questionCurrent}, Answer Choices: {questionChoices}")
+        print(questionList)
+
+    numQuestions = len(questionList)
+
+    return render_template("trivia.html", questions=questionList, answersDict=questions, numquestions=numQuestions)
 
 # subway
 @app.route('/subway')
