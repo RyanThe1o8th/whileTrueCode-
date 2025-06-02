@@ -124,7 +124,7 @@ def blackjackHit():
 
 num = 0
 previous = []
-
+# Need to fix guess, previous doesn't reset for some reason
 @app.route('/guess')
 def guess():
     number = random.randint(1, 100)
@@ -178,8 +178,9 @@ def rpsCheck():
 
 
     print(f"Player Action: {action}, Opponent Action: {oppAction}")
-    # addToInv(session.get('username'), 'money', 'dollars', 10)
-    # print(displayInv(session.get('username'), 'money'))
+    # addToInv(session.get('username'), 'lunch', 1)
+    # print(displayInv(session.get('username')))
+
     #Win Cons
     win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
     tie = oppAction == action
