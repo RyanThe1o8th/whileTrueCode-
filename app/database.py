@@ -120,8 +120,8 @@ def encountergen(location):
             cursor = conn.cursor()
             readn = cursor.execute("SELECT encounter FROM encounters WHERE username = ? AND location = ?", (username, location)).fetchall()
             enchoice = random.choice(readn)
-            print(enchoice)
-            return enchoice
+            print(enchoice[0])
+            return enchoice[0]
     except sqlite3.IntegrityError:
         flash('Database Error')
 

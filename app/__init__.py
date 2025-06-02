@@ -1,7 +1,7 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
-from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit
+from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen
 import game
 import random
 import requests
@@ -48,77 +48,6 @@ def profile():
 @app.route('/testing')
 def testing():
     return render_template("testing.html", user=session.get('username'))
-
-# black jack creation
-
-running_deck = "placeholder"
-player = "a"
-dealer = "b"
-
-def deal_card(deck):
-    return deck.pop()
-
-def calculate_hand_value(hand):
-    ace_count = hand.count('A')
-    total = 0
-    for card in hand:
-        if card.isdigit():
-            total += int(card)
-        elif card in ('J', 'Q', 'K'):
-            total += 10
-        elif card == 'A':
-            total += 11
-    while total > 21 and ace_count > 0:
-        total -= 10
-        ace_count -= 1
-    return total
-
-
-@app.route('/blackjack')
-def blackjack():
-    suits = ('Hearts', 'Diamonds', 'Clubs', 'Spades')
-    ranks = ('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A')
-    deck = [rank for rank in ranks for suit in suits] * 4
-    random.shuffle(deck)
-    player_hand = [deal_card(deck), deal_card(deck)]
-    dealer_hand = [deal_card(deck), deal_card(deck)]
-    global running_deck
-    global player
-    global dealer
-    running_deck = deck
-    player = player_hand
-    dealer = dealer_hand
-    print(*player_hand)
-    print(*dealer_hand)
-    return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand))
-
-@app.route('/blackjack/stand')
-def blackjackStand():
-    global running_deck
-    global player
-    global dealer
-    deck = running_deck
-    player_hand = player
-    dealer_hand = dealer
-    while calculate_hand_value(dealer_hand) < 17:
-        dealer_hand.append(deal_card(deck))
-        if calculate_hand_value(dealer_hand) > 21 or calculate_hand_value(player_hand) > calculate_hand_value(dealer_hand):
-            return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand), result = "You won!!!")
-        elif calculate_hand_value(player_hand) == calculate_hand_value(dealer_hand):
-            return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand), result = "Push. Oh well.")
-        else:
-            return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand), result = "Loser")
-
-@app.route('/blackjack/hit')
-def blackjackHit():
-    global running_deck
-    global player
-    global dealer
-    deck = running_deck
-    player.append(deal_card(deck))
-    player_hand = player
-    dealer_hand = dealer
-    return render_template("blackjack.html", player = player_hand, dealer = dealer_hand, player_value = calculate_hand_value(player_hand), dealer_value = calculate_hand_value(dealer_hand))
 
 # guess the number
 
@@ -360,16 +289,26 @@ def school():
 
 @app.route('/house')
 def house():
-
     return render_template('house.html')
+
+def kitchen():
+    encountername = encountergen("Kitchen")
+    return render_template('encounter.html', location = "Kitchen", encounter = encountername, back = "house")
+
+def bedroom():
+    encountername = encountergen("Bedroom")
+    return render_template('encounter.html', location = "Bedroom", encounter = encountername, back = "house")
+
 
 @app.route('/friendHouse')
 def friendHouse():
-    return render_template('friendHouse.html')
+    encountername = encountergen("Friend's House")
+    return render_template('encounter.html', location = "FHouse", encounter = encountername, back = "neighborhood")
 
 @app.route('/park')
 def park():
-    return render_template('park.html')
+    encountername = encountergen("Park")
+    return render_template('encounter.html', location = "Park", encounter = encountername, back = "neighborhood")
 
 # mall
 
@@ -401,12 +340,8 @@ def USHistory():
 
 @app.route('/lunchroom')
 def lunchroom():
-    return render_template('lunchroom.html')
-
-#encouters
-@app.route('/encounter')
-def encounter():
-    return render_template('encounter.html', location = location, encounter = encountername)
+    encountername = encountergen("Lunchroom")
+    return render_template('encounter.html', location = "Lunchroom", encounter = encountername, back = "school")
 
 if __name__ == "__main__":
     app.run(host = '0.0.0.0')
