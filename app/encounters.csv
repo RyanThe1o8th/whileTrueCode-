@@ -1,44 +1,44 @@
-Kitchen,Grab Leftovers,Yes
-Kitchen,Grab Soda,Yes
-Kitchen,Cook,Yes
-Kitchen,Wash the Dishes,Yes
-Bedroom,Sleep,Yes
-Bedroom,Finish Homework,Yes
-Bedroom,Study for tests,Yes
-Bedroom,Take writing implements,Yes
-Bedroom,Play Video Games,Yes
-Park,Contemplate the meaning of Life,Yes
-Park,Play basketball,Yes
-Park,Workout,Yes
-Park,Get into a fistfight,Yes
-Friend's House,Steal Lunch,Yes
-Friend's House,Steal Study Guide,Yes
-Friend's House,Steal Adderal,Yes
-Friend's House,Play Video Games,Yes
-Friend's House,Study Together,Yes
-Lunchroom,FOOD FIGHT!,Yes
-Lunchroom,Eat,Yes
-Lunchroom,Talk to friends,Yes
-Lunchroom,Sleep,Yes
-Kitchen,Grab Leftovers,No
-Kitchen,Grab Soda,No
-Kitchen,Cook,No
-Kitchen,Wash the Dishes,No
-Bedroom,Sleep,No
-Bedroom,Finish Homework,No
-Bedroom,Study for tests,No
-Bedroom,Take writing implements,No
-Bedroom,Play Video Games,No
-Park,Contemplate the meaning of Life,No
-Park,Play basketball,No
-Park,Workout,No
-Park,Get into a fistfight,No
-Friend's House,Steal Lunch,No
-Friend's House,Steal Study Guide,No
-Friend's House,Steal Adderal,No
-Friend's House,Play Video Games,No
-Friend's House,Study Together,No
-Lunchroom,FOOD FIGHT!,No
-Lunchroom,Eat,No
-Lunchroom,Talk to friends,No
-Lunchroom,Sleep,No
+Kitchen,Grab Leftovers,Yes,You grab some leftovers,Food
+Kitchen,Grab Soda,Yes,You grab some soda,Soda
+Kitchen,Cook,Yes,You cook some food,Food
+Kitchen,Wash the Dishes,Yes,You wash the dishes and find some money,Money
+Bedroom,Sleep,Yes,"You’d sleep, but your mom yelled at you for an hour last time you missed school.",None
+Bedroom,Finish Homework,Yes,You locked in for homework,Homework
+Bedroom,Study for tests,Yes,You studied,Study Guide
+Bedroom,Take writing implements,Yes,You grabbed your pencil,Pencil
+Bedroom,Play Video Games,Yes,You gamed,Nothing
+Park,Contemplate the meaning of Life,Yes,That was so depressing,Sadness
+Park,Play basketball,Yes,YES! BASKETBALL!!!!,Adrenaline
+Park,Workout,Yes,You workout,Adrenaline
+Park,Get into a fistfight,Yes,You fight some punks and totally don’t get your teeth knocked out,Adrenaline
+Friend's House,Steal Lunch,Yes,You took your friend’s lunch,Food
+Friend's House,Steal Study Guide,Yes,You stole your friend’s study guide,Study Guide
+Friend's House,Steal Adderal,Yes,You stole your friend’s medication,Adderal
+Friend's House,Play Video Games,Yes,You gamed with your friend,Nothing
+Friend's House,Study Together,Yes,You studied with your friend,Study Guide
+Lunchroom,FOOD FIGHT!,Yes,You started a food fight and got clobbered with some potatoes,Sadness
+Lunchroom,Eat,Yes,You ate your… food.,Sadness
+Lunchroom,Talk to friends,Yes,You talked with friends,Nothing
+Lunchroom,Sleep,Yes,You took a nap in the lunchroom,Nothing
+Kitchen,Grab Leftovers,No,You didn’t grab leftovers.,Nothing
+Kitchen,Grab Soda,No,You didn’t grab soda,Nothing
+Kitchen,Cook,No,You didn’t cook food,Nothing
+Kitchen,Wash the Dishes,No,You were a VERY bad child,Nothing
+Bedroom,Sleep,No,Good idea. Can’t miss school today.,Nothing
+Bedroom,Finish Homework,No,You didn’t finish homework,Nothing
+Bedroom,Study for tests,No,You didn’t study,Nothing
+Bedroom,Take writing implements,No,You forgot to grab your pencil,Nothing
+Bedroom,Play Video Games,No,You didn’t play video games,Nothing
+Park,Contemplate the meaning of Life,No,Life is too short to be depressed about it,Nothing
+Park,Play basketball,No,You didn’t play basketball,Nothing
+Park,Workout,No,You didn’t work out,Nothing
+Park,Get into a fistfight,No,You didn’t fight anyone.,Nothing
+Friend's House,Steal Lunch,No,You didn’t steal your friend’s lunch,Nothing
+Friend's House,Steal Study Guide,No,You didn’t steal your friend’s studyguide,Nothing
+Friend's House,Steal Adderal,No,You didn’t steal your friends adderal,Nothing
+Friend's House,Play Video Games,No,You didn’t play video games with your friend,Nothing
+Friend's House,Study Together,No,You didn’t study with your friend,Nothing
+Lunchroom,FOOD FIGHT!,No,You didn’t start a food fight,Nothing
+Lunchroom,Eat,No,You didn’t eat,Nothing
+Lunchroom,Talk to friends,No,You didn’t talk to friends,Nothing
+Lunchroom,Sleep,No,You didn’t sleep in the lunchroom.,Nothing
