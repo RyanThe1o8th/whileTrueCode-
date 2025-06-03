@@ -36,7 +36,6 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS inventory (
             username TEXT NOT NULL,
-            category TEXT NOT NULL,
             itemName TEXT NOT NULL,
             itemQuant INTEGER NOT NULL
         )
@@ -77,32 +76,43 @@ def changelog_add(message):
         conn.commit()
 
 # inventory display
-def displayInv(username, category):
+def displayInv(username):
     conn = database_connect()
     cursor = conn.cursor()
-    inv = cursor.execute('SELECT itemName, itemQuant FROM inventory WHERE username = ? AND category = ?', (username, category,)).fetchall()
+    inv = cursor.execute('SELECT itemName, itemQuant FROM inventory WHERE username = ?', (username,)).fetchall()
     # for each thing of a given category, I want to display all of the items and their quantities on the side
     return inv
-def addToInv(username, category, name, quantity):
+def addToInv(username, name, quantity):
     conn = database_connect()
     cursor = conn.cursor()
     # What if an item has already been added to the inventory? We want to update rather than SELECT
-    exists = cursor.execute('SELECT itemQuant FROM inventory WHERE username = ? AND itemName = ? AND category = ?', (username, name, category,)).fetchone()
+    exists = cursor.execute('SELECT itemQuant FROM inventory WHERE username = ? AND itemName = ?', (username, name,)).fetchone()
     # print(exists)
     if exists is None:
-        cursor.execute('INSERT INTO inventory (username, category, itemName, itemQuant) VALUES (?, ?, ?, ?)', (username, category, name, quantity,))
+        cursor.execute('INSERT INTO inventory (username, itemName, itemQuant) VALUES (?, ?, ?)', (username, name, quantity,))
     else:
         cursor.execute('''UPDATE inventory SET itemQuant = ? WHERE itemName = ? AND username = ?''', (quantity+exists[0], name, username,))
     conn.commit()
     print("Item added to inventory")
     cursor.close()
-# def removeFromInv(username, itemName, quantity):
-#
+def removeFromInv(username, itemName, quantity):
+    conn = database_connect()
+    cursor = conn.cursor()
+    exists = cursor.execute('SELECT itemQuant FROM inventory WHERE username = ? AND itemName = ?', (username, name,)).fetchone()
+    if exists is None:
+        print("Nothing to remove")
+    if exists[0] - quantity <= 0:
+        cursor.execute('''DELETE FROM inventory WHERE username = ? AND itemname = ?''', (username, itemName,))
+    else:
+        cursor.execute('''UPDATE inventory SET itemQuant = ? WHERE itemName = ? AND username = ?''', (exists[0]-quantity, itemName, username,))
+    conn.commit()
+    cursor.close()
 #stats
 def statedit(username):
     conn = database_connect()
     cursor = conn.cursor()
-    user = cursor.execute('SELECT username FROM stats WHERE username = ?', (username)).fetchone()
+    # user = cursor.execute('SELECT username FROM stats WHERE username = ?', (username)).fetchone()
+    #
 
 #encounter
 def encounterchoice(location, enchoice):

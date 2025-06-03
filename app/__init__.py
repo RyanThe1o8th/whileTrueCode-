@@ -1,7 +1,11 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
+<<<<<<< HEAD
 from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen, encounterchoice, delencounter
+=======
+from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, removeFromInv, statedit, delencounter, encountergen
+>>>>>>> eaa0adea9b032f35818ad03cccbff0290481f8d7
 import game
 import random
 import requests
@@ -53,7 +57,7 @@ def testing():
 
 num = 0
 previous = []
-
+# Need to fix guess, previous doesn't reset for some reason
 @app.route('/guess')
 def guess():
     number = random.randint(1, 100)
@@ -107,8 +111,9 @@ def rpsCheck():
 
 
     print(f"Player Action: {action}, Opponent Action: {oppAction}")
-    # addToInv('username', 'money', 'dollars', 10)
-    # print(displayInv('username', 'money'))
+    # addToInv(session.get('username'), 'lunch', 1)
+    # print(displayInv(session.get('username')))
+
     #Win Cons
     win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
     tie = oppAction == action
