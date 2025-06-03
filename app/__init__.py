@@ -1,7 +1,7 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
-from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen
+from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen, encounterchoice, delencounter
 import game
 import random
 import requests
@@ -349,6 +349,14 @@ def USHistory():
 def lunchroom():
     encountername = encountergen("Lunchroom")
     return render_template('encounter.html', location = "Lunchroom", encounter = encountername, back = "school")
+
+@app.route('/result')
+def result():
+    loc = "Park"
+    encountername = encountergen("Lunchroom")
+    res = encounterchoice(loc, encountername)
+    return render_template('result.html', location = loc, result = res, back = "school")
+
 
 if __name__ == "__main__":
     app.run(host = '0.0.0.0')

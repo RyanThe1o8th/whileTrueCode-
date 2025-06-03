@@ -105,14 +105,16 @@ def statedit(username):
     user = cursor.execute('SELECT username FROM stats WHERE username = ?', (username)).fetchone()
 
 #encounter
-def encounterchoice(location, choice, enchoice):
+def encounterchoice(location, enchoice):
     try:
         username = session.get('username')
+        choice = request.form.get('choice')
         with sqlite3.connect('truecode.db') as conn:
             cursor = conn.cursor()
-            readn = cursor.execute("SELECT result FROM encounters WHERE username = ? AND location = ? AND encounter = ? AND option = ?", (username, location, enchoice, choice))
+            readn = cursor.execute("SELECT result FROM encounters WHERE username = ? AND location = ? AND encounter = ? AND option = ?", (username, location, enchoice, choice)).fetchall()
+            return readn
     except sqlite3.IntegrityError:
-        flash('Database Error')
+        print('Database Error')
 
 
 def delencounter(location, enchoice):
