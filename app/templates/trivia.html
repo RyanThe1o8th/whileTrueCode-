@@ -11,18 +11,24 @@
       </p>
     </div>
     <div class="questionaire">
+      <form action="/trivia/check" method="POST">
       {% for i in range(numquestions) %}
         <div class="question">
           <h3>{{ questions[i] }}</h3>
         </div>
-        {% for j in range(4) %} <!-- iterate through answer choices -->
-          <div class="answerChoices">
-            <form action="/trivia/check" method="post">
-              <button>{{ answersDict[questions[i]][j] }}</button> <!-- i = question index, j = answer index -->
-            </form>
-          </div>
-        {% endfor %}
+        <div class="answerChoices">
+          {% for j in range(4) %} <!-- iterate through answer choices -->
+              <label for={{ answersDict[questions[i]][j] }}>
+                <input type="radio" id={{i}}{{j}} name={{i}} value={{ answersDict[questions[i]][j] }}> {{ answersDict[questions[i]][j] }} <!-- i = question index, j = answer index -->
+              </label>
+              <br>
+          {% endfor %}
+        </div>
       {% endfor %}
+        <div>
+          <button id="submit" type="submit"><i><b> Dare to test your knowledge? </b></i></button>
+        </div>
+      </form>
     </div>
     <div class="answerChoices">
       <table>

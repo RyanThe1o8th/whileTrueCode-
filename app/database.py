@@ -46,7 +46,9 @@ def init_db():
             username TEXT NOT NULL,
             location TEXT NOT NULL,
             encounter TEXT NOT NULL,
-            option TEXT NOT NULL
+            option TEXT NOT NULL,
+            result TEXT NOT NULL,
+            item TEXT NOT NULL
         )
     ''')
 
@@ -113,6 +115,15 @@ def statedit(username):
     #
 
 #encounter
+def encounterchoice(location, choice, enchoice):
+    try:
+        username = session.get('username')
+        with sqlite3.connect('truecode.db') as conn:
+            cursor = conn.cursor()
+            readn = cursor.execute("SELECT result FROM encounters WHERE username = ? AND location = ? AND encounter = ? AND option = ?", (username, location, enchoice, choice))
+    except sqlite3.IntegrityError:
+        flash('Database Error')
+
 
 def delencounter(location, enchoice):
     try:
@@ -130,8 +141,8 @@ def encountergen(location):
             cursor = conn.cursor()
             readn = cursor.execute("SELECT encounter FROM encounters WHERE username = ? AND location = ?", (username, location)).fetchall()
             enchoice = random.choice(readn)
-            print(enchoice)
-            return enchoice
+            print(enchoice[0])
+            return enchoice[0]
     except sqlite3.IntegrityError:
         flash('Database Error')
 
@@ -146,7 +157,9 @@ def setup_user(user):
                     location = info[0]
                     encounter = info[1]
                     option = info[2]
-                    cursor.execute('INSERT INTO encounters (username, location, encounter, option) VALUES (?, ?, ?, ?)', (user, location, encounter, option))
+                    result = info[3]
+                    item = info[4]
+                    cursor.execute('INSERT INTO encounters (username, location, encounter, option, result, item) VALUES (?, ?, ?, ?, ?, ?)', (user, location, encounter, option, result, item))
                     conn.commit() #Had to move this into the loop
     except sqlite3.IntegrityError:
         flash('Database Error')
