@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div>
+      <p>
+        Well, Well, Well, Here are your results!
+      </p>
+    </div>
+    <div class="results">
+      {% for i in range(numquestions) %}
+        <div class="question">
+          <h3>{{ questions[i] }}</h3>
+        </div>
+        <div class="answer">
+          <h2>Answer:</h2>
+          <br>
+          {{ correctAnswersDict[questions[i]] }}
+        </div>
+      {% endfor %}
+    </div>
+    <div>
+
+    </div>
+  </body>
+</html>

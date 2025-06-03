@@ -18,8 +18,8 @@
         </div>
         <div class="answerChoices">
           {% for j in range(4) %} <!-- iterate through answer choices -->
-              <label for={{ answersDict[questions[i]][j] }}>
-                <input type="radio" id={{i}}{{j}} name={{i}} value={{ answersDict[questions[i]][j] }}> {{ answersDict[questions[i]][j] }} <!-- i = question index, j = answer index -->
+              <label for="{{ answersDict[questions[i]][j] }}">
+                <input type="radio" id={{i}}{{j}} name={{i}} value="{{ answersDict[questions[i]][j] }}"> {{ answersDict[questions[i]][j] }} <!-- i = question index, j = answer index -->
               </label>
               <br>
           {% endfor %}

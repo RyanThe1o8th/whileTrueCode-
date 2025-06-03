@@ -239,6 +239,13 @@ def scrambleCheck():
 def trivia():
     response = requests.get("https://opentdb.com/api.php?amount=10&category=23&type=multiple")
     data = response.json()
+
+    global qna
+    global questions
+    global questionList
+    global numQuestions
+
+
     qna = {} #Store question and answer pairs
     questions = {} #Store question and multiple choice answers
     questionList = []
@@ -270,10 +277,34 @@ def trivia():
 
 @app.route("/trivia/check", methods=["POST"])
 def triviaCheck():
+
+    global qna
+    global questions
+    global questionList
+    global numQuestions
+    global questionResults
+
+    qna = qna
+    questions = questions
+    questionList = questionList
+    numQuestions = numQuestions
+    questionResults = []
+
     if request.method == "POST":
         print(request.form)
 
-    return "aaa"
+        for i in range(numQuestions):
+            answer = request.form.get(str(i))
+            question = questionList[i]
+            correctAnswer = qna[question]
+
+            print(f"Question: {question}, Answer: {correctAnswer}, Selected Answer: {answer}, Result: {answer == correctAnswer}")
+
+            questionResults.append(answer == correctAnswer)
+
+        print(questionResults)
+
+    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna, numquestions=numQuestions)
 
 # subway
 @app.route('/subway')
