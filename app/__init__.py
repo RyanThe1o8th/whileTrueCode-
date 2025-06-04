@@ -1,11 +1,7 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
-<<<<<<< HEAD
-from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen, encounterchoice, delencounter
-=======
-from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, removeFromInv, statedit, delencounter, encountergen
->>>>>>> eaa0adea9b032f35818ad03cccbff0290481f8d7
+from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen, encounterchoice, delencounter, removeFromInv
 import game
 import random
 import requests
@@ -355,16 +351,24 @@ def park():
 
 # mall
 
-@app.route('/candy')
+@app.route('/candy', methods=['GET', 'POST'])
 def candy():
+    if request.method == 'POST':
+        # Get the selected choice from the form
+        selected_choice = request.form.get('choice')
+        return f"You have selected: {selected_choice}. Thank you for your purchase!"
     return render_template('candy.html')
 
 @app.route('/gamble')
 def gamble():
     return render_template('gamble.html')
 
-@app.route('/darkAlley')
+@app.route('/darkAlley', methods=['GET', 'POST'])
 def darkAlley():
+    if request.method == 'POST':
+        # Get the selected choice from the form
+        selected_choice = request.form.get('choice')
+        return f"You have selected: {selected_choice}. Thank you for your purchase!"
     return render_template('darkAlley.html')
 
 # school
