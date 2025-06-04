@@ -1,8 +1,7 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
-from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen, encounterchoice, delencounter
-from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, removeFromInv, statedit, delencounter, encountergen
+from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen, encounterchoice, delencounter, removeFromInv
 import game
 import random
 import requests
@@ -356,16 +355,24 @@ def park():
 
 # mall
 
-@app.route('/candy')
+@app.route('/candy', methods=['GET', 'POST'])
 def candy():
+    if request.method == 'POST':
+        # Get the selected choice from the form
+        selected_choice = request.form.get('choice')
+        return f"You have selected: {selected_choice}. Thank you for your purchase!"
     return render_template('candy.html')
 
 @app.route('/gamble')
 def gamble():
     return render_template('gamble.html')
 
-@app.route('/darkAlley')
+@app.route('/darkAlley', methods=['GET', 'POST'])
 def darkAlley():
+    if request.method == 'POST':
+        # Get the selected choice from the form
+        selected_choice = request.form.get('choice')
+        return f"You have selected: {selected_choice}. Thank you for your purchase!"
     return render_template('darkAlley.html')
 
 # school
@@ -377,6 +384,10 @@ def computerScienceLab():
 @app.route('/mathClassroom')
 def mathClassroom():
     return render_template('mathClassroom.html')
+
+@app.route('/mathFight')
+def mathFight():
+    return render_template('mathFight.html')
 
 @app.route('/USHistory')
 def USHistory():
