@@ -381,6 +381,10 @@ def computerScienceLab():
 def mathClassroom():
     return render_template('mathClassroom.html')
 
+@app.route('/mathFight')
+def mathFight():
+    return render_template('mathFight.html')
+
 @app.route('/USHistory')
 def USHistory():
     return render_template('USHistory.html')
