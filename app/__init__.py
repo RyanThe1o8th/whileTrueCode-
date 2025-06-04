@@ -6,7 +6,7 @@ import game
 import random
 import requests
 import json
-
+import mathgenerator as mg
 app = Flask(__name__)
 app.secret_key = 'whileTrueCode()-'
 
@@ -383,7 +383,14 @@ def mathClassroom():
 
 @app.route('/mathFight')
 def mathFight():
-    return render_template('mathFight.html')
+    problem, solution = []
+    for i in range(10):
+        problem[i], solution[i] = mg.addition()
+    return render_template('mathFight.html', problem = problem, solution = solution)
+#
+# @app.route('/mathFight/check')
+# def mathCheck():
+#
 
 @app.route('/USHistory')
 def USHistory():
