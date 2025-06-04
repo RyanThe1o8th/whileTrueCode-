@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div>
+      <p>
+        Look at this! We have a new challenger! Can they answer the <i><b>Problems?</b></i>
+      </p>
+    </div>
+    <div class="questionaire">
+      <form action="/mathFight/check" method="POST">
+      {% for i in range(numquestions) %}
+        <div class="question">
+          <h3>{{ questions[i] }}</h3>
+        </div>
+        <div class="answerChoices">
+          {% for j in range(4) %} <!-- iterate through answer choices -->
+              <label for="{{ answersDict[questions[i]][j] }}">
+                <input type="radio" id={{i}}{{j}} name={{i}} value="{{ answersDict[questions[i]][j] }}"> {{ answersDict[questions[i]][j] }} <!-- i = question index, j = answer index -->
+              </label>
+              <br>
+          {% endfor %}
+        </div>
+      {% endfor %}
+        <div>
+          <button id="submit" type="submit"><i><b> Dare to test your knowledge? </b></i></button>
+        </div>
+      </form>
+    </div>
+    <div class="answerChoices">
+      <table>
+
+      </table>
+    </div>
+    <div>
+
+    </div>
+  </body>
+</html>

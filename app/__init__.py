@@ -290,12 +290,15 @@ def triviaCheck():
     questionList = questionList
     numQuestions = numQuestions
     questionResults = []
+    userAnswers = []
+    numCorrect = 0
 
     if request.method == "POST":
         print(request.form)
 
         for i in range(numQuestions):
             answer = request.form.get(str(i))
+            userAnswers.append(answer)
             question = questionList[i]
             correctAnswer = qna[question]
 
@@ -303,9 +306,10 @@ def triviaCheck():
 
             questionResults.append(answer == correctAnswer)
 
+        numCorrect = questionResults.count(True)
         print(questionResults)
 
-    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna, numquestions=numQuestions)
+    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna, numquestions=numQuestions, numcorrect=numCorrect, useranswers=userAnswers, answersDict=questions)
 
 # subway
 @app.route('/subway')
@@ -407,6 +411,10 @@ def computerScienceLab():
 @app.route('/mathClassroom')
 def mathClassroom():
     return render_template('mathClassroom.html')
+
+@app.route('/mathFight')
+def mathFight():
+    return render_template('mathFight.html')
 
 @app.route('/USHistory')
 def USHistory():
