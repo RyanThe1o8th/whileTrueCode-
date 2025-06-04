@@ -1,11 +1,8 @@
 # Testing ground
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
-<<<<<<< HEAD
 from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen, encounterchoice, delencounter
-=======
 from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, removeFromInv, statedit, delencounter, encountergen
->>>>>>> eaa0adea9b032f35818ad03cccbff0290481f8d7
 import game
 import random
 import requests
@@ -294,12 +291,15 @@ def triviaCheck():
     questionList = questionList
     numQuestions = numQuestions
     questionResults = []
+    userAnswers = []
+    numCorrect = 0
 
     if request.method == "POST":
         print(request.form)
 
         for i in range(numQuestions):
             answer = request.form.get(str(i))
+            userAnswers.append(answer)
             question = questionList[i]
             correctAnswer = qna[question]
 
@@ -307,9 +307,10 @@ def triviaCheck():
 
             questionResults.append(answer == correctAnswer)
 
+        numCorrect = questionResults.count(True)
         print(questionResults)
 
-    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna, numquestions=numQuestions)
+    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna, numquestions=numQuestions, numcorrect=numCorrect, useranswers=userAnswers, answersDict=questions)
 
 # subway
 @app.route('/subway')
