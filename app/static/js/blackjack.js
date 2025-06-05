@@ -1,32 +1,26 @@
-// blackjack
-// last updated: 10/8/2024
-
-const debug = true; // to debug log messages
+const debug = true;
 const suits = ["C", "D", "H", "S"];
 const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"];
 const ACE_VALUE = 11;
 
 const hand = new Map();
 const aceCount = new Map();
-const cardSfx = new Audio("assets/sfx/new_card.mp3");
-const gameOverSfx = new Audio("assets/sfx/card_game_over.wav");
 
-var hiddenCard;
-var deck = [];
-var canHit = true;
-var canStay = true;
-var firstTime = true;
-var sounds = true;
-var animationDelay = 500;
+let hiddenCard;
+let deck = [];
+let canHit = true;
+let canStay = true;
+let firstTime = true;
+let sounds = true;
+let animationDelay = 500;
 
-var hitBtn;
-var stayBtn;
-var soundsBtn;
-var playAgainBtn;
+let hitBtn;
+let stayBtn;
+let soundsBtn;
+let playAgainBtn;
 
-window.onload = function()
-{
-    preloadImages(); 
+window.onload = function () {
+    preloadImages();
     hitBtn = document.getElementById("hit-btn");
     stayBtn = document.getElementById("stay-btn");
     soundsBtn = document.getElementById("sounds-btn");
@@ -39,15 +33,14 @@ window.onload = function()
     playAgainBtn.style.visibility = "hidden";
 
     startGame();
-}
+};
 
-async function startGame()
-{
-    let ms = firstTime ? 0 : animationDelay;
+async function startGame() {
+    const ms = firstTime ? 0 : animationDelay;
 
     buildDeck();
     shuffleDeck();
-    
+
     hand.set("dealer", 0);
     hand.set("player", 0);
     aceCount.set("dealer", 0);
@@ -55,193 +48,153 @@ async function startGame()
 
     addHiddenCard();
     await wait(ms);
-    addCardTo("dealer");
+    await addCardTo("dealer");
     await wait(ms);
+    await addCardTo("player");
+    await wait(ms);
+    await addCardTo("player");
 
-    addCardTo("player");
-    await wait(ms);
-    addCardTo("player");
-    
     canHit = true;
     canStay = true;
     firstTime = false;
 }
 
-function buildDeck()
-{
-    for(i = 0; i < suits.length; i++)
-    {
-        for(j = 0; j < values.length; j++)
-        {
+function buildDeck() {
+    deck = []; // reset the deck
+    for (let i = 0; i < suits.length; i++) {
+        for (let j = 0; j < values.length; j++) {
             deck.push(values[j] + "-" + suits[i]);
         }
     }
 }
 
-function shuffleDeck()
-{
+function shuffleDeck() {
     let currentIndex = deck.length;
 
-    while (currentIndex != 0)
-    {
-
+    while (currentIndex !== 0) {
         let randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
-
-        // swapping cards
         [deck[currentIndex], deck[randomIndex]] = [deck[randomIndex], deck[currentIndex]];
     }
 }
 
-function addCardTo(subject)
-{
+async function addCardTo(subject) {
     let card = deck.pop();
     let value = getCardValue(card);
-    
+
     addValueToHand(value, subject);
     spawnCard(createCard(card), subject);
 }
 
-function addHiddenCard()
-{
+function addHiddenCard() {
     hiddenCard = document.createElement("img");
     hiddenCard.src = "../static/cards/hidden.png";
-
     spawnCard(hiddenCard, "dealer");
 }
 
-function spawnCard(card, subject)
-{
-    playSound(cardSfx);
-    document.getElementById(subject+"-hand").appendChild(card);
+function spawnCard(card, subject) {
+    document.getElementById(subject + "-hand").appendChild(card);
 }
 
-function createCard(card)
-{
+function createCard(card) {
     let img = document.createElement("img");
-
     img.src = "../static/cards/" + card + ".png";
-
     return img;
 }
 
-function addValueToHand(value, subject)
-{
+function addValueToHand(value, subject) {
     let currentValue = hand.get(subject);
-    let newValue = currentValue + value;
-
-    hand.set(subject, newValue);
+    hand.set(subject, currentValue + value);
 
     log("adding " + value + " to " + subject);
-    
-    if(value == ACE_VALUE)
-    {
+    if (value === ACE_VALUE) {
         adjustAceCount(1, subject);
     }
 }
 
-async function hit()
-{
-    if(!canHit)
-    {
-        return;
-    }
+async function hit() {
+    if (!canHit) return;
 
-    addCardTo("player");
+    await addCardTo("player");
 
-    if(getHand("player") > 21)
-    {
+    if (getHand("player") > 21) {
         await wait(animationDelay);
         await stay();
     }
 }
 
-async function stay()
-{
-    if(!canStay)
-    {
-        return;
-    }
+async function stay() {
+    if (!canStay) return;
 
     canStay = false;
     canHit = false;
 
-    while (hand.get("dealer") < 17)
-    {
+    await wait(animationDelay * 0.25);
+    revealCard();
+    await wait(animationDelay);
+
+    while (getHand("dealer") < 17) {
         await addCardTo("dealer");
         await wait(animationDelay * 1.5);
     }
 
-    await wait(animationDelay * 0.25);
-    revealCard();
     await wait(animationDelay);
     checkWinner();
 }
 
-function getHand(subject)
-{
-    while(hand.get(subject) > 21 && aceCount.get(subject) > 0)
-    {
-        addValueToHand(-10, subject);
-        adjustAceCount(-1, subject);
+function getHand(subject) {
+    let total = hand.get(subject);
+    let aces = aceCount.get(subject);
+
+    while (total > 21 && aces > 0) {
+        total -= 10;
+        aces--;
     }
 
-    return hand.get(subject);
+    return total;
 }
 
-function revealCard()
-{
+function revealCard() {
     let card = deck.pop();
     hiddenCard.src = createCard(card).src;
 
-    addValueToHand(getCardValue(card), "dealer");
-    playSound(cardSfx);
+    let value = getCardValue(card);
+    hand.set("dealer", hand.get("dealer") + value);
+    if (value === ACE_VALUE) {
+        adjustAceCount(1, "dealer");
+    }
 }
 
-function checkWinner()
-{
-    let status = document.getElementById("game-status");
-    let dealer = getHand("dealer");
-    let player = getHand("player");
+function checkWinner() {
+    const status = document.getElementById("game-status");
+    const dealer = getHand("dealer");
+    const player = getHand("player");
 
-    if (player > 21)
-    {
+    if (player > 21) {
         status.innerText = "Dealer won!\nPlayer busted";
-    }
-    else if (dealer > 21)
-    {
+    } else if (dealer > 21) {
         status.innerText = "Player won!\nDealer busted";
-    }
-    else if (player === dealer)
-    {
+    } else if (player === dealer) {
         status.innerText = "Draw!";
-    }
-    else
-    {
+    } else {
         status.innerText = player > dealer ? "Player won!" : "Dealer won!";
     }
-
-    playSound(gameOverSfx);
     endGame();
 }
 
-function endGame()
-{
+function endGame() {
     playAgainBtn.style.visibility = "visible";
-    playAgainBtn.focus(); 
+    playAgainBtn.focus();
     hitBtn.style.visibility = "hidden";
     stayBtn.style.visibility = "hidden";
 }
 
-
-function clearHands()
-{
+function clearHands() {
     document.getElementById("dealer-hand").innerHTML = '';
     document.getElementById("player-hand").innerHTML = '';
 }
 
-function playAgain()
-{
+function playAgain() {
     playAgainBtn.style.visibility = "hidden";
     hitBtn.style.visibility = "visible";
     stayBtn.style.visibility = "visible";
@@ -250,64 +203,41 @@ function playAgain()
     startGame();
 }
 
-function adjustAceCount(increment, subject)
-{
+function adjustAceCount(increment, subject) {
     aceCount.set(subject, aceCount.get(subject) + increment);
 }
 
-function getCardValue(card)
-{
-    let data = card.split("-");
-
-    if(isNaN(data[0]))
-    {
-        if(data[0] == "A")
-        {
-            return ACE_VALUE;
-        }
-
-        return 10;
-    }
-
-    return parseInt(data[0]);
+function getCardValue(card) {
+    const face = card.split("-")[0];
+    if (face === "A") return ACE_VALUE;
+    if (["T", "J", "Q", "K"].includes(face)) return 10;
+    return parseInt(face);
 }
 
-async function wait(ms)
-{
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// used to cache images and display them faster
 function preloadImages() {
     suits.forEach(suit => {
-        values.forEach(value =>{
-            let img = new Image();
+        values.forEach(value => {
+            const img = new Image();
             img.src = "../static/cards/" + value + "-" + suit + ".png";
         });
     });
 }
 
-function toggleSound()
-{
+function toggleSound() {
     sounds = !sounds;
-    
     soundsBtn.style.opacity = sounds ? 1 : 0.5;
 }
 
-function playSound(audio)
-{
-    if (audio && typeof audio.play === 'function' && sounds)
-    {
+function playSound(audio) {
+    if (audio && typeof audio.play === 'function' && sounds) {
         audio.play();
     }
 }
 
-function log(message)
-{
-    if(!debug)
-    {
-        return;
-    }
+function log(message) {
+    if (debug) console.log(message);
+}
 
-    console.log(message);
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
