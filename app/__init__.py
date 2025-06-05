@@ -76,7 +76,7 @@ def guesscheck():
 
 @app.route("/rps")
 def rps():
-    global oppAction
+    #global oppAction
     dial = []
     oppAction = random.randint(1, 3)
 
@@ -88,9 +88,9 @@ def rpsCheck():
         action = request.form.get("inputAction")
         # print(action)
 
-    global oppAction
-    global dial
-    dial = []
+    #global oppAction
+    #global dial
+    #dial = []
     oppAction = random.randint(1, 3)
 
     if oppAction == 1:
@@ -101,7 +101,7 @@ def rpsCheck():
         oppAction = "Scissors"
 
 
-    print(f"Player Action: {action}, Opponent Action: {oppAction}")
+    #print(f"Player Action: {action}, Opponent Action: {oppAction}")
     # addToInv(session.get('username'), 'lunch', 1)
     # print(displayInv(session.get('username')))
 
