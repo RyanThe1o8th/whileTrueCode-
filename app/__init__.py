@@ -2,7 +2,6 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 import os
 from database import init_db, changelog_add, statedit, database_connect, register_user, login_user, logout_user, displayInv, addToInv, statedit, delencounter, encountergen, encounterchoice, delencounter, removeFromInv
-import game
 import random
 import requests
 import json
@@ -51,37 +50,33 @@ def testing():
 
 # guess the number
 
-num = 0
-previous = []
 # Need to fix guess, previous doesn't reset for some reason
 @app.route('/guess')
 def guess():
     number = random.randint(1, 100)
-    global num
-    global previous
+    session['num'] = number
+    session['previous'] = ""
     num = number
-    return render_template("guess.html", number = num, prev = previous)
+    return render_template("guess.html", number = num, prev = session['previous'].split(";"))
 
 @app.route('/guess/check', methods = ["GET", "POST"])
 def guesscheck():
-    global num
-    global previous
     if request.method == 'POST':
         guess = (int)(request.form.get('inputNum'))
-        if(guess > num):
-            previous.append(str(guess) + " was too high!")
-            return render_template("guess.html", number = num, prev = previous)
-        if(guess < num):
-            previous.append(str(guess) + " was too low!")
-            return render_template("guess.html", number = num, prev = previous)
-        if(guess == num):
-            previous.append("YOU WIN WOOO!!!")
-            return render_template("guess.html", number = num, prev = previous, win = "wooo")
-    return render_template("guess.html", number = num, prev = previous)
+        if(guess > session['num']):
+            session['previous'] = session['previous'] + ";" + (str(guess) + " was too high!")
+            return render_template("guess.html", number = session['num'], prev = session['previous'].split(";"))
+        if(guess < session['num']):
+            session['previous'] = session['previous'] + ";" + (str(guess) + " was too low!")
+            return render_template("guess.html", number = session['num'], prev = session['previous'].split(";"))
+        if(guess == session['num']):
+            session['previous'] = session['previous'] + ";" + ("YOU WIN WOOO!!!")
+            return render_template("guess.html", number = session['num'], prev = session['previous'].split(";"), win = "wooo")
+    return render_template("guess.html", number = session['num'], prev = session['previous'].split(";"))
 
 @app.route("/rps")
 def rps():
-    global oppAction
+    #global oppAction
     dial = []
     oppAction = random.randint(1, 3)
 
@@ -93,9 +88,9 @@ def rpsCheck():
         action = request.form.get("inputAction")
         # print(action)
 
-    global oppAction
-    global dial
-    dial = []
+    #global oppAction
+    #global dial
+    #dial = []
     oppAction = random.randint(1, 3)
 
     if oppAction == 1:
@@ -106,7 +101,7 @@ def rpsCheck():
         oppAction = "Scissors"
 
 
-    print(f"Player Action: {action}, Opponent Action: {oppAction}")
+    #print(f"Player Action: {action}, Opponent Action: {oppAction}")
     # addToInv(session.get('username'), 'lunch', 1)
     # print(displayInv(session.get('username')))
 
@@ -115,33 +110,40 @@ def rpsCheck():
     tie = oppAction == action
 
     return render_template("rps.html", oppAct=oppAction, act=action, won=win, tied=tie, playing=False)
-
+'''
 # hangman
 @app.route('/hangman')
 def hang():
     # print(displayInv('username', 'money'))
-    words = ["nights", "days", "stars", "rays", "supernova", "super mega ultra hyper explosion"]
-    global word
+    words = ["nights", "days", "star", "rays", "supernova"]
+    #global word
     word = random.choice(words)
-    global word_letters
+    session['word'] = word
+    #global word_letters
     word_letters = set(word)
     # Word letters being a set means that if a letter is guessed, it only has to be removed once
     # If you want to get the correct order of letters in the word, you'll want to use an array
     # For the correct letters, and reference the index position in the word string
-    global correct_letters
-    correct_letters = []
+    session['word_letters'] = word_letters
+    #global correct_letters
+    correct_letters = ""
     for i in range(len(word)):
-        correct_letters.append("_")
-        correct_letters.append(" ")
+        correct_letters = correct_letters + ("_")
+        correct_letters = correct_letters + (" ")
     # Currently trying to create a set of letters guessed correctly, with _ for letters not discovered
-    global alphabet
-    alphabet = set(chr(x) for x in range(ord('a'), ord('z') + 1))
-    global used_letters
-    used_letters = set()
-    global lives
+    session['correct_letters'] = correct_letters
+    #global alphabet
+    #alphabet = set(chr(x) for x in range(ord('a'), ord('z') + 1)) # why we have built in functions
+    #session['alphabet'] = alphabet
+    #global used_letters
+    #used_letters = set()
+    session['used_letters'] = ""
+    #global lives
     lives = 6
-    global guessCount
+    session['lives'] = lives
+    #global guessCount
     guessCount = 0
+    session['guesscount'] = guessCount
     return render_template("hangman.html", lives=lives)
 
 # To do for hangman:
@@ -149,19 +151,23 @@ def hang():
 # When all letters in the word are guessed, show the victory message
 @app.route('/hangman/check', methods= ["GET", "POST"])
 def hangcheck():
-    global word
-    global word_letters
-    global used_letters
-    global correct_letters
-    global lives
-    global alphabet
-    global guessCount
+    #global word # no change
+    word = session['word']
+    #global word_letters # no change
+    word_letters = session['word_letters']
+    #global correct_letters # no change
+    correct_letters = session['correct_letters']
+    #global alphabet # why is it here?  no change
+    #alphabet = session['alphabet']
+    #global lives # change
+    #global used_letters # change
+    #global guessCount # change
     if request.method == 'POST':
         user_letter = request.form.get('inputLetter').lower()
-        if user_letter in alphabet: # Is it a letter?
+        if user_letter.isalpha(): # Is it a letter?
             if user_letter not in used_letters: #Have you used it?
                 guessCount += 1
-                used_letters.add(user_letter)
+                #used_letters.add(user_letter)
                 if user_letter in word_letters: #Is it in the word?
                     word_letters.remove(user_letter)
                     # return the word but with the places with that letter filled out
@@ -169,22 +175,69 @@ def hangcheck():
                         if word[i] == user_letter:
                             correct_letters[i*2] = word[i]
                     if len(word_letters) == len(word): # You've guessed the word
-                        return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed the word!", num = guessCount, c = "".join(correct_letters))
+                        return render_template("hangman.html", lives = session['lives'], used = used_letters, message="You guessed the word!", num = guessCount, c = "".join(correct_letters))
                     else:
-                        return render_template("hangman.html", lives = lives, used = used_letters, message="You guessed a letter!", num = guessCount, c = "".join(correct_letters))
+                        return render_template("hangman.html", lives = session['lives'], used = used_letters, message="You guessed a letter!", num = guessCount, c = "".join(correct_letters))
                 else:
-                    lives -= 1
-                    if lives == 0: # You've been hanged
-                        return render_template("hangman.html", lives = lives, used = used_letters, message="You've been hanged. Game over", num = guessCount, c = "".join(correct_letters))
+                    session['lives'] = session['lives'] - 1
+                    if session['lives'] == 0: # You've been hanged
+                        return render_template("hangman.html", lives = session['lives'], used = used_letters, message="You've been hanged. Game over", num = guessCount, c = "".join(correct_letters))
                     else: # letter was not in word
-                        return render_template("hangman.html", lives = lives, used = used_letters, message="You suffer a penalty", num = guessCount, c = "".join(correct_letters))
+                        return render_template("hangman.html", lives = session['lives'], used = used_letters, message="You suffer a penalty", num = guessCount, c = "".join(correct_letters))
             else:
-                return render_template("hangman.html", lives = lives, used = used_letters, message="This letter was already used", num = guessCount, c = "".join(correct_letters))
+                return render_template("hangman.html", lives = session['lives'], used = used_letters, message="This letter was already used", num = guessCount, c = "".join(correct_letters))
                 # Say letter was already used
         else:
-            return render_template("hangman.html", lives = lives, used = used_letters, message="Letter is invalid", num = guessCount, c = "".join(correct_letters))
+            return render_template("hangman.html", lives = session['lives'], used = used_letters, message="Letter is invalid", num = guessCount, c = "".join(correct_letters))
             # Invalid letter
 
+'''
+
+# hangman
+
+def makeCurrent(word, guessed):
+    returnable = ""
+    for i in word:
+        if i in guessed.split(","):
+            returnable += i
+        elif i == ",":
+            returnable += ""
+        else:
+            returnable += "-"
+    return returnable
+
+@app.route('/hangman')
+def hang():
+    words = ["h,e,l,l,o"]
+    word = random.choice(words)
+    session['word'] = word
+    session['usedLetters'] = ""
+    session['lives'] = 6
+    return render_template("hangman.html", lives = session['lives'])
+
+@app.route('/hangman/check', methods= ["GET", "POST"])
+def hangcheck():
+    if request.method == 'POST':
+        userInput = request.form.get('inputLetter').lower()
+        if userInput.isalpha() and len(userInput) == 1:
+            if userInput not in session['usedLetters'].split(","):
+                session['usedLetters'] = session['usedLetters'] + "," + userInput
+                if userInput in session['word'].split(","):
+                    if "-" not in makeCurrent(session['word'], session['usedLetters']):
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed the word!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), end = True)
+                    else:
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed a letter!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
+                else:
+                    session['lives'] = session['lives'] - 1
+                    if session['lives'] == 0:
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You've been hanged. Game over", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
+                    else:
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You suffer a penalty", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
+            else:
+                return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="This letter was already used", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
+        else:
+            return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You sure this a letter?", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
+    return render_template("hangman.html", lives = session['lives'])
 
 
 @app.route("/scramble", methods=["GET","POST"])
@@ -290,12 +343,15 @@ def triviaCheck():
     questionList = questionList
     numQuestions = numQuestions
     questionResults = []
+    userAnswers = []
+    numCorrect = 0
 
     if request.method == "POST":
         print(request.form)
 
         for i in range(numQuestions):
             answer = request.form.get(str(i))
+            userAnswers.append(answer)
             question = questionList[i]
             correctAnswer = qna[question]
 
@@ -303,9 +359,10 @@ def triviaCheck():
 
             questionResults.append(answer == correctAnswer)
 
+        numCorrect = questionResults.count(True)
         print(questionResults)
 
-    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna, numquestions=numQuestions)
+    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna, numquestions=numQuestions, numcorrect=numCorrect, useranswers=userAnswers, answersDict=questions)
 
 # subway
 @app.route('/subway')
@@ -330,24 +387,51 @@ def school():
 def house():
     return render_template('house.html')
 
+@app.route('/kitchen', methods=['GET', 'POST'])
 def kitchen():
-    encountername = encountergen("Kitchen")
-    return render_template('encounter.html', location = "Kitchen", encounter = encountername, back = "house")
+    encountername = encountergen("kitchen")
+    locname = "Kitchen"
+    if request.method == 'POST':
+        # Get the selected choice from the form
+        choice = request.form.get('choice')
+        return render_template('result.html', location = "kitchen", result = encounterchoice("kitchen", choice), back = "house", locname = locname)
+    return render_template('encounter.html', location = "kitchen", encounter = encountername, back = "house", locname = locname)
 
+@app.route('/bedroom', methods=['GET', 'POST'])
 def bedroom():
-    encountername = encountergen("Bedroom")
-    return render_template('encounter.html', location = "Bedroom", encounter = encountername, back = "house")
+    encountername = encountergen("bedroom")
+    locname = "Bedroom"
+    if request.method == 'POST':
+        # Get the selected choice from the form
+        choice = request.form.get('choice')
+        return render_template('result.html', location = "bedroom", result = encounterchoice("bedroom", choice), back = "house", locname = locname)
+    return render_template('encounter.html', location = "bedroom", encounter = encountername, back = "house", locname = locname)
 
 
-@app.route('/friendHouse')
-def friendHouse():
-    encountername = encountergen("Friend's House")
-    return render_template('encounter.html', location = "FHouse", encounter = encountername, back = "neighborhood")
 
-@app.route('/park')
+@app.route('/friendhouse', methods=['GET', 'POST'])
+def friendhouse():
+    encountername = encountergen("friendhouse")
+    locname = "Friend's House"
+    if request.method == 'POST':
+        # Get the selected choice from the form
+        choice = request.form.get('choice')
+        return render_template('result.html', location = "friendhouse", result = encounterchoice("friendhouse", choice), back = "neighborhood", locname = locname)
+    return render_template('encounter.html', location = "friendhouse", encounter = encountername, back = "neighborhood", locname = locname)
+
+@app.route('/park', methods=['GET', 'POST'])
 def park():
-    encountername = encountergen("Park")
-    return render_template('encounter.html', location = "Park", encounter = encountername, back = "neighborhood")
+    locname = "Park"
+    if request.method == 'GET':
+        encountername = encountergen("park")
+        session["encounter"] = encountername
+        return render_template('encounter.html', location = "park", encounter = encountername, back = "neighborhood", locname = locname)
+    if request.method == 'POST':
+        # Get the selected choice from the form
+        encountername = session.get("encounter")
+        print(encountername)
+        choice = request.form.get('choice')
+        return render_template('result.html', location = "park", result = encounterchoice("park", encountername, choice), back = "neighborhood", locname = locname)
 
 # mall
 
@@ -396,17 +480,16 @@ def mathFight():
 def USHistory():
     return render_template('USHistory.html')
 
-@app.route('/lunchroom')
+@app.route('/lunchroom', methods=['GET', 'POST'])
 def lunchroom():
-    encountername = encountergen("Lunchroom")
-    return render_template('encounter.html', location = "Lunchroom", encounter = encountername, back = "school")
+    encountername = encountergen("lunchroom")
+    locname = "Lunchroom"
+    if request.method == 'POST':
+        # Get the selected choice from the form
+        choice = request.form.get('choice')
+        return render_template('result.html', location = "lunchroom", result = encounterchoice("Lunchroom", choice), back = "school", locname = locname)
+    return render_template('encounter.html', location = "lunchroom", encounter = encountername, back = "school", locname = locname)
 
-@app.route('/result')
-def result():
-    loc = "Park"
-    encountername = encountergen("Lunchroom")
-    res = encounterchoice(loc, encountername)
-    return render_template('result.html', location = loc, result = res, back = "school")
 
 
 if __name__ == "__main__":

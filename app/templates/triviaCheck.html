@@ -8,6 +8,12 @@
     <div>
       <p>
         Well, Well, Well, Here are your results!
+        <br>
+        You got {{ numcorrect }} right out of {{ numquestions }}!
+        That's a <b>{{ numcorrect / numquestions * 100}} %!</b>
+        {% if (numcorrect / numquestions) == 1 %}
+          <b>Are you cheating!</b>
+        {% endif %}
       </p>
     </div>
     <div class="results">
@@ -15,10 +21,25 @@
         <div class="question">
           <h3>{{ questions[i] }}</h3>
         </div>
+        <div class="answerChoices">
+          {% for j in range(4) %} <!-- iterate through answer choices -->
+              <label for="{{ answersDict[questions[i]][j] }}">
+                {{ answersDict[questions[i]][j] }} <!-- i = question index, j = answer index -->
+              </label>
+              <br>
+          {% endfor %}
+        </div>
         <div class="answer">
-          <h2>Answer:</h2>
-          <br>
-          {{ correctAnswersDict[questions[i]] }}
+          <h4>Answer:</h4>
+          <b>{{ correctAnswersDict[questions[i]] }}</b>
+        </div>
+        <div class="userAnswer">
+          You answered <b>{{ useranswers[i] }}</b>
+          {% if correctAnswersDict[questions[i]] == useranswers[i] %}
+            That's correct!
+          {% else %}
+            That's wrong!
+          {% endif %}
         </div>
       {% endfor %}
     </div>
