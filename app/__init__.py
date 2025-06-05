@@ -48,9 +48,11 @@ def profile():
 def testing():
     return render_template("testing.html", user=session.get('username'))
 
+@app.route('/blackjack')
+def blackjack():
+    return render_template("blackjack.html")
+    
 # guess the number
-
-# Need to fix guess, previous doesn't reset for some reason
 @app.route('/guess')
 def guess():
     number = random.randint(1, 100)
@@ -76,39 +78,23 @@ def guesscheck():
 
 @app.route("/rps")
 def rps():
-    #global oppAction
     dial = []
     oppAction = random.randint(1, 3)
-
     return render_template("rps.html", oppAct=oppAction, dialogue=dial, playing=True)
 
 @app.route("/rps/check", methods=["POST"])
 def rpsCheck():
     if request.method == "POST":
         action = request.form.get("inputAction")
-        # print(action)
-
-    #global oppAction
-    #global dial
-    #dial = []
     oppAction = random.randint(1, 3)
-
     if oppAction == 1:
         oppAction = "Rock"
     elif oppAction == 2:
         oppAction = "Paper"
     else:
         oppAction = "Scissors"
-
-
-    #print(f"Player Action: {action}, Opponent Action: {oppAction}")
-    # addToInv(session.get('username'), 'lunch', 1)
-    # print(displayInv(session.get('username')))
-
-    #Win Cons
     win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
     tie = oppAction == action
-
     return render_template("rps.html", oppAct=oppAction, act=action, won=win, tied=tie, playing=False)
 '''
 # hangman
@@ -250,7 +236,6 @@ def scramble():
     session["attempts"] = 3
     session["playing"] = True
     session["dail"] = ""
-
     return render_template("scramble.html", attemptsremaining = session["attempts"], scrambledWord = session["scrambled"], isPlaying = session["playing"])
 
 @app.route("/scramble/check", methods=["POST"])
@@ -262,9 +247,7 @@ def scrambleCheck():
     word = session["scrambleWord"]
     wordScramble = session["scrambled"]
     results = ""
-
     playing = True
-
     session["dail"] = session["dail"] + "You gussed " + guess + "!"
     if guess.lower() == word.lower():
         session["dail"] = session["dail"] + "Darn! It was " + word + ", you got it in " + str(int(3 - session["attempts"]))+ " attempt!;"
@@ -272,13 +255,10 @@ def scrambleCheck():
         playing = False
     else:
         session["dail"] = session["dail"] + "Unfortunate its wrong! Try Again!" + ";"
-
     if session["attempts"]  == 0:
         results = "Lost"
         playing = False
-
     session["playing"] = playing
-
     return render_template("scramble.html", attemptsremaining=session["attempts"] , scrambledWord=wordScramble, dialogue=session["dail"].split(";"), result=results, isPlaying=playing)
 
 @app.route("/trivia")
