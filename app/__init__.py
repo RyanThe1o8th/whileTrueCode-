@@ -361,35 +361,47 @@ def house():
 
 @app.route('/kitchen', methods=['GET', 'POST'])
 def kitchen():
-    encountername = encountergen("kitchen")
     locname = "Kitchen"
+    if request.method == 'GET':
+        encountername = encountergen("kitchen")
+        session["encounter"] = encountername
+        return render_template('encounter.html', location = "kitchen", encounter = encountername, back = "house", locname = locname)
     if request.method == 'POST':
         # Get the selected choice from the form
+        encountername = session.get("encounter")
+        print(encountername)
         choice = request.form.get('choice')
-        return render_template('result.html', location = "kitchen", result = encounterchoice("kitchen", choice), back = "house", locname = locname)
-    return render_template('encounter.html', location = "kitchen", encounter = encountername, back = "house", locname = locname)
+        return render_template('result.html', location = "kitchen", result = encounterchoice("kitchen", encountername, choice), back = "house", locname = locname)
 
 @app.route('/bedroom', methods=['GET', 'POST'])
 def bedroom():
-    encountername = encountergen("bedroom")
     locname = "Bedroom"
+    if request.method == 'GET':
+        encountername = encountergen("bedroom")
+        session["encounter"] = encountername
+        return render_template('encounter.html', location = "bedroom", encounter = encountername, back = "house", locname = locname)
     if request.method == 'POST':
         # Get the selected choice from the form
+        encountername = session.get("encounter")
+        print(encountername)
         choice = request.form.get('choice')
-        return render_template('result.html', location = "bedroom", result = encounterchoice("bedroom", choice), back = "house", locname = locname)
-    return render_template('encounter.html', location = "bedroom", encounter = encountername, back = "house", locname = locname)
+        return render_template('result.html', location = "bedroom", result = encounterchoice("bedroom", encountername, choice), back = "house", locname = locname)
 
 
 
 @app.route('/friendhouse', methods=['GET', 'POST'])
 def friendhouse():
-    encountername = encountergen("friendhouse")
     locname = "Friend's House"
+    if request.method == 'GET':
+        encountername = encountergen("friendhouse")
+        session["encounter"] = encountername
+        return render_template('encounter.html', location = "friendhouse", encounter = encountername, back = "neighborhood", locname = locname)
     if request.method == 'POST':
         # Get the selected choice from the form
+        encountername = session.get("encounter")
+        print(encountername)
         choice = request.form.get('choice')
-        return render_template('result.html', location = "friendhouse", result = encounterchoice("friendhouse", choice), back = "neighborhood", locname = locname)
-    return render_template('encounter.html', location = "friendhouse", encounter = encountername, back = "neighborhood", locname = locname)
+        return render_template('result.html', location = "friendhouse", result = encounterchoice("friendhouse", encountername, choice), back = "neighborhood", locname = locname)
 
 @app.route('/park', methods=['GET', 'POST'])
 def park():
@@ -447,14 +459,17 @@ def USHistory():
 
 @app.route('/lunchroom', methods=['GET', 'POST'])
 def lunchroom():
-    encountername = encountergen("lunchroom")
     locname = "Lunchroom"
+    if request.method == 'GET':
+        encountername = encountergen("lunchroom")
+        session["encounter"] = encountername
+        return render_template('encounter.html', location = "lunchroom", encounter = encountername, back = "school", locname = locname)
     if request.method == 'POST':
         # Get the selected choice from the form
+        encountername = session.get("encounter")
+        print(encountername)
         choice = request.form.get('choice')
-        return render_template('result.html', location = "lunchroom", result = encounterchoice("Lunchroom", choice), back = "school", locname = locname)
-    return render_template('encounter.html', location = "lunchroom", encounter = encountername, back = "school", locname = locname)
-
+        return render_template('result.html', location = "lunchroom", result = encounterchoice("lunchroom", encountername, choice), back = "school", locname = locname)
 
 
 if __name__ == "__main__":
