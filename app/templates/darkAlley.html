@@ -1,28 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <button><a href = "/mall"> mall </a></button>
-    <form method="POST" action="/candy">
-      <label>
-          <input type="radio" name="choice" value="Option 1"> Option 1 - $10
-      </label><br>
-      <label>
-          <input type="radio" name="choice" value="Option 2"> Option 2 - $20
-      </label><br>
-      <label>
-          <input type="radio" name="choice" value="Option 3"> Option 3 - $30
-      </label><br>
-      <label>
-          <input type="radio" name="choice" value="Option 4"> Option 4 - $40
-      </label><br>
-      <label>
-          <input type="radio" name="choice" value="Option 5"> Option 5 - $50
-      </label><br>
-      <label>
-          <input type="radio" name="choice" value="Option 6"> Option 6 - $60
-      </label><br><br>
-      
-      <input type="submit" value="Buy Now">
-  </form>
-  </body>
+<head>
+    <title>Dark Alley</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/darkalley.css">
+
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
+    <br>
+    <br>
+
+</head>
+<body>
+    <div class="c">
+        <div class="can">
+            <p class="Location"> Dark Alley </p>
+            <br>
+
+            <form method="POST" action="/darkAlley">
+                <br> <br>
+                <label>
+                    <input type="radio" name="choice" value="Test Answers"> Test Answers - $5
+                </label><br><br><br>
+                <label>
+                    <input type="radio" name="choice" value="Adderal"> Adderal - $6
+                </label><br><br><br>
+                <label>
+                    <input type="radio" name="choice" value="Grandma's Cooking"> Grandma's Cooking - $3
+                </label><br><br><br>
+
+                <input id="buy" type="submit" value="Buy Now"> <br><br><br>
+            </form>
+            <div class="back">
+                <form action="/mall">
+                    <input id=back type="submit" name="return" value="Return to Mall">
+                </form>
+            </div>
+        </div>
+    </div>
+    </form>
+</body>
 </html>

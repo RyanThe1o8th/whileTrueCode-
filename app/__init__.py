@@ -424,7 +424,8 @@ def candy():
     if request.method == 'POST':
         # Get the selected choice from the form
         selected_choice = request.form.get('choice')
-        return f"You have selected: {selected_choice}. Thank you for your purchase!"
+        res = "You have selected: " + selected_choice + ". Thank you for your purchase!"
+        return render_template('result.html', location = "candy", result = res, back = "mall", locname = "Candy Store")
     return render_template('candy.html')
 
 @app.route('/gamble')
@@ -436,7 +437,8 @@ def darkAlley():
     if request.method == 'POST':
         # Get the selected choice from the form
         selected_choice = request.form.get('choice')
-        return f"You have selected: {selected_choice}. Thank you for your purchase!"
+        res = "You have selected: " + selected_choice + ". Now leave, before anyone sees you."
+        return render_template('result.html', location = "darkalley", result = res, back = "mall", locname = "Dark Alley")
     return render_template('darkAlley.html')
 
 # school

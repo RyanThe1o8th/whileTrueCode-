@@ -1,44 +1,70 @@
-kitchen,Grab Leftovers,Yes,You grab some leftovers,Food
-kitchen,Grab Soda,Yes,You grab some soda,Soda
-kitchen,Cook,Yes,You cook some food,Food
-kitchen,Wash the Dishes,Yes,You wash the dishes and find some money,Money
+kitchen,Grab leftovers,Yes,"You grab some leftovers. They look a little moldy, but it's probably ok.",Food
+kitchen,Grab soda,Yes,You grab some soda. SUGARRRR.,Soda
+kitchen,Cook,Yes,You cook some food and nearly burn the house down.,Food
+kitchen,Wash the dishes,Yes,You wash the dishes and find some money. How'd that get there???,Money
+kitchen,Bake a cake,Yes,Your mom is happy you remembered her birthday!,Happiness
+kitchen,Eat some bread,Yes,The bread is kind of stale.,Sadness
+kitchen,Grab leftovers,No,Better not touch those.,Nothing
+kitchen,Grab soda,No,You didn’t grab soda. It's too sweet anyways.,Nothing
+kitchen,Cook,No,The kitchen will stay intact today.,Nothing
+kitchen,Wash the dishes,No,You were a VERY bad child,Nothing
+kitchen,Bake a cake,No,... ITS YOUR MOM'S BIRTHDAY,Sadness
+kitchen,Eat some bread,No,Not hungry,Nothing
 bedroom,Sleep,Yes,"You’d sleep, but your mom yelled at you for an hour last time you missed school.",None
 bedroom,Finish Homework,Yes,You locked in for homework,Homework
-bedroom,Study for tests,Yes,You studied,Study Guide
+bedroom,Study for tests,Yes,You studied. Those test are NOT getting you today!,Study Guide
 bedroom,Take writing implements,Yes,You grabbed your pencil,Pencil
-bedroom,Play Video Games,Yes,You gamed,Nothing
+bedroom,Play Video Games,Yes,You played so hard but all your team did was call you slurs.,Sadness
+bedroom,Take adderal,Yes,You searched your whole room but there's none left. You'll have to look somewhere else.,Nothing
+bedroom,Clean up,Yes,MOM APPROVAL 100%%%%%,Nothing
+bedroom,Sleep,No,Good idea. Can’t miss school today.,Nothing
+bedroom,Finish Homework,No,You didn’t finish homework????,Nothing
+bedroom,Study for tests,No,You didn’t study... Overconfidence?,Nothing
+bedroom,Take writing implements,No,You forgot to grab your pencil,Nothing
+bedroom,Play Video Games,No,You didn’t play video games. That's kind of boring.,Nothing
+bedroom,Take adderal,No,You're strong enough without the drugs.,Nothing
+bedroom,Clean up,No,Your mom yelled at you and then told you to grow up. Rude!!,Nothing
 park,Contemplate the meaning of Life,Yes,That was so depressing,Sadness
 park,Play basketball,Yes,YES! BASKETBALL!!!!,Adrenaline
 park,Workout,Yes,You workout,Adrenaline
 park,Get into a fistfight,Yes,You fight some punks and totally don’t get your teeth knocked out,Adrenaline
-friendhouse,Steal Lunch,Yes,You took your friend’s lunch,Food
-friendhouse,Steal Study Guide,Yes,You stole your friend’s study guide,Study Guide
-friendhouse,Steal Adderal,Yes,You stole your friend’s medication,Adderal
-friendhouse,Play Video Games,Yes,You gamed with your friend,Nothing
-friendhouse,Study Together,Yes,You studied with your friend,Study Guide
-lunchroom,FOOD FIGHT!,Yes,You started a food fight and got clobbered with some potatoes,Sadness
-lunchroom,Eat,Yes,You ate your… food.,Sadness
-lunchroom,Talk to friends,Yes,You talked with friends,Nothing
-lunchroom,Sleep,Yes,You took a nap in the lunchroom,Nothing
-kitchen,Grab Leftovers,No,You didn’t grab leftovers.,Nothing
-kitchen,Grab Soda,No,You didn’t grab soda,Nothing
-kitchen,Cook,No,You didn’t cook food,Nothing
-kitchen,Wash the Dishes,No,You were a VERY bad child,Nothing
-bedroom,Sleep,No,Good idea. Can’t miss school today.,Nothing
-bedroom,Finish Homework,No,You didn’t finish homework,Nothing
-bedroom,Study for tests,No,You didn’t study,Nothing
-bedroom,Take writing implements,No,You forgot to grab your pencil,Nothing
-bedroom,Play Video Games,No,You didn’t play video games,Nothing
+park,Swing on da swings,Yes,Swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing swing ,Happiness
+park,Jump into the lake,Yes,Great you're soaked now. ,Adrenaline
+park,Pray ,Yes,I hope you found what you're looking for,Nothing
+park,Feed the ducks,Yes,Quack,Happiness
 park,Contemplate the meaning of Life,No,Life is too short to be depressed about it,Nothing
 park,Play basketball,No,You didn’t play basketball,Nothing
 park,Workout,No,You didn’t work out,Nothing
 park,Get into a fistfight,No,You didn’t fight anyone.,Nothing
-friendhouse,Steal Lunch,No,You didn’t steal your friend’s lunch,Nothing
-friendhouse,Steal Study Guide,No,You didn’t steal your friend’s studyguide,Nothing
-friendhouse,Steal Adderal,No,You didn’t steal your friends adderal,Nothing
-friendhouse,Play Video Games,No,You didn’t play video games with your friend,Nothing
-friendhouse,Study Together,No,You didn’t study with your friend,Nothing
+park,Swing on da swings,No,You're not a kid anymore...,Nothing
+park,Jump into the lake,No,That would be stupid,Nothing
+park,Pray ,No,You decide not to pray,Nothing
+park,Feed the ducks,No,You abandon the poor ducks,Nothing
+friendhouse,Steal Lunch,Yes,You took your friend’s lunch? Is yours that bad?,Food
+friendhouse,Steal Study Guide,Yes,"You stole your friend’s study guide, because they took better notes than you",Study Guide
+friendhouse,Steal Adderal,Yes,You stole your friend’s medication. Nice!,Adderal
+friendhouse,Play Video Games,Yes,You gamed with your friend and you won!,Happiness
+friendhouse,Study Together,Yes,"You studied with your friend, but got distracted a lot.",Nothing
+friendhouse,Talk to your friend's mom,Yes,She thinks you're a bad influence. That's fair.,Sadness
+friendhouse,Watch TV,Yes,It's pretty boring.,Sadness
+friendhouse,Steal Lunch,No,You didn’t steal your friend’s lunch.,Nothing
+friendhouse,Steal Study Guide,No,You didn’t steal your friend’s studyguide.,Nothing
+friendhouse,Steal Adderal,No,You didn’t steal your friends adderal... maybe you'll find some somewhere else.,Nothing
+friendhouse,Play Video Games,No,You didn’t play video games with your friend.,Nothing
+friendhouse,Study Together,No,You didn’t study with your friend.,Nothing
+friendhouse,Talk to your friend's mom,No,"If you pressed yes before, you're weird man.",Nothing
+friendhouse,Watch TV,No,Hahahaha who needs TV when you have a computer??,Nothing
+lunchroom,FOOD FIGHT!,Yes,You started a food fight and got clobbered with some potatoes,Sadness
+lunchroom,Eat,Yes,You ate your… food. If you can call it that.,Sadness
+lunchroom,Talk to friends,Yes,You talked with friends.,Nothing
+lunchroom,Sleep,Yes,You took a nap in the lunchroom and woke up with a milky mustache.,Nothing
+lunchroom,Study,Yes,You nerd.,Study Guide
+lunchroom,Play cards against your friends,Yes,You lost hahahahahhaahahhaahahah,Sadness
+lunchroom,Play cards with your friends.,Yes,You... you won? I thought you were unlucky...,Money
 lunchroom,FOOD FIGHT!,No,You didn’t start a food fight,Nothing
 lunchroom,Eat,No,You didn’t eat,Nothing
 lunchroom,Talk to friends,No,You didn’t talk to friends,Nothing
 lunchroom,Sleep,No,You didn’t sleep in the lunchroom.,Nothing
+lunchroom,Study,No,It's not worth studying this close to the test.,Nothing
+lunchroom,Play cards against your friends,No,You don't really like cards.,Nothing
+lunchroom,Play cards with your friends.,No,You don't really like cards.,Nothing
