@@ -242,52 +242,44 @@ def hangcheck():
 
 @app.route("/scramble", methods=["GET","POST"])
 def scramble():
-    global word
-    global wordScramble
-    global attemptsR
-    global playing
-
-    word = "Placeholder"
+    words = ["Placeholder"]
+    word = random.choice(words)
+    session["scrambleWord"] = word
     wordScramble = "".join(random.sample(word, len(word)))
-    attemptsR = 3
-    playing = True
+    session["scrambled"] = wordScramble
+    session["attempts"] = 3
+    session["playing"] = True
+    session["dail"] = ""
 
-
-
-    return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble, isPlaying=playing)
+    return render_template("scramble.html", attemptsremaining = session["attempts"], scrambledWord = session["scrambled"], isPlaying = session["playing"])
 
 @app.route("/scramble/check", methods=["POST"])
 def scrambleCheck():
     if request.method == "POST":
-        print(request.form)
+        #print(request.form)
         guess = request.form.get("guess")
+    session["attempts"]  = session["attempts"] - 1
+    word = session["scrambleWord"]
+    wordScramble = session["scrambled"]
+    results = ""
 
-    global word
-    global wordScramble
-    global attemptsR
-    global playing
-    global dial
+    playing = True
 
-    attemptsR = attemptsR - 1
-    word = word
-    wordScramble = wordScramble
-    dial = []
-    results = "Unknown"
-
-    dial.append(f"You gussed {guess}!")
-
+    session["dail"] = session["dail"] + "You gussed " + guess + "!"
     if guess.lower() == word.lower():
-        dial.append(f"Darn! It was {word}, you got it in {3 - attemptsR}!")
+        session["dail"] = session["dail"] + "Darn! It was " + word + ", you got it in " + str(int(3 - session["attempts"]))+ " attempt!;"
         results = "Won"
         playing = False
     else:
-        dial.append("HAHA you suck! Try Again!")
+        session["dail"] = session["dail"] + "Unfortunate its wrong! Try Again!" + ";"
 
-    if attemptsR == 0:
+    if session["attempts"]  == 0:
         results = "Lost"
         playing = False
 
-    return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble, dialogue=dial, result=results, isPlaying=playing)
+    session["playing"] = playing
+
+    return render_template("scramble.html", attemptsremaining=session["attempts"] , scrambledWord=wordScramble, dialogue=session["dail"].split(";"), result=results, isPlaying=playing)
 
 @app.route("/trivia")
 def trivia():
