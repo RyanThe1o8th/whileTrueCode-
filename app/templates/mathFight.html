@@ -8,18 +8,35 @@
   <div>
     <p>You've encountered the <b>Math Exam!</b></p>
   </div>
-  <form action="/mathFight/check" method="POST">
-    {% for i in range(numquestions) %}
-      <div>
-        <h3>{{ questions[i] }}</h3>
-        {% for choice in answersDict[questions[i]] %}
-          <label>
-            <input type="radio" name="{{ i }}" value="{{ choice }}"> {{ choice }}
-          </label><br>
-        {% endfor %}
-      </div>
-    {% endfor %}
-    <button type="submit"><b>Submit Answers</b></button>
-  </form>
+
+  {% if not show_questions %}
+    <!-- Show difficulty selection only -->
+    <form method="GET" action="/mathFight">
+      <label for="difficulty">Choose your challenge:</label>
+      <select name="difficulty" id="difficulty">
+        <option value="easy" {% if difficulty == 'easy' %}selected{% endif %}>Easy</option>
+        <option value="medium" {% if difficulty == 'medium' or not difficulty %}selected{% endif %}>Medium</option>
+        <option value="hard" {% if difficulty == 'hard' %}selected{% endif %}>Hard</option>
+      </select>
+      <button type="submit">Start Fight</button>
+    </form>
+  {% else %}
+    <!-- Hide difficulty selector after first selection -->
+    <p><b>Difficulty:</b> {{ difficulty|capitalize }}</p>
+
+    <form action="/mathFight/check" method="POST">
+      {% for i in range(numquestions) %}
+        <div>
+          <h3>\\({{ questions[i]|safe }}\\)</h3>
+          {% for choice in answersDict[questions[i]] %}
+            <label>
+              <input type="radio" name="{{ i }}" value="{{ choice }}" required> {{ choice }}
+            </label><br>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit"><b>Submit Answers</b></button>
+    </form>
+  {% endif %}
 </body>
 </html>

@@ -462,39 +462,79 @@ def screen2():
 @app.route('/winScreenCS')
 def screen3():
     return render_template("screen3.html")
-
-@app.route('/mathClassroom')
+@app.route("/mathClassroom")
 def mathClassroom():
-    return render_template('mathClassroom.html')
-
+    return render_template("mathClassroom.html")
 @app.route("/mathFight")
 def mathFight():
+    difficulty = request.args.get('difficulty')
+
+    # If difficulty is not provided, show difficulty selection only (no questions)
+    if not difficulty:
+        # Show difficulty selection form only, no questions yet
+        return render_template("mathFight.html", show_questions=False, difficulty='medium')
+
+    gen_pools = {
+        'easy': [
+            mg.addition, mg.subtraction, mg.multiplication, mg.division
+        ],
+        'medium': [
+            mg.basic_algebra, mg.area_of_triangle, mg.quadratic_equation
+        ],
+        'hard': [
+            mg.power_rule_differentiation, mg.power_rule_integration,
+            mg.stationary_points, mg.definite_integral, mg.trig_differentiation
+        ]
+    }
+
+    generators = gen_pools.get(difficulty, gen_pools['medium'])
+
     questionList = []
     answersDict = {}
     correctAnswers = {}
     numQuestions = 10
+    max_attempts = 50
+    attempts = 0
 
-    for _ in range(numQuestions):
-        problem, solution = mg.addition()
-        cleaned_solution = str(solution).replace('$', '').strip()
-
+    while len(questionList) < numQuestions and attempts < max_attempts:
+        attempts += 1
+        gen_func = random.choice(generators)
         try:
-            base = int(cleaned_solution)
-        except ValueError:
-            continue  # skip malformed solutions
+            problem, solution = gen_func()
+            # Remove $ and trim
+            solution_str = str(solution).replace('$', '').strip()
 
-        questionList.append(problem)
-        fake_answers = [str(base + x) for x in [-3, -1, 1, 2] if str(base + x) != str(base)]
-        choices = fake_answers[:3]
-        choices.insert(random.randint(0, 3), str(base))
-        answersDict[problem] = choices
-        correctAnswers[problem] = str(base)
+            # Try to convert to int for answer choices
+            base = int(float(solution_str))
 
+            # Avoid duplicates
+            if problem in questionList:
+                continue
+
+            # Generate fake answers
+            fake_answers = [str(base + x) for x in [-3, -1, 1, 2] if str(base + x) != str(base)]
+            choices = fake_answers[:3]
+            choices.insert(random.randint(0, 3), str(base))
+
+            questionList.append(problem)
+            answersDict[problem] = choices
+            correctAnswers[problem] = str(base)
+        except Exception as e:
+            # print(f"Skipping question due to error: {e}")
+            continue
+
+    # Store in session
     session["mathQuestions"] = questionList
     session["mathAnswers"] = correctAnswers
     session["mathChoices"] = answersDict
 
-    return render_template("mathFight.html", questions=questionList, answersDict=answersDict, numquestions=len(questionList))
+    return render_template("mathFight.html",
+                           questions=questionList,
+                           answersDict=answersDict,
+                           numquestions=len(questionList),
+                           difficulty=difficulty,
+                           show_questions=True)
+
 
 @app.route("/mathFight/check", methods=["POST"])
 def mathFightCheck():
