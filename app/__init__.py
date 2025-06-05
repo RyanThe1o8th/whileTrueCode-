@@ -51,7 +51,7 @@ def testing():
 @app.route('/blackjack')
 def blackjack():
     return render_template("blackjack.html")
-    
+
 # guess the number
 @app.route('/guess')
 def guess():
@@ -210,13 +210,13 @@ def hangcheck():
                 session['usedLetters'] = session['usedLetters'] + "," + userInput
                 if userInput in session['word'].split(","):
                     if "-" not in makeCurrent(session['word'], session['usedLetters']):
-                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed the word!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), end = True)
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed the word!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), end = True, win = True)
                     else:
                         return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed a letter!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
                 else:
                     session['lives'] = session['lives'] - 1
                     if session['lives'] == 0:
-                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You've been hanged. Game over", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You've been hanged. Game over", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), lose = True)
                     else:
                         return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You suffer a penalty", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
             else:
@@ -443,7 +443,23 @@ def darkAlley():
 
 @app.route('/computerScienceLab')
 def computerScienceLab():
+    #3 phases 
+    #hangman
+    #unscramble
+    #rock paper scissors
     return render_template('computerScienceLab.html')
+
+@app.route('/screen')
+def screen1():
+    return render_template("screen1.html")
+    
+@app.route('/screen2')
+def screen2():
+    return render_template("screen2.html")
+
+@app.route('/screen3')
+def screen3():
+    return render_template("screen3.html")
 
 @app.route('/mathClassroom')
 def mathClassroom():
