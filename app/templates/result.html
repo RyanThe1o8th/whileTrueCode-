@@ -2,14 +2,14 @@
 <html>
 
 <head>
-    <title>{{ location }}</title>
+    <title>{{ locname }}</title>
 
     <!-- bootstrap -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- css -->
-    <link rel="stylesheet" href="/static/css/encounter.css">
+    <link rel="stylesheet" href="/static/css/result.css">
 
         <form action="/">
             <input id=home type="submit" name="return" value="Home">
@@ -22,17 +22,17 @@
   <body>
 <body>
     <div class = "e">
-        <div class ="enc">
-            <p> {{ location }} </p>
+        <div class="enc">
+            <p class="Location"> {{ locname }} </p>
 
-            <br> <br> <br> <br>
+            <br> <br>
             <p> {{ result }} </p>
 
+            <br> <br>
 
-
-            <div class = "back">
+            <div class="back">
                 <form action="/{{back}}">
-                    <input id= back type="submit" name="return" value="Return to {{ back }}">
+                    <input id=back type="submit" name="return" value="Return to {{ back }}">
                 </form>
             </div>
 
