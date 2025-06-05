@@ -51,33 +51,29 @@ def testing():
 
 # guess the number
 
-num = 0
-previous = []
 # Need to fix guess, previous doesn't reset for some reason
 @app.route('/guess')
 def guess():
     number = random.randint(1, 100)
-    global num
-    global previous
+    session['num'] = number
+    session['previous'] = ""
     num = number
-    return render_template("guess.html", number = num, prev = previous)
+    return render_template("guess.html", number = num, prev = session['previous'].split(";"))
 
 @app.route('/guess/check', methods = ["GET", "POST"])
 def guesscheck():
-    global num
-    global previous
     if request.method == 'POST':
         guess = (int)(request.form.get('inputNum'))
-        if(guess > num):
-            previous.append(str(guess) + " was too high!")
-            return render_template("guess.html", number = num, prev = previous)
-        if(guess < num):
-            previous.append(str(guess) + " was too low!")
-            return render_template("guess.html", number = num, prev = previous)
-        if(guess == num):
-            previous.append("YOU WIN WOOO!!!")
-            return render_template("guess.html", number = num, prev = previous, win = "wooo")
-    return render_template("guess.html", number = num, prev = previous)
+        if(guess > session['num']):
+            session['previous'] = session['previous'] + ";" + (str(guess) + " was too high!")
+            return render_template("guess.html", number = session['num'], prev = session['previous'].split(";"))
+        if(guess < session['num']):
+            session['previous'] = session['previous'] + ";" + (str(guess) + " was too low!")
+            return render_template("guess.html", number = session['num'], prev = session['previous'].split(";"))
+        if(guess == session['num']):
+            session['previous'] = session['previous'] + ";" + ("YOU WIN WOOO!!!")
+            return render_template("guess.html", number = session['num'], prev = session['previous'].split(";"), win = "wooo")
+    return render_template("guess.html", number = session['num'], prev = session['previous'].split(";"))
 
 @app.route("/rps")
 def rps():
