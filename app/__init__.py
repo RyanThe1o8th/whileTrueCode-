@@ -5,7 +5,7 @@ from database import init_db, changelog_add, statedit, database_connect, registe
 import random
 import requests
 import json
-
+import mathgenerator as mg
 app = Flask(__name__)
 app.secret_key = 'whileTrueCode()-'
 
@@ -465,9 +465,56 @@ def screen3():
 def mathClassroom():
     return render_template('mathClassroom.html')
 
-@app.route('/mathFight')
+@app.route("/mathFight")
 def mathFight():
-    return render_template('mathFight.html')
+    questionList = []
+    answersDict = {}
+    correctAnswers = {}
+    numQuestions = 10
+
+    for _ in range(numQuestions):
+        problem, solution = mg.addition()
+        cleaned_solution = str(solution).replace('$', '').strip()
+
+        try:
+            base = int(cleaned_solution)
+        except ValueError:
+            continue  # skip malformed solutions
+
+        questionList.append(problem)
+        fake_answers = [str(base + x) for x in [-3, -1, 1, 2] if str(base + x) != str(base)]
+        choices = fake_answers[:3]
+        choices.insert(random.randint(0, 3), str(base))
+        answersDict[problem] = choices
+        correctAnswers[problem] = str(base)
+
+    session["mathQuestions"] = questionList
+    session["mathAnswers"] = correctAnswers
+    session["mathChoices"] = answersDict
+
+    return render_template("mathFight.html", questions=questionList, answersDict=answersDict, numquestions=len(questionList))
+
+@app.route("/mathFight/check", methods=["POST"])
+def mathFightCheck():
+    questions = session.get("mathQuestions", [])
+    correctAnswers = session.get("mathAnswers", {})
+    answerChoices = session.get("mathChoices", {})
+    userAnswers = []
+    questionResults = []
+    numCorrect = 0
+
+    for i, question in enumerate(questions):
+        userAnswer = request.form.get(str(i))
+        userAnswers.append(userAnswer)
+        correct = correctAnswers[question]
+        questionResults.append(userAnswer == correct)
+
+    numCorrect = questionResults.count(True)
+
+    return render_template("mathFightCheck.html", questions=questions, correctAnswersDict=correctAnswers,
+                           useranswers=userAnswers, numquestions=len(questions), numcorrect=numCorrect,
+                           answersDict=answerChoices)
+
 
 @app.route('/USHistory')
 def USHistory():
