@@ -1,6 +1,3 @@
-// blackjack
-// last updated: 6/5/2025
-
 const debug = true;
 const suits = ["C", "D", "H", "S"];
 const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"];
