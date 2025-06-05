@@ -453,11 +453,11 @@ def computerScienceLab():
 def screen1():
     return render_template("screen1.html")
     
-@app.route('/screen2')
+@app.route('/screen2', methods=['GET', 'POST'])
 def screen2():
     return render_template("screen2.html")
 
-@app.route('/screen3')
+@app.route('/winScreenCS')
 def screen3():
     return render_template("screen3.html")
 
