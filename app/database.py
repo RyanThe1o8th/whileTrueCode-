@@ -122,7 +122,7 @@ def encounterchoice(location, enchoice, choice):
         with sqlite3.connect('truecode.db') as conn:
             cursor = conn.cursor()
             readn = cursor.execute("SELECT result FROM encounters WHERE username = ? AND location = ? AND encounter = ? AND option = ?", (username, location, enchoice, choice)).fetchall()
-            return enchoice[0]
+            return readn[0][0]
     except sqlite3.IntegrityError:
         print('Database Error')
 

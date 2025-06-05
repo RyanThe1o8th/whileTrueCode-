@@ -48,9 +48,11 @@ def profile():
 def testing():
     return render_template("testing.html", user=session.get('username'))
 
+@app.route('/blackjack')
+def blackjack():
+    return render_template("blackjack.html")
+    
 # guess the number
-
-# Need to fix guess, previous doesn't reset for some reason
 @app.route('/guess')
 def guess():
     number = random.randint(1, 100)
@@ -76,39 +78,23 @@ def guesscheck():
 
 @app.route("/rps")
 def rps():
-    #global oppAction
     dial = []
     oppAction = random.randint(1, 3)
-
     return render_template("rps.html", oppAct=oppAction, dialogue=dial, playing=True)
 
 @app.route("/rps/check", methods=["POST"])
 def rpsCheck():
     if request.method == "POST":
         action = request.form.get("inputAction")
-        # print(action)
-
-    #global oppAction
-    #global dial
-    #dial = []
     oppAction = random.randint(1, 3)
-
     if oppAction == 1:
         oppAction = "Rock"
     elif oppAction == 2:
         oppAction = "Paper"
     else:
         oppAction = "Scissors"
-
-
-    #print(f"Player Action: {action}, Opponent Action: {oppAction}")
-    # addToInv(session.get('username'), 'lunch', 1)
-    # print(displayInv(session.get('username')))
-
-    #Win Cons
     win = (oppAction == "Rock" and action == "Paper") or (oppAction == "Paper" and action == "Scissors") or (oppAction == "Scissors" and action == "Rock")
     tie = oppAction == action
-
     return render_template("rps.html", oppAct=oppAction, act=action, won=win, tied=tie, playing=False)
 '''
 # hangman
@@ -242,52 +228,38 @@ def hangcheck():
 
 @app.route("/scramble", methods=["GET","POST"])
 def scramble():
-    global word
-    global wordScramble
-    global attemptsR
-    global playing
-
-    word = "Placeholder"
+    words = ["Placeholder"]
+    word = random.choice(words)
+    session["scrambleWord"] = word
     wordScramble = "".join(random.sample(word, len(word)))
-    attemptsR = 3
-    playing = True
-
-
-
-    return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble, isPlaying=playing)
+    session["scrambled"] = wordScramble
+    session["attempts"] = 3
+    session["playing"] = True
+    session["dail"] = ""
+    return render_template("scramble.html", attemptsremaining = session["attempts"], scrambledWord = session["scrambled"], isPlaying = session["playing"])
 
 @app.route("/scramble/check", methods=["POST"])
 def scrambleCheck():
     if request.method == "POST":
-        print(request.form)
+        #print(request.form)
         guess = request.form.get("guess")
-
-    global word
-    global wordScramble
-    global attemptsR
-    global playing
-    global dial
-
-    attemptsR = attemptsR - 1
-    word = word
-    wordScramble = wordScramble
-    dial = []
-    results = "Unknown"
-
-    dial.append(f"You gussed {guess}!")
-
+    session["attempts"]  = session["attempts"] - 1
+    word = session["scrambleWord"]
+    wordScramble = session["scrambled"]
+    results = ""
+    playing = True
+    session["dail"] = session["dail"] + "You gussed " + guess + "!"
     if guess.lower() == word.lower():
-        dial.append(f"Darn! It was {word}, you got it in {3 - attemptsR}!")
+        session["dail"] = session["dail"] + "Darn! It was " + word + ", you got it in " + str(int(3 - session["attempts"]))+ " attempt!;"
         results = "Won"
         playing = False
     else:
-        dial.append("HAHA you suck! Try Again!")
-
-    if attemptsR == 0:
+        session["dail"] = session["dail"] + "Unfortunate its wrong! Try Again!" + ";"
+    if session["attempts"]  == 0:
         results = "Lost"
         playing = False
-
-    return render_template("scramble.html", attemptsremaining=attemptsR, scrambledWord=wordScramble, dialogue=dial, result=results, isPlaying=playing)
+    session["playing"] = playing
+    return render_template("scramble.html", attemptsremaining=session["attempts"] , scrambledWord=wordScramble, dialogue=session["dail"].split(";"), result=results, isPlaying=playing)
 
 @app.route("/trivia")
 def trivia():
@@ -389,35 +361,47 @@ def house():
 
 @app.route('/kitchen', methods=['GET', 'POST'])
 def kitchen():
-    encountername = encountergen("kitchen")
     locname = "Kitchen"
+    if request.method == 'GET':
+        encountername = encountergen("kitchen")
+        session["encounter"] = encountername
+        return render_template('encounter.html', location = "kitchen", encounter = encountername, back = "house", locname = locname)
     if request.method == 'POST':
         # Get the selected choice from the form
+        encountername = session.get("encounter")
+        print(encountername)
         choice = request.form.get('choice')
-        return render_template('result.html', location = "kitchen", result = encounterchoice("kitchen", choice), back = "house", locname = locname)
-    return render_template('encounter.html', location = "kitchen", encounter = encountername, back = "house", locname = locname)
+        return render_template('result.html', location = "kitchen", result = encounterchoice("kitchen", encountername, choice), back = "house", locname = locname)
 
 @app.route('/bedroom', methods=['GET', 'POST'])
 def bedroom():
-    encountername = encountergen("bedroom")
     locname = "Bedroom"
+    if request.method == 'GET':
+        encountername = encountergen("bedroom")
+        session["encounter"] = encountername
+        return render_template('encounter.html', location = "bedroom", encounter = encountername, back = "house", locname = locname)
     if request.method == 'POST':
         # Get the selected choice from the form
+        encountername = session.get("encounter")
+        print(encountername)
         choice = request.form.get('choice')
-        return render_template('result.html', location = "bedroom", result = encounterchoice("bedroom", choice), back = "house", locname = locname)
-    return render_template('encounter.html', location = "bedroom", encounter = encountername, back = "house", locname = locname)
+        return render_template('result.html', location = "bedroom", result = encounterchoice("bedroom", encountername, choice), back = "house", locname = locname)
 
 
 
 @app.route('/friendhouse', methods=['GET', 'POST'])
 def friendhouse():
-    encountername = encountergen("friendhouse")
     locname = "Friend's House"
+    if request.method == 'GET':
+        encountername = encountergen("friendhouse")
+        session["encounter"] = encountername
+        return render_template('encounter.html', location = "friendhouse", encounter = encountername, back = "neighborhood", locname = locname)
     if request.method == 'POST':
         # Get the selected choice from the form
+        encountername = session.get("encounter")
+        print(encountername)
         choice = request.form.get('choice')
-        return render_template('result.html', location = "friendhouse", result = encounterchoice("friendhouse", choice), back = "neighborhood", locname = locname)
-    return render_template('encounter.html', location = "friendhouse", encounter = encountername, back = "neighborhood", locname = locname)
+        return render_template('result.html', location = "friendhouse", result = encounterchoice("friendhouse", encountername, choice), back = "neighborhood", locname = locname)
 
 @app.route('/park', methods=['GET', 'POST'])
 def park():
@@ -482,14 +466,17 @@ def USHistory():
 
 @app.route('/lunchroom', methods=['GET', 'POST'])
 def lunchroom():
-    encountername = encountergen("lunchroom")
     locname = "Lunchroom"
+    if request.method == 'GET':
+        encountername = encountergen("lunchroom")
+        session["encounter"] = encountername
+        return render_template('encounter.html', location = "lunchroom", encounter = encountername, back = "school", locname = locname)
     if request.method == 'POST':
         # Get the selected choice from the form
+        encountername = session.get("encounter")
+        print(encountername)
         choice = request.form.get('choice')
-        return render_template('result.html', location = "lunchroom", result = encounterchoice("Lunchroom", choice), back = "school", locname = locname)
-    return render_template('encounter.html', location = "lunchroom", encounter = encountername, back = "school", locname = locname)
-
+        return render_template('result.html', location = "lunchroom", result = encounterchoice("lunchroom", encountername, choice), back = "school", locname = locname)
 
 
 if __name__ == "__main__":
