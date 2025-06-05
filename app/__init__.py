@@ -5,7 +5,7 @@ from database import init_db, changelog_add, statedit, database_connect, registe
 import random
 import requests
 import json
-
+import mathgenerator as mg
 app = Flask(__name__)
 app.secret_key = 'whileTrueCode()-'
 
@@ -51,7 +51,7 @@ def testing():
 @app.route('/blackjack')
 def blackjack():
     return render_template("blackjack.html")
-    
+
 # guess the number
 @app.route('/guess')
 def guess():
@@ -210,13 +210,13 @@ def hangcheck():
                 session['usedLetters'] = session['usedLetters'] + "," + userInput
                 if userInput in session['word'].split(","):
                     if "-" not in makeCurrent(session['word'], session['usedLetters']):
-                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed the word!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), end = True)
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed the word!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), end = True, win = True)
                     else:
                         return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed a letter!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
                 else:
                     session['lives'] = session['lives'] - 1
                     if session['lives'] == 0:
-                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You've been hanged. Game over", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You've been hanged. Game over", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), lose = True)
                     else:
                         return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You suffer a penalty", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
             else:
@@ -445,15 +445,78 @@ def darkAlley():
 
 @app.route('/computerScienceLab')
 def computerScienceLab():
+    #3 phases 
+    #hangman
+    #unscramble
+    #rock paper scissors
     return render_template('computerScienceLab.html')
+
+@app.route('/screen')
+def screen1():
+    return render_template("screen1.html")
+    
+@app.route('/screen2')
+def screen2():
+    return render_template("screen2.html")
+
+@app.route('/screen3')
+def screen3():
+    return render_template("screen3.html")
 
 @app.route('/mathClassroom')
 def mathClassroom():
     return render_template('mathClassroom.html')
 
-@app.route('/mathFight')
+@app.route("/mathFight")
 def mathFight():
-    return render_template('mathFight.html')
+    questionList = []
+    answersDict = {}
+    correctAnswers = {}
+    numQuestions = 10
+
+    for _ in range(numQuestions):
+        problem, solution = mg.addition()
+        cleaned_solution = str(solution).replace('$', '').strip()
+
+        try:
+            base = int(cleaned_solution)
+        except ValueError:
+            continue  # skip malformed solutions
+
+        questionList.append(problem)
+        fake_answers = [str(base + x) for x in [-3, -1, 1, 2] if str(base + x) != str(base)]
+        choices = fake_answers[:3]
+        choices.insert(random.randint(0, 3), str(base))
+        answersDict[problem] = choices
+        correctAnswers[problem] = str(base)
+
+    session["mathQuestions"] = questionList
+    session["mathAnswers"] = correctAnswers
+    session["mathChoices"] = answersDict
+
+    return render_template("mathFight.html", questions=questionList, answersDict=answersDict, numquestions=len(questionList))
+
+@app.route("/mathFight/check", methods=["POST"])
+def mathFightCheck():
+    questions = session.get("mathQuestions", [])
+    correctAnswers = session.get("mathAnswers", {})
+    answerChoices = session.get("mathChoices", {})
+    userAnswers = []
+    questionResults = []
+    numCorrect = 0
+
+    for i, question in enumerate(questions):
+        userAnswer = request.form.get(str(i))
+        userAnswers.append(userAnswer)
+        correct = correctAnswers[question]
+        questionResults.append(userAnswer == correct)
+
+    numCorrect = questionResults.count(True)
+
+    return render_template("mathFightCheck.html", questions=questions, correctAnswersDict=correctAnswers,
+                           useranswers=userAnswers, numquestions=len(questions), numcorrect=numCorrect,
+                           answersDict=answerChoices)
+
 
 @app.route('/USHistory')
 def USHistory():

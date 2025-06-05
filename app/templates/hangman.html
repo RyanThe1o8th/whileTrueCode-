@@ -10,7 +10,17 @@
     <input id= guess type="submit" name="guess" value="guess">
   </form>
   {% endif %}
-  {% else %}
+  {% endif %}
+  {% if win == True %}
+  Ye has conquered the first challenge. Please proceed to the next
+  <br>
+  <form action="/screen">
+    <button> Continue </button>
+  </form>
+  {% endif %}
+  {% if lose == True %}
+  Ye has lost thy battle. Attempt to prove your worth once again.
+  <br>
   <form action="/hangman">
     <button> Play again? </button>
   </form>
