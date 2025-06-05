@@ -51,7 +51,7 @@ def testing():
 @app.route('/blackjack')
 def blackjack():
     return render_template("blackjack.html")
-    
+
 # guess the number
 @app.route('/guess')
 def guess():
@@ -210,13 +210,13 @@ def hangcheck():
                 session['usedLetters'] = session['usedLetters'] + "," + userInput
                 if userInput in session['word'].split(","):
                     if "-" not in makeCurrent(session['word'], session['usedLetters']):
-                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed the word!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), end = True)
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed the word!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), end = True, win = True)
                     else:
                         return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You guessed a letter!", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
                 else:
                     session['lives'] = session['lives'] - 1
                     if session['lives'] == 0:
-                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You've been hanged. Game over", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
+                        return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You've been hanged. Game over", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']), lose = True)
                     else:
                         return render_template("hangman.html", lives = session['lives'], used = session['usedLetters'][1:], message="You suffer a penalty", num = len(session['usedLetters'])/2, c = makeCurrent(session['word'], session['usedLetters']))
             else:
@@ -424,7 +424,8 @@ def candy():
     if request.method == 'POST':
         # Get the selected choice from the form
         selected_choice = request.form.get('choice')
-        return f"You have selected: {selected_choice}. Thank you for your purchase!"
+        res = "You have selected: " + selected_choice + ". Thank you for your purchase!"
+        return render_template('result.html', location = "candy", result = res, back = "mall", locname = "Candy Store")
     return render_template('candy.html')
 
 @app.route('/gamble')
@@ -436,14 +437,31 @@ def darkAlley():
     if request.method == 'POST':
         # Get the selected choice from the form
         selected_choice = request.form.get('choice')
-        return f"You have selected: {selected_choice}. Thank you for your purchase!"
+        res = "You have selected: " + selected_choice + ". Now leave, before anyone sees you."
+        return render_template('result.html', location = "darkalley", result = res, back = "mall", locname = "Dark Alley")
     return render_template('darkAlley.html')
 
 # school
 
 @app.route('/computerScienceLab')
 def computerScienceLab():
+    #3 phases 
+    #hangman
+    #unscramble
+    #rock paper scissors
     return render_template('computerScienceLab.html')
+
+@app.route('/screen')
+def screen1():
+    return render_template("screen1.html")
+    
+@app.route('/screen2', methods=['GET', 'POST'])
+def screen2():
+    return render_template("screen2.html")
+
+@app.route('/winScreenCS')
+def screen3():
+    return render_template("screen3.html")
 
 @app.route("/mathClassroom")
 def mathClassroom():

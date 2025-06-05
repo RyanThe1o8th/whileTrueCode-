@@ -24,12 +24,22 @@
       </div>
     {% else %}
       <div>
-        {{ result }}
+        {% if result == "Won" %}
         You {{ result }}!
         <br>
-        <form action="/scramble" method="POST">
-          <button id="submit" type="submit">Play Again!</button>
+        Continue on.
+        <br>
+        <form action="/screen2" method="POST">
+          <button id="submit" type="submit">Go Forth</button>
         </form>
+        {% else %}
+        You {{ result }}!
+        <br>
+        You have committed a great sin and shall have to restart.
+        <br>
+        <button><a href = "/computerScienceLab"> return </a></button>
+        {% endif %}
+
       </div>
     {% endif %}
     <div>
