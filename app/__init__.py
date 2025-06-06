@@ -6,6 +6,7 @@ import random
 import requests
 import json
 import mathgenerator as mg
+import html
 app = Flask(__name__)
 app.secret_key = 'whileTrueCode()-'
 
@@ -272,15 +273,16 @@ def trivia():
     numQuestions = 0
     # print(data)
     for item in data["results"]:
-        question = item["question"]
-        correct = item["correct_answer"]
-        choices = item["incorrect_answers"]
+        question = html.unescape(item["question"])
+        correct = html.unescape(item["correct_answer"])
+        choices = html.unescape(item["incorrect_answers"])
         choices.insert(random.randint(0, 3), correct)
 
         qna[question] = correct
         questions[question] = choices
         questionList.append(question)
 
+    print(questions)
     # Store in session
     session["qna"] = qna
     session["questions"] = questions
