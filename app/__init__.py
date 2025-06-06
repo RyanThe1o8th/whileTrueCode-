@@ -266,75 +266,50 @@ def trivia():
     response = requests.get("https://opentdb.com/api.php?amount=10&category=23&type=multiple")
     data = response.json()
 
-    global qna
-    global questions
-    global questionList
-    global numQuestions
-
-
     qna = {} #Store question and answer pairs
     questions = {} #Store question and multiple choice answers
     questionList = []
     numQuestions = 0
     # print(data)
     for item in data["results"]:
-        # print (item["question"])
-        # print (item["correct_answer"])
-        # print (item["incorrect_answers"])
-        # print(item["incorrect_answers"].append(item["correct_answer"]))
+        question = item["question"]
+        correct = item["correct_answer"]
+        choices = item["incorrect_answers"]
+        choices.insert(random.randint(0, 3), correct)
 
+        qna[question] = correct
+        questions[question] = choices
+        questionList.append(question)
 
-        qna[item["question"]] = item["correct_answer"]
-        questions[item["question"]] = item["incorrect_answers"]
-        questions[item["question"]].insert(random.randint(0, 3), item["correct_answer"])
+    # Store in session
+    session["qna"] = qna
+    session["questions"] = questions
+    session["questionList"] = questionList
 
-        questionCurrent = item["question"]
-        questionAnswer = qna[item["question"]]
-        questionChoices = questions[item["question"]]
-        questionList.append(questionCurrent)
-
-        print(f"Question: {questionCurrent}, Answer: {questionAnswer}")
-        print(f"Question: {questionCurrent}, Answer Choices: {questionChoices}")
-        print(questionList)
-
-    numQuestions = len(questionList)
-
-    return render_template("trivia.html", questions=questionList, answersDict=questions, numquestions=numQuestions)
+    return render_template("trivia.html", questions=questionList, answersDict=questions, numquestions=len(questionList))
 
 @app.route("/trivia/check", methods=["POST"])
 def triviaCheck():
-
-    global qna
-    global questions
-    global questionList
-    global numQuestions
-    global questionResults
-
-    qna = qna
-    questions = questions
-    questionList = questionList
-    numQuestions = numQuestions
+    qna = session.get("qna", {})
+    questions = session.get("questions", {})
+    questionList = session.get("questionList", [])
+    numQuestions = len(questionList)
     questionResults = []
     userAnswers = []
     numCorrect = 0
 
     if request.method == "POST":
-        print(request.form)
-
         for i in range(numQuestions):
             answer = request.form.get(str(i))
             userAnswers.append(answer)
-            question = questionList[i]
-            correctAnswer = qna[question]
-
-            print(f"Question: {question}, Answer: {correctAnswer}, Selected Answer: {answer}, Result: {answer == correctAnswer}")
-
+            correctAnswer = qna[questionList[i]]
             questionResults.append(answer == correctAnswer)
 
         numCorrect = questionResults.count(True)
-        print(questionResults)
 
-    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna, numquestions=numQuestions, numcorrect=numCorrect, useranswers=userAnswers, answersDict=questions)
+    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna,
+                           numquestions=numQuestions, numcorrect=numCorrect,
+                           useranswers=userAnswers, answersDict=questions)
 
 # subway
 @app.route('/subway')
