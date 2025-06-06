@@ -1,0 +1,30 @@
+qianjunZ -- 2025-04-30 10:55
+* start of repo
+* added everything nessesary for file structure.
+* initial commit with flag and requirements.
+
+qianjunZ -- 2025-05-08 10:55
+* Created the files for the minigames and started coding up most of the games.
+
+qianjunZ -- 2025-05-08 21:55
+* Finished almost all of the dificult games namely blackjack.
+
+qianjunZ -- 2025-05-09 10:55
+* started and finished trivia game.
+
+qianjunZ -- 2025-05-12 10:55
+* started trying to work on the droplet dont know if it should be with the ini file and like requirement modified.
+
+qianjunZ -- 2025-05-19 21:00
+* moved all the games over from the temporary game file to the main game which allows it to be run with the rest of the site.
+
+qianjunZ -- 2025-06-03 10:55
+* created the store and make the form working that allows you to buy items.
+
+qianjunZ -- 2025-06-05 13:00 - 24:00
+* moved all the games from a public variable style over to sql and session based
+* changed all the games to make them more efficient and require alot less variables and complexity
+* fixed blackjack logic as well as the routing of it which somehow got deleted
+* routed the games together to create the compsci lab boss
+* continued adding routing pages and other nessecities 
+* made sure all requirements are fulfilled by the due date
