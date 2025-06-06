@@ -1,14 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    I see you have conquered Hangman. 
+<head>
+    <title>CS Lab</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/startfight.css">
+
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
     <br>
-    Our great leader Mykolyk would be pround.
     <br>
-    Please do not let me hold you from the next challenge.
-    <br>
-    The next of these challenges shall be unscramble word.
-    <br>
-    <button><a href = "/scramble"> Begin </a></button>
-  </body>
+
+</head>
+<body>
+    <div class="e">
+        <div class="enc">
+            <p class="Location"> Computer Science Lab </p>
+            <p>
+                Congratulations. The battle is won - but not the war.
+                <br>
+                <br>
+                Topher Mykoylk rests behind the Lisa Desk. Although you are eye level, it seems he is looking down on you.
+                <br>
+                <br>
+                You still have much to prove.
+                <br>
+                <br>
+                The next of these challenges shall be <b> word unscramble.</b>
+                <br>
+                <br>
+                Of course, if you are scared, you can always retreat.
+                <br>
+                <br>
+            </p>
+            <div class="start">
+                <form action="/scramble">
+                    <input id=start type="submit" name="begin" value="Nah, I'd win">
+                </form>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="back">
+                <form action="/school">
+                    <input id=back type="submit" name="return" value="Run away back to school">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

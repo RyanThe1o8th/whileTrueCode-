@@ -112,7 +112,7 @@ p {
         scale: 105%;
     }
 
-#start {
+#guess {
     text-decoration: none;
     color: white;
     border: none;
@@ -121,13 +121,13 @@ p {
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    width: 150px;
+    width: 180px;
     padding: 10px;
     cursor: pointer;
     position: relative;
 }
 
-    #start:hover {
+    #guess:hover {
         transition: 0.3s;
         background-color: #ADD8E6;
         color: black;

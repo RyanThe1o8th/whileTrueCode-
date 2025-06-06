@@ -1,35 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Math Exam Results</title>
+    <title>Math Classroom</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/mathcheck.css">
+
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
+    <br>
+    <br>
 </head>
 <body>
-  <div>
-    <p>You got {{ numcorrect }} out of {{ numquestions }} correct! That's <b>{{ (numcorrect / numquestions) * 100 }}%</b>!</p>
-    {% if (numcorrect / numquestions) == 1 %}
-      <b>You obliterated the exam with your secret technique: Arithmetic Knowledge!</b>
-    {% elif (numcorrect / numquestions) > 0.65 %}
-      <b> You passed, but you could do better</b>
-    {% else %}
-      <b> YOU FAILED!? </b>
-    {% endif %}
-  </div>
-  {% for i in range(numquestions) %}
-    <div>
-      <h3>{{ questions[i] }}</h3>
-      {% for choice in answersDict[questions[i]] %}
-        <div>{{ choice }}</div>
-      {% endfor %}
-      <p>Correct Answer: <b>{{ correctAnswersDict[questions[i]] }}</b></p>
-      <p>You answered: <b>{{ useranswers[i] }}</b> — 
-        {% if correctAnswersDict[questions[i]] == useranswers[i] %}
-          Correct
-        {% else %}
-          Incorrect
-        {% endif %}
-      </p>
+    <div class="e">
+        <div class="enc">
+            <div>
+                <p>You got {{ numcorrect }} out of {{ numquestions }} correct! That's <b>{{ (numcorrect / numquestions) * 100 }}%</b>!</p>
+                {% if (numcorrect / numquestions) == 1 %}
+                <b>You obliterated the exam with your secret technique: Arithmetic Knowledge!</b>
+                {% elif (numcorrect / numquestions) > 0.65 %}
+                <b> You passed, but you could do better</b>
+                {% else %}
+                <b> YOU FAILED!? </b>
+                {% endif %}
+            </div>
+            {% for i in range(numquestions) %}
+            <div>
+                <h3>{{ questions[i] }}</h3>
+                {% for choice in answersDict[questions[i]] %}
+                <div>{{ choice }}</div>
+                {% endfor %}
+                <p>Correct Answer: <b>{{ correctAnswersDict[questions[i]] }}</b></p>
+                <p>
+                    You answered: <b>{{ useranswers[i] }}</b> —
+                    {% if correctAnswersDict[questions[i]] == useranswers[i] %}
+                    Correct
+                    {% else %}
+                    Incorrect
+                    {% endif %}
+                </p>
+            </div>
+            {% endfor %}
+            <br>
+            <br>
+            <form action="/school">
+                <input id=back type="submit" name="return" value="Head back to School">
+            </form>
+            <br>
+            <br>
+        </div>
     </div>
-  {% endfor %}
+
 </body>
 </html>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <head>
         <title>Math Classroom</title>
 
         <!-- bootstrap -->
@@ -17,8 +16,6 @@
 
         <br>
         <br>
-
-    </head>
 </head>
 <body>
     <div class="e">
@@ -56,7 +53,15 @@
                     {% endfor %}
                 </div>
                 {% endfor %}
-                <button type="submit"><b>Submit Answers</b></button>
+                <br>
+                <br>
+                <br>
+                <form action="/mathCheck">
+                    <input id=start type="submit" name="begin" value="Submit Answers">
+                </form>
+                <br>
+                <br>
+                <br>
             </form>
             {% endif %}
 

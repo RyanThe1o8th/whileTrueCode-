@@ -1,35 +1,60 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>CS Lab: Hangman</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/hangman.css">
+
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
+    <br>
+    <br>
+
+</head>
 <body>
-  Let's play hangman. You will suffer a penalty for each mistake. If you suffer six penalties, you will be hanged.
-  <p>Remaining lives: {{lives}} </p>
-  {% if lives > 0%}
-  {% if end != True %}
-  <form action="/hangman/check" method="post">
-    <input id = 'letter' type="letter" name="inputLetter" placeholder="placeholder"><br>
-    <input id= guess type="submit" name="guess" value="guess">
-  </form>
-  {% endif %}
-  {% endif %}
-  {% if win == True %}
-  Ye has conquered the first challenge. Please proceed to the next
-  <br>
-  <form action="/screen">
-    <button> Continue </button>
-  </form>
-  {% endif %}
-  {% if lose == True %}
-  Ye has lost thy battle. Attempt to prove your worth once again.
-  <br>
-  <form action="/hangman">
-    <button> Play again? </button>
-  </form>
-  {% endif %}
-  <p>{{c}}</p>
-  <p>{{message}}</p>
-  {% if num != 0%}
-  <p>{{used}}</p>
-  {% endif %}
-  <!-- List of penalties -->
+    <div class="e">
+        <div class="enc">
+            <p class="Location"> CS Lab </p>
+
+            <p>Let's play hangman. You will suffer a penalty for each mistake. If you suffer six penalties, you will be hanged.</p>
+            <p>Remaining lives: {{lives}} </p>
+            {% if lives > 0%}
+            {% if end != True %}
+            <form action="/hangman/check" method="post">
+                <input id='letter' type="letter" name="inputLetter" placeholder="Type a letter!"><br>
+                <br><br>
+                <input id=guess type="submit" name="guess" value="Guess">
+            </form>
+            {% endif %}
+            {% endif %}
+            {% if win == True %}
+            <p> <b>Ye has conquered the first challenge. Please proceed to the next</b></p>
+            <br>
+            <form action="/screen">
+                <input id=guess type="submit" name="guess" value="Continue Onwards">
+            </form>
+            {% endif %}
+            {% if lose == True %}
+            <p> <b>Ye has lost thy battle. Attempt to prove your worth once again. </b></p>
+            <br>
+            <form action="/hangman">
+                <input id=guess type="submit" name="guess" value="Play Again">
+            </form>
+            {% endif %}
+            <p>{{c}}</p>
+            <p>{{message}}</p>
+            {% if num != 0%}
+            <p>{{used}}</p>
+            {% endif %}
+        </div>
+    </div>
+            <!-- List of penalties -->
 </body>
 </html>
