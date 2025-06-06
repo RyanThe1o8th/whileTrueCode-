@@ -46,15 +46,18 @@ h6{
     right: 1%;
     border-style: inset;
     border-color: blue;
+    height: 270px;
 }
 
-.updates{
+.updates {
     text-align: center;
     width: 400px;
     position: relative;
     left: 1%;
     border-style: inset;
     border-color: blue;
+    overflow: auto;
+    height: 270px;
 }
 
 #play {
