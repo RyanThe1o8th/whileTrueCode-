@@ -479,6 +479,7 @@ def mathFight():
         try:
             problem, solution = gen_func()
             # Remove $ and trim
+            problem = str(problem).replace('$', '').strip()
             solution_str = str(solution).replace('$', '').strip()
 
             # Try to convert to int for answer choices
