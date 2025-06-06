@@ -1,42 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
+    <title>U.S.H.</title>
+
+    <!-- bootstrap -->
     <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div>
-      <p>
-        Look at this! We have a new challenger! Can they answer the <i><b>Trivia?</b></i>
-      </p>
-    </div>
-    <div class="questionaire">
-      <form action="/ush/check" method="POST">
-      {% for i in range(numquestions) %}
-        <div class="question">
-          <h3>{{ questions[i] }}</h3>
-        </div>
-        <div class="answerChoices">
-          {% for j in range(4) %} <!-- iterate through answer choices -->
-              <label for="{{ answersDict[questions[i]][j] }}">
-                <input type="radio" id={{i}}{{j}} name={{i}} value="{{ answersDict[questions[i]][j] }}"> {{ answersDict[questions[i]][j] }} <!-- i = question index, j = answer index -->
-              </label>
-              <br>
-          {% endfor %}
-        </div>
-      {% endfor %}
-        <div>
-          <button id="submit" type="submit"><i><b> Dare to test your knowledge? </b></i></button>
-        </div>
-      </form>
-    </div>
-    <div class="answerChoices">
-      <table>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      </table>
-    </div>
-    <div>
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/mathfight.css">
 
-    </div>
-  </body>
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
+    <br>
+    <br>
+</head>
+<body>
+    <div class="e">
+        <div class="enc">
+            <div>
+                <div>
+                    <p>
+                        Look at this! We have a new challenger! Can they answer the <i><b>Trivia?</b></i>
+                    </p>
+                <p>
+                </div>
+                <div class="questionaire">
+                    <form action="/ush/check" method="POST">
+                        {% for i in range(numquestions) %}
+                        <div class="question">
+                            <h3>{{ questions[i] }}</h3>
+                        </div>
+                        <div class="answerChoices">
+                            {% for j in range(4) %} <!-- iterate through answer choices -->
+                            <label for="{{ answersDict[questions[i]][j] }}">
+                                <input type="radio" id={{i}}{{j}} name={{i}} value="{{ answersDict[questions[i]][j] }}"> {{ answersDict[questions[i]][j] }} <!-- i = question index, j = answer index -->
+                            </label>
+                            <br>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                        <br>
+                        <br>
+                        <div>
+                            <button id="start" type="submit"><i><b> Dare to test your knowledge? </b></i></button>
+                        </div>
+                        <br>
+                        <br>
+                    </form>
+                </div>
+                <div class="answerChoices">
+                    <table>
+                    </table>
+                </div>
+                <div>
+                </p>
+                </div>
+            </div>
+        </div>
+</body>
 </html>

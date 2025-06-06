@@ -1,50 +1,73 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div>
-      <p>
-        Well, Well, Well, Here are your results!
-        <br>
-        You got {{ numcorrect }} right out of {{ numquestions }}!
-        That's a <b>{{ numcorrect / numquestions * 100}} %!</b>
-        {% if (numcorrect / numquestions) == 1 %}
-          <b>Are you cheating!</b>
-        {% endif %}
-      </p>
-    </div>
-    <div class="results">
-      {% for i in range(numquestions) %}
-        <div class="question">
-          <h3>{{ questions[i] }}</h3>
-        </div>
-        <div class="answerChoices">
-          {% for j in range(4) %} <!-- iterate through answer choices -->
-              <label for="{{ answersDict[questions[i]][j] }}">
-                {{ answersDict[questions[i]][j] }} <!-- i = question index, j = answer index -->
-              </label>
-              <br>
-          {% endfor %}
-        </div>
-        <div class="answer">
-          <h4>Answer:</h4>
-          <b>{{ correctAnswersDict[questions[i]] }}</b>
-        </div>
-        <div class="userAnswer">
-          You answered <b>{{ useranswers[i] }}</b>
-          {% if correctAnswersDict[questions[i]] == useranswers[i] %}
-            That's correct!
-          {% else %}
-            That's wrong!
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
-    <div>
+<head>
+    <title>U.S.H.</title>
 
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/mathcheck.css">
+
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
+    <br>
+    <br>
+</head>
+<body>
+    <div class="e">
+        <div class="enc">
+            <div>
+                <p>
+                    Well, Well, Well, Here are your results!
+                    <br>
+                    You got {{ numcorrect }} right out of {{ numquestions }}!
+                    That's a <b>{{ numcorrect / numquestions * 100}} %!</b>
+                    {% if (numcorrect / numquestions) == 1 %}
+                    <b>Are you cheating!</b>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="results">
+                {% for i in range(numquestions) %}
+                <div class="question">
+                    <h3>{{ questions[i] }}</h3>
+                </div>
+                <div class="answerChoices">
+                    {% for j in range(4) %} <!-- iterate through answer choices -->
+                    <label for="{{ answersDict[questions[i]][j] }}">
+                        {{ answersDict[questions[i]][j] }} <!-- i = question index, j = answer index -->
+                    </label>
+                    <br>
+                    {% endfor %}
+                </div>
+                <div class="answer">
+                    <h4>Answer:</h4>
+                    <b>{{ correctAnswersDict[questions[i]] }}</b>
+                </div>
+                <div class="userAnswer">
+                    You answered <b>{{ useranswers[i] }}</b>
+                    {% if correctAnswersDict[questions[i]] == useranswers[i] %}
+                    That's correct!
+                    {% else %}
+                    That's wrong!
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <div>
+                <br>
+                <br>
+                <form action="/school">
+                    <input id=back type="submit" name="return" value="Head back to School">
+                </form>
+                <br>
+                <br>
+            </div>
+        </div>
     </div>
-  </body>
+</body>
 </html>

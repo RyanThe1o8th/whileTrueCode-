@@ -55,31 +55,5 @@
             <br>
             <br>
         </div>
-  <div>
-    <p>You got {{ numcorrect }} out of {{ numquestions }} correct! That's <b>{{ (numcorrect / numquestions) * 100 }}%</b>!</p>
-    {% if (numcorrect / numquestions) == 1 %}
-      <b>You obliterated the exam with your secret technique: Knowledge!</b>
-    {% elif (numcorrect / numquestions) > 0.65 %}
-      <b> You passed, but you could do better</b>
-    {% else %}
-      <b> YOU FAILED!? </b>
-    {% endif %}
-  </div>
-  {% for i in range(numquestions) %}
-    <div>
-      <h3>{{ questions[i] }}</h3>
-      {% for choice in answersDict[questions[i]] %}
-        <div>{{ choice }}</div>
-      {% endfor %}
-      <p>Correct Answer: <b>{{ correctAnswersDict[questions[i]] }}</b></p>
-      <p>You answered: <b>{{ useranswers[i] }}</b> — 
-        {% if correctAnswersDict[questions[i]] == useranswers[i] %}
-          Correct
-        {% else %}
-          Incorrect
-        {% endif %}
-      </p>
-    </div>
-
 </body>
 </html>

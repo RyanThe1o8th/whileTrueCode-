@@ -534,7 +534,6 @@ def mathFightCheck():
                            useranswers=userAnswers, numquestions=len(questions), numcorrect=numCorrect,
                            answersDict=answerChoices)
 
-
 @app.route('/USHistory')
 def USHistory():
     return render_template('USHistory.html')
