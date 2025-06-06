@@ -1,26 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <body>
-      Lets play rock, paper, scissors!
-      {% if playing %}
-        <form action="/rps/check" method="POST">
-            <button id = 'action' type="submit" name="inputAction" value="Rock">Rock</button>
-            <button id = 'action' type="submit" name="inputAction" value="Paper">Paper</button>
-            <button id = 'action' type="submit" name="inputAction" value="Scissors">Scissors</button>
-        </form>
-      {% endif %}
-      {% if not playing %}
-        {% if won %}
-          Ahhhh, you got me! I went {{ oppAct }} and you went {{ act }}!
-        {% elif tied %}
-          Damn! We Tied! I went {{ oppAct }} and you went {{ act }}!
-        {% else %}
-          HAHA, I got you! I went {{ oppAct }} and you went {{ act }}!
-        {% endif %}
-      {% endif %}
-      {% for i in dialogue %}
-      {{i}}
-      <br>
-      {% endfor %}
-  </body>
+<head>
+    <title>CS Lab: Unscramble</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/rps.css">
+
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
+    <br>
+    <br>
+
+</head>
+<body>
+    <div class="e">
+        <div class="enc">
+            <p class="Location"> CS Lab </p>
+            <p>Lets play rock, paper, scissors!</p>
+            {% if playing %}
+            <form action="/rps/check" method="POST">
+                <button id='action' type="submit" name="inputAction" value="Rock">Rock</button>
+                <button id='action' type="submit" name="inputAction" value="Paper">Paper</button>
+                <button id='action' type="submit" name="inputAction" value="Scissors">Scissors</button>
+            </form>
+            {% endif %}
+            {% if not playing %}
+            {% if won %}
+            <p>Ahhhh, you got me! I went {{ oppAct }} and you went {{ act }}!</p>
+            <br />
+            <br />
+            <br />
+            <form action="/winScreenCS">
+                <input id=guess type="submit" name="guess" value="Continue Onwards">
+            </form>
+            {% elif tied %}
+            <p>Damn! We Tied! I went {{ oppAct }} and you went {{ act }}!</p>
+            <br />
+            <br />
+            <br />
+            <form action="/rps">
+                <input id=guess type="submit" name="guess" value="Replay">
+            </form>
+            {% else %}
+            <p>HAHA, I got you! I went {{ oppAct }} and you went {{ act }}!</p>
+            <br />
+            <br />
+            <br />
+            <form action="/computerScienceLab">
+                <input id=guess type="submit" name="guess" value="Restart">
+            </form>
+            {% endif %}
+            {% endif %}
+            {% for i in dialogue %}
+            {{i}}
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+</body>
 </html>

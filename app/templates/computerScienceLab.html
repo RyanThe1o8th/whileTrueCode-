@@ -1,17 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <button><a href = "/school"> Run away back to school </a></button>
+<head>
+    <title>CS Lab</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/startfight.css">
+
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
     <br>
     <br>
-    Hello you shall begin the fight against the head developer Mykolyk who shall impose 3 challenges upon you.
-    <br>
-    Only the strongest of Devos will be able to complete these challenges.
-    <br>
-    In order to gain the great sires acknoledgement ye shall not fail any of these tasks.
-    <br>
-    The first of these challenges shall be Hangman.
-    <br>
-    <button><a href = "/hangman"> Begin </a></button>
-  </body>
+
+</head>
+<body>
+    <div class="e">
+        <div class="enc">
+            <p class="Location"> Computer Science Lab </p>
+            <p>
+                <br>
+                <br>
+                <br>
+                As you walk into the classroom, you shield your eyes against Topher Mykoylk, the Devo of all Devos.
+                <br>
+                <br>
+                <img src="../static/pictures/Topher.png" class="teacher">
+                <br>
+                <br>
+                You aspire to be this man, but you know the road ahead will be rocky and full of hardships.
+                <br>
+                <br>
+                In order to rise to his level, you must beat 3 challenges of his choosing.
+                <br>
+                <br>
+                The first of these challenges shall be <b>Hangman.</b>
+                <br>
+                <br>
+            </p>
+            <div class="start">
+                <form action="/hangman">
+                    <input id=start type="submit" name="begin" value="Bring it On!">
+                </form>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="back">
+                <form action="/school">
+                    <input id=back type="submit" name="return" value="Run away back to school">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

@@ -1,52 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    {% if isPlaying%}
-      <div>
-        Welcome to Scramble the word, where we scramble words!
-        Do you have what it takes to unscramble the word?
-        <br>
-        You only have three tries you know!
-      </div>
-      <div>
-        <form action="/scramble/check" method="POST">
-          <input id="guessBox" name="guess" type="letter" placeholder="Enter Your Guess!">
-          <button id="submit" type="submit">Guess</button>
-        </form>
-      </div>
-      <div>
-        You have {{ attemptsremaining }} attempts remaining!
-      </div>
-      <div>
-        Can you unscramble this word?
-        <br>
-        <i>{{ scrambledWord }}</i>
-      </div>
-    {% else %}
-      <div>
-        {% if result == "Won" %}
-        You {{ result }}!
-        <br>
-        Continue on.
-        <br>
-        <form action="/screen2" method="POST">
-          <button id="submit" type="submit">Go Forth</button>
-        </form>
-        {% else %}
-        You {{ result }}!
-        <br>
-        You have committed a great sin and shall have to restart.
-        <br>
-        <button><a href = "/computerScienceLab"> return </a></button>
-        {% endif %}
+<head>
+    <title>CS Lab: Unscramble</title>
 
-      </div>
-    {% endif %}
-    <div>
-      {% for i in dialogue %}
-      {{i}}
-      <br>
-      {% endfor %}
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/scramble.css">
+
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
+    <br>
+    <br>
+
+</head>
+<body>
+    <div class="e">
+        <div class="enc">
+            <p class="Location"> CS Lab </p>
+            {% if isPlaying%}
+            <div>
+                <p>
+                    Welcome to Scramble the word, where we scramble words!
+                    <br>
+                    Do you have what it takes to unscramble the word?
+                    <br>
+                    You only have three tries you know!
+                </p>
+            </div>
+            <div>
+                <form action="/scramble/check" method="POST">
+                    <input id="guessBox" name="guess" type="letter" placeholder="Enter Your Guess!">
+                    <button id="submit" type="submit">Guess</button>
+                </form>
+            </div>
+            <div>
+               <p> You have {{ attemptsremaining }} attempts remaining! </p>
+            </div>
+            <div>
+               <p> Can you unscramble this word? </p>
+                <br>
+                <i>{{ scrambledWord }}</i>
+            </div>
+            {% else %}
+            <div>
+                {% if result == "Won" %}
+                <p>You {{ result }}! </p>
+                <form action="/screen2">
+                    <input id=guess type="submit" name="guess" value="Continue Onwards">
+                </form>
+                {% else %}
+                <p>You {{ result }}!</p>
+                <br>
+                <p>You have committed a great sin and shall have to restart.</p>
+                <br>
+                <div class="back">
+                    <form action="/computerScienceLab">
+                        <input id=back type="submit" name="return" value="Retry">
+                    </form>
+                </div>
+                {% endif %}
+
+            </div>
+            {% endif %}
+            <div>
+                <br>
+                {% for i in dialogue %}
+                <br>
+                {{i}}
+                <br>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-  </body>
+</body>
 </html>

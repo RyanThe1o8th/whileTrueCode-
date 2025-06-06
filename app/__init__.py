@@ -251,11 +251,11 @@ def scrambleCheck():
     playing = True
     session["dail"] = session["dail"] + "You gussed " + guess + "!"
     if guess.lower() == word.lower():
-        session["dail"] = session["dail"] + "Darn! It was " + word + ", you got it in " + str(int(3 - session["attempts"]))+ " attempt!;"
+        session["dail"] = session["dail"] + " Darn! It was " + word + ", you got it in " + str(int(3 - session["attempts"]))+ " attempt!;"
         results = "Won"
         playing = False
     else:
-        session["dail"] = session["dail"] + "Unfortunate its wrong! Try Again!" + ";"
+        session["dail"] = session["dail"] + " Unfortunately its wrong! Try Again!" + ";"
     if session["attempts"]  == 0:
         results = "Lost"
         playing = False
