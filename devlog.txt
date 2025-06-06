@@ -3,6 +3,15 @@ qianjunZ -- 2025-04-30 10:55
 * added everything nessesary for file structure.
 * initial commit with flag and requirements.
 
+tanzeemH -- 2025-05-01 10:55
+* Added more stuff for file structure 
+
+tanzeemH -- 2025-05-05 10:55
+* Revised javascript for moving images around
+
+tanzeemH -- 2025-05-06 10:55
+* Tested javascript for moving images around
+
 qianjunZ -- 2025-05-08 10:55
 * Created the files for the minigames and started coding up most of the games.
 
@@ -12,14 +21,44 @@ qianjunZ -- 2025-05-08 21:55
 qianjunZ -- 2025-05-09 10:55
 * started and finished trivia game.
 
+tanzeemH -- 2025-05-12 10:55
+* Revised route details, templates for each route
+
 qianjunZ -- 2025-05-12 10:55
 * started trying to work on the droplet dont know if it should be with the ini file and like requirement modified.
+
+tanzeemH -- 2025-05-14 10:55
+* Testing, revising game.py functions
+
+tanzeemH -- 2025-05-19 10:55
+* Testing, revising hangman, running into issues
 
 qianjunZ -- 2025-05-19 21:00
 * moved all the games over from the temporary game file to the main game which allows it to be run with the rest of the site.
 
+tanzeemH -- 2025-05-20 10:55
+* Testing, revising hangman, running into issues
+
+tanzeemH -- 2025-05-27 10:55
+* Inventory table, functions work
+
+tanzeemH -- 2025-05-28 10:55
+* Inventory table, functions work
+
+tanzeemH -- 2025-05-29 10:55
+* Inventory table, functions work
+
+tanzeemH -- 2025-05-30 10:55
+* Inventory table, functions work
+
 qianjunZ -- 2025-06-03 10:55
 * created the store and make the form working that allows you to buy items.
+
+tanzeemH -- 2025-06-04 10:55
+* Math classroom fight in progress
+
+tanzeemH -- 2025-06-05 18:00
+* Math classroom fight completed
 
 qianjunZ -- 2025-06-05 13:00 - 24:00
 * moved all the games from a public variable style over to sql and session based
