@@ -261,7 +261,7 @@ def scrambleCheck():
     session["playing"] = playing
     return render_template("scramble.html", attemptsremaining=session["attempts"] , scrambledWord=wordScramble, dialogue=session["dail"].split(";"), result=results, isPlaying=playing)
 
-@app.route("/trivia")
+@app.route("/ush")
 def trivia():
     response = requests.get("https://opentdb.com/api.php?amount=10&category=23&type=multiple")
     data = response.json()
@@ -288,7 +288,7 @@ def trivia():
 
     return render_template("trivia.html", questions=questionList, answersDict=questions, numquestions=len(questionList))
 
-@app.route("/trivia/check", methods=["POST"])
+@app.route("/ush/check", methods=["POST"])
 def triviaCheck():
     qna = session.get("qna", {})
     questions = session.get("questions", {})
