@@ -1,15 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <button><a href = "/school"> Run away back to school </a></button>
+<head>
+    <title>Math Classroom</title>
+
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/startfight.css">
+
+    <form action="/">
+        <input id=home type="submit" name="return" value="Home">
+    </form>
+
     <br>
     <br>
-    Hello you shall begin the fight against the Insert Math Teacher.
-    <br>
-    Only the strongest of nerds will be able to complete these challenges.
-    <br>
-    Begin Your pop quiz.
-    <br>
-    <button><a href = "/mathFight"> Begin </a></button>
-  </body>
+
+</head>
+<body>
+    <div class="e">
+        <div class="enc">
+            <p class="Location"> Math Classroom </p>
+
+            <br>
+            <br>
+            <br>
+            Hello you shall begin the fight against the Math Department.
+            <br>
+            <br>
+            Only the strongest of nerds will be able to complete these challenges.
+            <br>
+            <br>
+            Begin Your pop quiz.
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="start">
+                <form action="/mathFight">
+                    <input id=start type="submit" name="begin" value="Bring it On!">
+                </form>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="back">
+                <form action="/school">
+                    <input id=back type="submit" name="return" value="Run away back to school">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
