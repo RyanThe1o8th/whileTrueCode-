@@ -286,7 +286,7 @@ def trivia():
     session["questions"] = questions
     session["questionList"] = questionList
 
-    return render_template("trivia.html", questions=questionList, answersDict=questions, numquestions=len(questionList))
+    return render_template("ush.html", questions=questionList, answersDict=questions, numquestions=len(questionList))
 
 @app.route("/ush/check", methods=["POST"])
 def triviaCheck():
@@ -307,7 +307,7 @@ def triviaCheck():
 
         numCorrect = questionResults.count(True)
 
-    return render_template("triviaCheck.html", questions=questionList, correctAnswersDict=qna,
+    return render_template("ushCheck.html", questions=questionList, correctAnswersDict=qna,
                            numquestions=numQuestions, numcorrect=numCorrect,
                            useranswers=userAnswers, answersDict=questions)
 
